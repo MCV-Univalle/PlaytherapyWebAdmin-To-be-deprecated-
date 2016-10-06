@@ -2,11 +2,18 @@
 {% load staticfiles %}
 
 {% block specific-css %}
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'dist/css/style.css' %}">
   <!--<link rel="stylesheet" href="{% static 'css/header.css' %}">-->
 {% endblock %}
 
+{% block all-css %}
+{% endblock %}
+
 {% block css-navbar %}
+{% endblock %}
+
+{% block navbar %}
+{% include 'old_new/old/navbar.html' %}
 {% endblock %}
 
 

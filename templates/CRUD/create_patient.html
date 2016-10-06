@@ -1,153 +1,190 @@
 {% extends "base.html" %}
 
 {% block specific-css %}
-{% endblock %}
-
-{% block css-navbar %}
+<style type="text/css">
+.buttons{
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 30px;
+}
+</style>
 {% endblock %}
 
 {% block content %}
 {# ================ insert here all the content of the page =============== #}
-<div class="container full-screen-w" style="display:none;" id="main-content">
-  <div class="row">
-    <div class="col-xs-6 col-xs-offset-3 col-sm-6 -col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
-      <form class="form-group-up form-horizontal" action="./account" method="POST">
-        {% csrf_token %}
-        <!--<fieldset>-->
-          <legend>Personal Data</legend>
-          <!--
-          <div class="form-group">
-              <label for="inputUser" class="col-lg-2 control-label">Username</label>
-              <div class="col-lg-10">
-                <input class="form-control" id="inputUser" placeholder="{{ username }}" type="text" disabled="">
-              </div>
-          </div>
-          -->
-          
-          <div class="form-group" id="inputEmail">
-              <label for="inputEmail" class="col-lg-2 control-label">Email</label>
-              <div class="col-lg-10">
-                <input name="email" class="form-control" value="{{ email }}" placeholder="Email" type="text" disabled="">
-              </div>
-          </div>
-          
-          <div class="form-group" id="inputPassword1">
-            <label for="inputPassword1" class="col-lg-2 control-label">Password</label>
-            <div class="col-lg-10">
-              <input name="password" class="form-control" id="p1" placeholder="Password" type="password">
-            </div>
-          </div>
-          
-          <div class="form-group" style="display:none;" id="inputPassword2">
-            <label for="inputPassword2" class="col-lg-2 control-label">Repeat password</label>
-            <div class="col-lg-10">
-              <input class="form-control" id="p2" placeholder="Repeat password" type="password">
-            </div>
-          </div>
-          
-          <div id="match-alert" style="display:none;">
-            <div class="alert alert-warning col-md-10 col-md-offset-2">
-              <strong>Passwords don't match!</strong>
-            </div>
-          </div>
-          
-          <div class="form-group" id="inputName">
-            <label for="inputPassword" class="col-lg-2 control-label">Name</label>
-            <div class="col-lg-10">
-              <input name="firstname" class="form-control" value="{{ firstname }}" placeholder="Name" type="text">
-            </div>
-          </div>
-          
-          <div class="form-group" id="inputLastName">
-            <label for="inputError" class="col-lg-2 control-label">Last Name</label>
-            <div class="col-lg-10">
-              <input name="lastname" class="form-control" value="{{ lastname }}" placeholder="Last name" type="text">
-            </div>
-          </div>
-          
-          <div class="form-group" id="inputGenres">
-            <div class="col-lg-2">
-              <label for="inputError" class="control-label">Genres I Like</label>
-            </div>
-            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                {% for genre in genres %}
-                  {% if genre.2 %}
-                  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 block-inline">
-                    <div class="checkbox"><input type="checkbox" name="like_{{ genre.0 }}" checked>{{ genre.1 }}</input></div>
-                  </div>
-                  {% else %}
-                  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 block-inline">
-                    <div class="checkbox"><input type="checkbox" name="like_{{ genre.0 }}" >{{ genre.1 }}</input></div>
-                  </div>
-                  {% endif %}
-                {% endfor %}
-              </div>
-            </div>
-          </div>
-          
-          {% if success %}
-          <div class="form-group">
-            <div class="col-lg-12 ">
-              <div class="alert alert-success col-md-10 col-md-offset-2">
-                <strong>Success!</strong>
-              </div>
-            </div>
-          </div>
-          {% endif %}
-          <div class="form-group">
-            <div class="col-xs-6 col-sm-6 col-lg-5 col-lg-offset-2">
-              <button type="submit" class="btn btn-primary" id="button-changes">Save changes</button>
-            </div>
-            <div class="col-xs-5 col-sm-5 col-lg-5 text-right">
-              <button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bs-example-modal-sm" id="todisable">Disable account</button>
-              <!--<a class="btn btn-warning" id="todisable">Disable account</a>-->
-            </div>
-          </div>
-          <!-- Info -->
-          {% if auditor %}
-          <legend>Auditor</legend>
-          <div class="form-group">
-            <!--<div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">-->
-              
-            <!--</div>-->
-            <div class="col-lg-2">
-              <label class="control-label"></label>
-            </div>
-            <div class="col-lg-10">
-              <a class="btn btn-info" href="/reports/statistics">Reports and Statistics</a>
-            </div>
-            <!--<div class="col-lg-10 col-lg-offset-2">
-              <a class="btn btn-info" href="./statistics">Reports and Statistics</a>
-            </div>-->
-          </div>
-          {% endif %}
-          <!-- End Info -->
-          
-          
-          <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Small modal</button>-->
-          <!-- Modal for deactivate account -->
-          <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-            <div class="modal-dialog modal-sm">
-              <div class="modal-content">
-                <div class="modal-body">
-                  Are you sure?
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" id="close" data-dismiss="modal">Cancel</button>
-                  <input name="op" value="modify" id="op" style="display:none" />
-                  <button type="submit" class="btn btn-danger" id="dodisable">Continue</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          
-        <!--</fieldset>-->
-      </form>
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            {% if create %}
+                <h1 class="page-header">Crear Paciente</h1>
+            {% else %}
+                <h1 class="page-header">Modificar Paciente</h1>
+            {% endif %}
+        </div>
+        <!-- /.col-lg-12 -->
     </div>
-  </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <!--<div class="panel panel-default">-->
+                <!--<div class="panel-heading">-->
+                    <!--Datos personales del paciente-->
+                <!--</div>-->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-10 col-xs-offset-1 col-sm-10 -col-sm-offset-1 col-md-12 col-md-offset-1 col-lg-12 col-lg-offset-0">
+                            <form class="form-group-up form-horizontal" action="crear_paciente/" method="POST">
+                                {% csrf_token %}
+                                <fieldset>
+                                    <!--<legend>Datos personales del paciente</legend>-->
+                                    <!--********************************** Nombres **********************************-->
+                                    <div class="row">
+                                        <label for="inputName" class="col-lg-2 control-label">Nombres</label>
+                                        <div class="form-group col-lg-10" id="inputName">
+                                            {% if names %}
+                                                <input name="name" class="form-control" placeholder="Nombres" type="text" value="{{ name }}" required>
+                                            {% else %}
+                                                <input name="name" class="form-control" placeholder="Nombres" type="text" required>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <!--********************************** Apellidos **********************************-->
+                                    <div class="row">
+                                        <label for="inputLastName" class="col-lg-2 control-label">Apellidos</label>
+                                        <div class="form-group col-lg-10" id="inputLastName">
+                                            {% if lastName %}
+                                                <input name="lastname" class="form-control" placeholder="Apellidos" type="text" value="{{ lastname }}" required>
+                                            {% else %}
+                                                <input name="lastname" class="form-control" placeholder="Apellidos" type="text" required>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <!--********************************** Tipo de documento **********************************-->
+                                    <div class="row">
+                                        <label for="inputTypeID" class="col-lg-2 control-label">Tipo de documento</label>
+                                        <div class="form-group col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                            <select class="form-control" name="id_type" required>
+                                                <option {% if typeID == 'Cedula de ciudadania' %} selected {% endif %}>Cedula de ciudadania</option>
+                                                <option {% if typeID == 'Tarjeta de identidad' %} selected {% endif %}>Tarjeta de identidad</option>
+                                                <option {% if typeID == 'Numero de pasaporte' %} selected {% endif %}>Numero de pasaporte</option>
+                                                <option {% if typeID == 'Cedula de extranjeria' %} selected {% endif %}>Cedula de extranjeria</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <!--********************************** Numero de documento **********************************-->
+                                    <div class="row">
+                                        <label for="inputID" class="col-lg-2 control-label">Numero de documento</label>
+                                        <div class="form-group col-lg-10" id="inputID">
+                                            {% if ID %}
+                                                <input name="id_num" class="form-control" placeholder="Numero de documento" type="number" value="{{ id_num }}" required>
+                                            {% else %}
+                                                <input name="id_num" class="form-control" placeholder="Numero de documento" type="number" required>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <!--********************************** Genero **********************************-->
+                                    <div class="row">
+                                        <div class="form-group" id="inputGenres">
+                                            <label for="inputError" class="col-lg-2 control-label">Genero</label>
+                                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                                <div class="row">
+                                                    <label class="radio-inline col-lg-5 text-center">
+                                                        <input type="radio" name="genre" value="Masculino" {% if genre == 'Masculino' %} checked {% endif %} required>Masculino</input>
+                                                    </label>
+                                                    <label class="radio-inline col-lg-5 text-center">
+                                                        <input type="radio" name="genre" value="Femenino" {% if genre == 'Femenino' %} checked {% endif %} required>Femenino</input>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!--********************************** Ocupacion **********************************-->
+                                    <div class="row">
+                                        <label for="inputOcupation" class="col-lg-2 control-label">Ocupacion</label>
+                                        <div class="form-group col-lg-10" id="inputOcupation">
+                                            {% if ocupacion %}
+                                                <input name="occupation" class="form-control" placeholder="Ocupacion" type="text" value="{{ ocupacion }}">
+                                            {% else %}
+                                                <input name="occupation" class="form-control" placeholder="Ocupacion" type="text">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <!--********************************** Fecha de nacimiento **********************************-->
+                                    <div class="row">
+                                        <label for="inputDateBirthday" class="col-lg-2 control-label">Fecha de nacimiento</label>
+                                        <div class="form-group col-lg-10" id="inputDateBirthday">
+                                        {% if fecha %}
+                                            <input name="birthday" class="form-control" placeholder="yyyy-mm-dd" data-format="dd/MM/yyyy hh:mm:ss" type="date" value="{{ fecha }}" required>
+                                        {% else %}
+                                            <input name="birthday" class="form-control" placeholder="yyyy-mm-dd" data-format="dd/MM/yyyy hh:mm:ss" type="date" required>
+                                        {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <!--********************************** Entidad de salud **********************************-->
+                                    <div class="row">
+                                        <label for="inputEntity" class="col-lg-2 control-label">Entidad de salud</label>
+                                        <div class="form-group col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                            <select class="form-control" name="entity" required>
+                                                <option {% if entidad == 'Tiki' %} selected {% endif %}>Tiki</option>
+                                                <option>Tikilan</option>
+                                                <option>tiki el timbiliki</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    {% if create %}
+                                    <div class="row buttons">
+                                        <div class="col-xs-12 col-sm-12  col-md-4 col-lg-4">
+                                            <a type="return" class="btn btn-warning btn-block">
+                                                Regresar
+                                            </a>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12  col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+                                            <button type="submit" class="btn btn-primary btn-block">
+                                                Crear
+                                            </button>
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                    <div class="row buttons">
+                                        <div class="col-xs-12 col-sm-12  col-md-4 col-lg-4">
+                                            <a type="return" class="btn btn-warning btn-block">
+                                                Regresar
+                                            </a>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12  col-md-4 col-lg-4">
+                                            <button type="submit" class="btn btn-primary btn-block">
+                                                Crear
+                                            </button>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12  col-md-4 col-lg-4">
+                                            <a type="delete" class="btn btn-danger btn-block">
+                                                Eliminar
+                                            </a>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.panel-body -->
+            <!--</div>-->
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
 </div>
+
 {% endblock %}
 
 {% block specific-js %}
