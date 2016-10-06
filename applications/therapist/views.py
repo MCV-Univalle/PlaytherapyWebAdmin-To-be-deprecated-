@@ -8,12 +8,12 @@ from smtplib import SMTPException
 from models import *
 
 def create_therapist(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated(): # Verifies that the user is authenticated
         user_data = {
             'user_name':request.user.first_name,
             'create':True
         }
-        if request.method == 'POST': # Si se envian datos por POST se procesan para crear el terapeuta
+        if request.method == 'POST': # If a POST request arrives the values are extracted and a therapist is modified
             name = request.POST.get('name')
             lastname = request.POST.get('lastname')
             id_type = request.POST.get('id_type')
@@ -21,11 +21,9 @@ def create_therapist(request):
             genre = request.POST.get('genre')
             password1 = request.POST.get('password1')
             password2 = request.POST.get('password2')
-            if password1 == password2: # Verifica que ambos password sean iguales
+            if password1 == password2: # Verifies that the passwords are equal
                 try:
                     user = User.objects.create_user(username=id_num, password=password1, first_name=name, last_name=lastname)
-                    # user = User(username=id_num, password=password1, first_name=name, last_name=lastname)
-                    # user.save()
                     
                     terapeuta = Therapist(user=user,
                     name=name,
@@ -34,31 +32,38 @@ def create_therapist(request):
                     id_num=id_num,
                     genre=genre)
                     terapeuta.save()
+                    
+                    user_data['message'] = "Usuario creado correctamente"
+                    user_data['error'] = False
+                    return render(request, 'CRUD/edit_therapists.html', user_data)
 
                 except IntegrityError as e:
                     print "Error de integridad"
                     user_data['message'] = "Error de integridad"
-                    return render(request, 'CRUD/create_therapists.html', user_data)
+                    user_data['error'] = True
+                    return render(request, 'CRUD/edit_therapists.html', user_data)
+                    
                 except  SMTPException as e:
                     print "jojojojo"
                     user_data['message'] = "Error"
-                    return render(request, 'CRUD/create_therapists.html', user_data)
-            else:
-                
+                    user_data['error'] = True
+                    return render(request, 'CRUD/edit_therapists.html', user_data)
+                    
+            else: # else of "if password1 == password2:"
                 user_data['message'] = "Error contraseñas difrentes"
-                return render(request, 'CRUD/create_therapists.html', user_data)
-            user_data['message'] = "Usuario creado correctamente"
-            return render(request, 'CRUD/create_therapists.html', user_data)
-        else:
-            return render(request, 'CRUD/create_therapists.html', user_data)
-    else:
+                user_data['error'] = True
+                return render(request, 'CRUD/edit_therapists.html', user_data)
+                
+        else: # else of "if request.method == 'POST':"
+            return render(request, 'CRUD/edit_therapists.html', user_data)
+            
+    else: # else of "if request.user.is_authenticated():"
         return HttpResponseRedirect('/login')
 
 def modify_therapist(request, therapist_id):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated(): # Verifies that the user is authenticated
             
         therapist = Therapist.objects.get(id_num=therapist_id)
-        # print type(therapist)
         user_data = {
             'user_name':request.user.first_name,
             'create':False,
@@ -69,8 +74,7 @@ def modify_therapist(request, therapist_id):
             'genre':therapist.genre,
             
         }
-        if request.method == 'POST':
-            therapist = Therapist.objects.get()
+        if request.method == 'POST': # If a POST request arrives the values are extracted and a therapist is modified
             name = request.POST.get('name')
             lastname = request.POST.get('lastname')
             id_type = request.POST.get('id_type')
@@ -78,29 +82,49 @@ def modify_therapist(request, therapist_id):
             genre = request.POST.get('genre')
             password1 = request.POST.get('password1')
             password2 = request.POST.get('password2')
-            return render(request, 'CRUD/create_therapists.html', user_data)
-            if password1 == password2 and password1 != '': # Verifica que ambos password sean iguales
+            
+            if password1 == password2: # Verifies that the passwords are equal
                 try:
-                    user = User.objects.create_user(username=id_card, password=password1, first_name=name)
-                    terapeuta = Therapist(user=user,
-                    name=name,
-                    lastname=lastname,
-                    id_type=id_type,
-                    id_num=id_num,
-                    genre=genre)
-                    # login(request, user)
+                    therapist.user.username=id_num
+                    therapist.user.first_name = name
+                    therapist.user.last_name = lastname
+                    if password1 != '': # If the user change the password
+                        therapist.user.password = password1
+                    therapist.user.save();
+                    therapist.name = name
+                    therapist.lastname = lastname
+                    therapist.id_num = id_num
+                    therapist.id_type = id_type
+                    therapist.genre = genre
+                    therapist.save()
                     
+                    user_data['message'] = "Usuario modificado correctamente"
+                    user_data['error'] = False
+                    return render(request, 'CRUD/edit_therapists.html', user_data)
+
                 except IntegrityError as e:
-                    print "tiki"
-                    return render(request, 'CRUD/create_therapists.html', {'error':True})
+                    print "Error de integridad"
+                    user_data['message'] = "Error de integridad"
+                    user_data['error'] = True
+                    return render(request, 'CRUD/edit_therapists.html', user_data)
+                    
                 except  SMTPException as e:
-                    print "jojojojo"
-                    return render(request, 'CRUD/create_therapists.html', {'error':True})
-        else:
-            return render(request, 'CRUD/create_therapists.html', user_data)
-    else:
+                    print "Error"
+                    user_data['message'] = "Error"
+                    user_data['error'] = True
+                    return render(request, 'CRUD/edit_therapists.html', user_data)
+                    
+            else: # else of if password1 == password2:
+                user_data['message'] = "Error contraseñas difrentes"
+                user_data['error'] = True
+                return render(request, 'CRUD/edit_therapists.html', user_data)
+                
+        else: # else of "if request.method == 'POST':"
+            return render(request, 'CRUD/edit_therapists.html', user_data)
+            
+    else: # else of "if request.user.is_authenticated():"
         return HttpResponseRedirect('/login')
-        
+
 def view_therapist(request):
     if request.user.is_authenticated():
         t = Therapist.objects.filter()

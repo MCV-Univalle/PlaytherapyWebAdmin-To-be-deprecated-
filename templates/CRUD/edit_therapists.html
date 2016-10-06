@@ -31,7 +31,7 @@
     {% if message %}
     <div class="row" id="message">
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-12">
-            <div class="alert alert-danger">
+            <div class="alert {% if error %} alert-danger {% else %} alert-success {% endif %}">
                 <strong>{{ message }}</strong>
             </div>
         </div>
@@ -121,7 +121,7 @@
                                     <div class="row">
                                         <label for="inputPassword1" class="col-lg-2 control-label">Contraseña</label>
                                         <div class="form-group col-lg-10" id="inputPassword1">
-                                          <input name="password1" class="form-control" placeholder="Contraseña" type="password" required>
+                                          <input name="password1" class="form-control" placeholder="Contraseña" type="password" {if create %} required {% endif %}>
                                         </div>
                                     </div>
                                     
@@ -129,7 +129,7 @@
                                     <div class="row">
                                         <label for="inputPassword2" class="col-lg-2 control-label">Confirmar contraseña</label>
                                         <div class="form-group col-lg-10" id="inputPassword2">
-                                          <input name="password2" class="form-control" placeholder="Confirmar contraseña" type="password" required>
+                                          <input name="password2" class="form-control" placeholder="Confirmar contraseña" type="password" {% if create %} required {% endif %}>
                                         </div>
                                     </div>
                                     
@@ -157,7 +157,7 @@
                                         </div>
                                         <div class="col-xs-12 col-sm-12  col-md-4 col-lg-4">
                                             <button type="submit" class="btn btn-primary btn-block">
-                                                Crear
+                                                Modificar
                                             </button>
                                         </div>
                                         <div class="col-xs-12 col-sm-12  col-md-4 col-lg-4">
