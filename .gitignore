@@ -2,4 +2,5 @@
 *.pyc
 # Temporal folders cloude9
 .c9*/
+.~c9*
 
