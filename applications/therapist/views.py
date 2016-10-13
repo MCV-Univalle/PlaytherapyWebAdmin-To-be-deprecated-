@@ -114,7 +114,7 @@ def modify_therapist(request, therapist_id):
                     user_data['error'] = True
                     return render(request, 'CRUD/edit_therapists.html', user_data)
                     
-            else: # else of if password1 == password2:
+            else: # else of "if password1 == password2:"
                 user_data['message'] = "Error contraseñas difrentes"
                 user_data['error'] = True
                 return render(request, 'CRUD/edit_therapists.html', user_data)
