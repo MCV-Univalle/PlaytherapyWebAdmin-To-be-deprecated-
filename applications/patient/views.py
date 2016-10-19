@@ -3,44 +3,54 @@ from django.http import HttpResponseRedirect
 from .models import *
 from django.db import IntegrityError
 from smtplib import SMTPException
-# Create your views here.
+from forms import *
 
 def create_patient(request):
     if request.user.is_authenticated():
+        
+        patient_form = PatientForm(request.POST)
         user_data = {
             'user_name':request.user.first_name,
-            'create':True
+            'create':True,
+            'form':patient_form,
         }
-        if request.method == 'POST': # If a POST request arrrives the values are extracted
-            try:
-                name = request.POST.get('name')
-                lastname = request.POST.get('lastname')
-                id_type = request.POST.get('id_type')
-                id_num = request.POST.get('id_num')
-                genre = request.POST.get('genre')
-                occupation = request.POST.get('occupation')
-                birthday = request.POST.get('birthday')
-                entity = request.POST.get('entity')
-                
-                patient = Patient(name=name, 
-                lastname=lastname, 
-                id_type=id_type, 
-                id_num=id_num, 
-                genre=genre, 
-                occupation=occupation, 
-                birthday=birthday,
-                entity=entity)
-                patient.save()
-                
-                user_data['message'] = "Usuario creado correctamente"
-                user_data['error'] = False
-                return render(request, 'CRUD/edit_patient.html', user_data)
-            except IntegrityError as e:
-                user_data['message'] = "Error de integridad"
-                user_data['error'] = True
-                return render(request, 'CRUD/edit_patient.html', user_data)
-            except SMTPException as e:
-                user_data['message'] = "Error"
+        
+        if request.method == 'POST': # If a POST request arrives the values are extracted
+            if patient_form.is_valid():
+                try:
+                    name = request.POST.get('name')
+                    lastname = request.POST.get('lastname')
+                    id_type = request.POST.get('id_type')
+                    id_num = request.POST.get('id_num')
+                    genre = request.POST.get('genre')
+                    occupation = request.POST.get('occupation')
+                    birthday = request.POST.get('birthday')
+                    id_entity = request.POST.get('entity')
+                    entity = Entity.objects.get(id=id_entity)
+    
+                    patient = Patient(name=name, 
+                    lastname=lastname, 
+                    id_type=id_type, 
+                    id_num=id_num, 
+                    genre=genre, 
+                    occupation=occupation, 
+                    birthday=birthday,
+                    entity=entity)
+                    patient.save()
+                    
+                    user_data['message'] = "Usuario creado correctamente"
+                    user_data['error'] = False
+                    return render(request, 'CRUD/edit_patient.html', user_data)
+                except IntegrityError as e:
+                    user_data['message'] = "Error de integridad"
+                    user_data['error'] = True
+                    return render(request, 'CRUD/edit_patient.html', user_data)
+                except SMTPException as e:
+                    user_data['message'] = "Error"
+                    user_data['error'] = True
+                    return render(request, 'CRUD/edit_patient.html', user_data)
+            else:
+                user_data['message'] = "Error no se pudo crear el paciente"
                 user_data['error'] = True
                 return render(request, 'CRUD/edit_patient.html', user_data)
         else: # else of "if request.method == 'POST':"
@@ -73,13 +83,21 @@ def modify_patient(request, patient_id):
             
             try:
                 patient.name = name
-                patien.lastname = lastname
-                patien.id_type = id_type
+                patient.lastname = lastname
+                patient.id_type = id_type
                 patient.id_num = id_num
                 patient.genre = genre
                 patient.occupation = occupation
                 patient.birthday = birthday
                 patient.save()
+                
+                user_data['name'] = patient.name
+                user_data['lastname'] = patient.lastname
+                user_data['id_type'] = patient.id_type
+                user_data['id_num'] = patient.id_num
+                user_data['genre'] = patient.genre
+                user_data['occupation'] = patient.occupation
+                user_data['birthday'] = patient.birthday
                 
                 user_data['message'] = "Usuario modificado correctamente"
                 user_data['error'] = False

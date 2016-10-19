@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'applications.start',
     'applications.patient',
     'applications.therapist',
+    # 'applications.FIM',
+    'bootstrap3',
+    'datetimewidget'
 ]
 
 MIDDLEWARE_CLASSES = [

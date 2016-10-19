@@ -4,7 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Therapist(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     name = models.CharField(max_length=64)
     lastname = models.CharField(max_length=64)
     id_type = models.CharField(max_length=64)

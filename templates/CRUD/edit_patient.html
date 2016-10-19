@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load bootstrap3 %}
 
 {% block specific-css %}
 <style type="text/css">
@@ -12,6 +13,9 @@
     padding: 5px 5px 5px 15px;
 }
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+{{ form.media }}
+
 {% endblock %}
 
 {% block content %}
@@ -46,7 +50,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-10 col-xs-offset-1 col-sm-10 -col-sm-offset-1 col-md-12 col-md-offset-1 col-lg-12 col-lg-offset-0">
-                            <form class="form-group-up form-horizontal" action="crear_paciente/" method="POST">
+                            <form class="form-group-up form-horizontal" action="." method="POST">
                                 {% csrf_token %}
                                 <fieldset>
                                     <!--<legend>Datos personales del paciente</legend>-->
@@ -54,11 +58,7 @@
                                     <div class="row">
                                         <label for="inputName" class="col-lg-2 control-label">Nombres</label>
                                         <div class="form-group col-lg-10" id="inputName">
-                                            {% if name %}
-                                                <input name="name" class="form-control" placeholder="Nombres" type="text" value="{{ name }}" required>
-                                            {% else %}
-                                                <input name="name" class="form-control" placeholder="Nombres" type="text" required>
-                                            {% endif %}
+                                            {{ form.name }}
                                         </div>
                                     </div>
                                     
@@ -66,11 +66,7 @@
                                     <div class="row">
                                         <label for="inputLastName" class="col-lg-2 control-label">Apellidos</label>
                                         <div class="form-group col-lg-10" id="inputLastName">
-                                            {% if lastname %}
-                                                <input name="lastname" class="form-control" placeholder="Apellidos" type="text" value="{{ lastname }}" required>
-                                            {% else %}
-                                                <input name="lastname" class="form-control" placeholder="Apellidos" type="text" required>
-                                            {% endif %}
+                                            {{ form.lastname }}
                                         </div>
                                     </div>
                                     
@@ -78,12 +74,7 @@
                                     <div class="row">
                                         <label for="inputTypeID" class="col-lg-2 control-label">Tipo de documento</label>
                                         <div class="form-group col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                                            <select class="form-control" name="id_type" required>
-                                                <option {% if id_type == 'Cedula de ciudadania' %} selected {% endif %}>Cedula de ciudadania</option>
-                                                <option {% if id_type == 'Tarjeta de identidad' %} selected {% endif %}>Tarjeta de identidad</option>
-                                                <option {% if id_type == 'Numero de pasaporte' %} selected {% endif %}>Numero de pasaporte</option>
-                                                <option {% if id_type == 'Cedula de extranjeria' %} selected {% endif %}>Cedula de extranjeria</option>
-                                            </select>
+                                            {{ form.id_type }}
                                         </div>
                                     </div>
                                     
@@ -91,28 +82,26 @@
                                     <div class="row">
                                         <label for="inputID" class="col-lg-2 control-label">Numero de documento</label>
                                         <div class="form-group col-lg-10" id="inputID">
-                                            {% if id_num %}
-                                                <input name="id_num" class="form-control" placeholder="Numero de documento" type="number" value="{{ id_num }}" required>
-                                            {% else %}
-                                                <input name="id_num" class="form-control" placeholder="Numero de documento" type="number" required>
-                                            {% endif %}
+                                            {{ form.id_num }}
                                         </div>
                                     </div>
                                     
                                     <!--********************************** Genero **********************************-->
                                     <div class="row">
-                                        <div class="form-group" id="inputGenres">
-                                            <label for="inputError" class="col-lg-2 control-label">Genero</label>
-                                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                                                <div class="row">
-                                                    <label class="radio-inline col-lg-5 text-center">
-                                                        <input type="radio" name="genre" value="Masculino" {% if genre == 'Masculino' %} checked {% endif %} required>Masculino</input>
-                                                    </label>
-                                                    <label class="radio-inline col-lg-5 text-center">
-                                                        <input type="radio" name="genre" value="Femenino" {% if genre == 'Femenino' %} checked {% endif %} required>Femenino</input>
-                                                    </label>
-                                                </div>
-                                            </div>
+                                        <label for="inputError" class="col-lg-2 control-label">Genero</label>
+                                        <div class="form-group col-lg-10" id="inputGenres">
+                                            {{ form.genre }}
+                                            
+                                            <!--<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">-->
+                                            <!--    <div class="row">-->
+                                            <!--        <label class="radio-inline col-lg-5 text-center">-->
+                                            <!--            <input type="radio" name="genre" value="Masculino" {% if genre == 'Masculino' %} checked {% endif %} required>Masculino</input>-->
+                                            <!--        </label>-->
+                                            <!--        <label class="radio-inline col-lg-5 text-center">-->
+                                            <!--            <input type="radio" name="genre" value="Femenino" {% if genre == 'Femenino' %} checked {% endif %} required>Femenino</input>-->
+                                            <!--        </label>-->
+                                            <!--    </div>-->
+                                            <!--</div>-->
                                         </div>
                                     </div>
                                     
@@ -120,11 +109,12 @@
                                     <div class="row">
                                         <label for="inputOcupation" class="col-lg-2 control-label">Ocupacion</label>
                                         <div class="form-group col-lg-10" id="inputOcupation">
-                                            {% if occupation %}
-                                                <input name="occupation" class="form-control" placeholder="Ocupacion" type="text" value="{{ occupation }}">
-                                            {% else %}
-                                                <input name="occupation" class="form-control" placeholder="Ocupacion" type="text">
-                                            {% endif %}
+                                            {{ form.occupation }}
+                                            <!--{% if occupation %}-->
+                                            <!--    <input name="occupation" class="form-control" placeholder="Ocupacion" type="text" value="{{ occupation }}">-->
+                                            <!--{% else %}-->
+                                            <!--    <input name="occupation" class="form-control" placeholder="Ocupacion" type="text">-->
+                                            <!--{% endif %}-->
                                         </div>
                                     </div>
                                     
@@ -132,11 +122,12 @@
                                     <div class="row">
                                         <label for="inputDateBirthday" class="col-lg-2 control-label">Fecha de nacimiento</label>
                                         <div class="form-group col-lg-10" id="inputDateBirthday">
-                                        {% if birthday %}
-                                            <input name="birthday" class="form-control" placeholder="yyyy-mm-dd" data-format="dd/MM/yyyy hh:mm:ss" type="date" value="{{ birthday }}" required>
-                                        {% else %}
-                                            <input name="birthday" class="form-control" placeholder="yyyy-mm-dd" data-format="dd/MM/yyyy hh:mm:ss" type="date" required>
-                                        {% endif %}
+                                            {{ form.birthday }}
+                                        <!--{% if birthday %}-->
+                                        <!--    <input name="birthday" class="form-control" placeholder="yyyy-mm-dd" data-format="dd/MM/yyyy hh:mm:ss" type="date" value="{{ birthday }}" required>-->
+                                        <!--{% else %}-->
+                                        <!--    <input name="birthday" class="form-control" placeholder="yyyy-mm-dd" data-format="dd/MM/yyyy hh:mm:ss" type="date" required>-->
+                                        <!--{% endif %}-->
                                         </div>
                                     </div>
                                     
@@ -144,11 +135,14 @@
                                     <div class="row">
                                         <label for="inputEntity" class="col-lg-2 control-label">Entidad de salud</label>
                                         <div class="form-group col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                                            <select class="form-control" name="entity" required>
-                                                <option {% if entidad == 'Tiki' %} selected {% endif %}>Tiki</option>
-                                                <option>Tikilan</option>
-                                                <option>tiki el timbiliki</option>
-                                            </select>
+                                            {{ form.entity }}
+                                            <!--<select class="form-control" name="entity" required>-->
+                                            <!--    <option {% if entidad == 'Comfandi' %} selected {% endif %}>Comfandi</option>-->
+                                            <!--    <option>Saludcoop</option>-->
+                                            <!--    <option>Magisalud</option>-->
+                                            <!--    <option>Cafesalud</option>-->
+                                            <!--    <option>Coomeva</option>-->
+                                            <!--</select>-->
                                         </div>
                                     </div>
                                     
