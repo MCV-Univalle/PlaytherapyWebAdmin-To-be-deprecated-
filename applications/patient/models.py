@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.db import models
 
@@ -6,6 +7,13 @@ class Entity(models.Model):
     
     def __str__(self):
         return self.name
+        
+        
+class Diagnostic(models.Model):
+    
+    code = models.CharField(max_length=64)
+    name = models.TextField()
+    tipo = models.TextField()
 
 class Patient(models.Model):
     # Options for types of id
@@ -24,18 +32,16 @@ class Patient(models.Model):
     FEMALE = 'Femenino'
     GENRE_CHOICES = [(MALE, 'Masculino'),(FEMALE, 'Femenino')]
     
-    id_type = models.CharField(max_length=64, choices=ID_CHOICES)
-    id_num = models.CharField(max_length=64, primary_key=True) # Primary key
-    name = models.CharField(max_length=64)
-    lastname = models.CharField(max_length=64)
-    genre = models.CharField(max_length=64, choices=GENRE_CHOICES)
-    occupation = models.CharField(max_length=64)
-    birthday = models.DateField()
-    entity = models.ForeignKey(Entity)
+    id_type = models.CharField(max_length=64, choices=ID_CHOICES, verbose_name='Tipo de identificación')
+    id_num = models.CharField(max_length=64, primary_key=True, verbose_name='Número de identificación') # Primary key
+    name = models.CharField(max_length=64, verbose_name='Nombre')
+    lastname = models.CharField(max_length=64, verbose_name='Apellido')
+    genre = models.CharField(max_length=64, choices=GENRE_CHOICES, verbose_name='Genero')
+    occupation = models.CharField(max_length=64, verbose_name='Ocupación')
+    birthday = models.DateField(verbose_name='Fecha de nacimiento')
+    entity = models.ForeignKey(Entity, verbose_name='Entidad de salud')
+    list_diagnostic = models.ManyToManyField(Diagnostic)
     
-class Diagnostic(models.Model):
+
     
-    code = models.CharField(max_length=64)
-    name = models.TextField()
-    tipo = models.TextField();
 
