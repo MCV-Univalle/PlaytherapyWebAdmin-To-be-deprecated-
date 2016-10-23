@@ -48,7 +48,7 @@
     <div class="row">
         <div class="col-lg-12">
             {% if create %}
-                <h1 class="page-header">Crear Paciente</h1>
+                <h1 class="page-header">Registrar Paciente</h1>
             {% else %}
                 <h1 class="page-header">Modificar Paciente</h1>
             {% endif %}
@@ -56,12 +56,14 @@
         <!-- /.col-lg-12 -->
     </div>
     <!-- /.row -->
-    {% if message %}
+    {% if messages %}
     <div class="row" id="message">
-        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-12">
-            <div class="alert {% if error %} alert-danger {% else %} alert-success {% endif %}">
-                <strong>{{ message }}</strong>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            {% for message in messages %}
+            <div class="alert {% if message.tags == 'success' %} alert-success {% else %} alert-danger {% endif %}">
+                <strong {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</strong>
             </div>
+            {% endfor %}
         </div>
     </div>
     {% endif %}

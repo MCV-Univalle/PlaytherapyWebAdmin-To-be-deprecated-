@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
+
 from django.forms import ModelForm
 from django import forms
-from datetimewidget.widgets import DateTimeWidget, DateWidget, TimeWidget
+from datetimewidget.widgets import DateWidget
 from models import Patient
 
 class PatientForm(ModelForm):
@@ -22,3 +23,7 @@ class PatientForm(ModelForm):
     class Meta:
         model = Patient
         fields = ['name', 'lastname', 'id_type', 'id_num', 'genre', 'occupation', 'birthday', 'entity']
+        widgets = {
+            'birthday':DateWidget(usel10n = True, bootstrap_version=3),
+            'id_num':forms.NumberInput(),
+        }

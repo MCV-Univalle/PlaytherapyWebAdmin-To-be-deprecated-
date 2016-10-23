@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from __future__ import unicode_literals
 from django.db import models
 
@@ -36,7 +37,7 @@ class Patient(models.Model):
     id_num = models.CharField(max_length=64, primary_key=True, verbose_name='Número de identificación') # Primary key
     name = models.CharField(max_length=64, verbose_name='Nombre')
     lastname = models.CharField(max_length=64, verbose_name='Apellido')
-    genre = models.CharField(max_length=64, choices=GENRE_CHOICES, verbose_name='Genero')
+    genre = models.CharField(max_length=64, choices=GENRE_CHOICES, verbose_name='Género')
     occupation = models.CharField(max_length=64, verbose_name='Ocupación')
     birthday = models.DateField(verbose_name='Fecha de nacimiento')
     entity = models.ForeignKey(Entity, verbose_name='Entidad de salud')
