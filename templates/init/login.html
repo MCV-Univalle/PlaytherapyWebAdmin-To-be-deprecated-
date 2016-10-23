@@ -13,11 +13,23 @@
 
 {# =================== Estilos propios de esta pagina =================== #}
 {% block specific-css %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/signin.css">
     <style type="text/css">
-      body{
-        background: url("/static/img/spiderman_blur.jpg") no-repeat center center fixed;
+      body {
+        padding-top: 140px;
+        padding-bottom: 40px;
       }
+      
+      .float-right{
+        display: block;
+        float: right;
+      }
+      
+      .form-group {
+        max-width: 330px;
+        padding: 15px;
+        margin: 0 auto;
+      }
+
     </style>
 {% endblock %}
 
@@ -38,22 +50,22 @@
   <!--</div>-->
   <form class="form-group" action="login" method="POST">
     {% csrf_token %}
-    <!-- <h2 class="form-signin-heading">Iniciar sesion</h2> -->
-    <label class="control-label" for="inputUser"></label>
-    <input type="user" name="user" id="inputUser" class="form-control" placeholder="Username" required="" autofocus="">
-    <label for="inputPassword" class=""></label>
-    <input type='password' name="password" id='inputPassword' class='form-control' placeholder='Password' required=''>
-    <label for="submitButton" class=""></label>
-    {% if error %}
-    <div>
-      <div class="alert alert-danger">
-        <strong>Login or password incorrect!</strong>
+    <label style="color: #880000 ">{{ form.non_field_errors }}</label>
+      <div class="form-group">
+          <div class="input-group">
+              <div class="input-group-addon"><i class="fa fa-user"></i></div>
+              {{form.username}}
+          </div>
       </div>
-    </div>
-    {% endif %}
-    <button class="btn btn-primary btn-block" type="submit">Login</button>
+      <div class="form-group">
+          <div class="input-group">
+              <div class="input-group-addon"><i class="fa fa-asterisk"></i></div>
+              {{form.password}}
+          </div>
+      </div>
+    <button class="btn btn-primary btn-block" type="submit">Iniciar Sesión</button>
     <br>
-    <p>New to Cinemania? <a href="/signup">Join now <i class="glyphicon glyphicon-arrow-right"></i></a></p>
+    <!--<p>New to Playtherapy? <a href="/signup">Join now <i class="glyphicon glyphicon-arrow-right"></i></a></p>-->
   </form>
   
   
