@@ -1,41 +1,31 @@
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-
+from forms import LoginForm
 
 def index(request):
     return render(request, 'init/index.html')
 
 
-def user_login(request):
-    # Si ya esta logueado pase al dashboard
+def custom_login(request):
     if request.user.is_authenticated():
-        return HttpResponseRedirect('/dashboard')
-    else:
-        # Si recibe datos mediante post comienza el proceso de logueo
-        if request.method =='POST':
-            username = request.POST.get('user')
-            password = request.POST.get('password')
-            user = authenticate(username=username, password=password)
+        return dashboard(request)
     
-            # Si la cuenta existe se carga con los credenciales
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    request.session["id"] = user.id
-                    return HttpResponseRedirect('/dashboard')
-                else:
-                    return render(request,'init/login.html', {'error':True})
-            else: # Si no se encuentra envia un mensaje de error
-                return render(request,'init/login.html', {'error':True})
-        else: # Si no a enviado datos por post se muestra la pagina de login
-            return render(request,'init/login.html', {})
+    form = LoginForm()
+    if request.method == 'POST':
+        form = LoginForm(request.POST)  # se autentican los datos ingresados por el usuario
+        if form.is_valid(): # si son validos el form tiene el objeto usuario
+            user = form.get_user()
+            login(request, user)    # se loguea al usuario
+            return redirect('/dashboard')
+        
+    return render(request, 'init/login.html', {'form': form})
     
     
 def signup(request):
     if request.user.is_authenticated(): # Si ya esta logueado va al dashboard
-        return HttpResponseRedirect('/dashboard')
+        return redirect('/dashboard')
     elif request.method =='POST': # Si se envian datos por POST se procesan para crear la cuenta
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -56,7 +46,7 @@ def signup(request):
             request.user.therapist.numero_documento = numero_documento
             request.user.therapist.genero = genero
             request.user.save()
-            return HttpResponseRedirect('/dashboard')
+            return redirect('/dashboard')
         except:
             return render(request, 'init/signup.html', {'error':True})
     else: # Si no a enviado datos por post se muestra la pagina de sign up
@@ -65,18 +55,20 @@ def signup(request):
 def user_logout(request):
     if request.user.is_authenticated():
         logout(request)
-        return HttpResponseRedirect('/')
+        return redirect('/')
     else:
         return render(request, '/login')
 
-        
+@login_required # Verifies that the user is authenticated
 def dashboard(request):
-    if request.user.is_authenticated():
-        user_data = {
-            'user_name':request.user.first_name,
-            'tiki':False,
-        }
-        return render(request, 'init/dashboard.html', user_data)
-    else:
-        return HttpResponseRedirect('/login')
-    
+    try:
+        name = str(request.user.therapist.name)
+    except:
+        name = ''
+    user_data = {
+        'user_name':name,
+        'tiki':False,
+    }
+    print request.user.username
+    return render(request, 'init/dashboard.html', user_data)
+

@@ -2,6 +2,7 @@
 
 from __future__ import unicode_literals
 from django.db import models
+from django_select2.forms import ModelSelect2MultipleWidget, Select2MultipleWidget
 
 class Entity(models.Model):
     name = models.CharField(max_length=64)
@@ -15,6 +16,9 @@ class Diagnostic(models.Model):
     code = models.CharField(max_length=64)
     name = models.TextField()
     tipo = models.TextField()
+    
+    def __unicode__(self):
+        return "%s - %s" % (self.code, self.name)
 
 class Patient(models.Model):
     # Options for types of id
@@ -41,7 +45,10 @@ class Patient(models.Model):
     occupation = models.CharField(max_length=64, verbose_name='Ocupación')
     birthday = models.DateField(verbose_name='Fecha de nacimiento')
     entity = models.ForeignKey(Entity, verbose_name='Entidad de salud')
-    list_diagnostic = models.ManyToManyField(Diagnostic)
+    list_diagnostic = models.ManyToManyField(Diagnostic, verbose_name="Diagnostico")
+    
+    def __unicode__(self):
+        return self.id_num + ' - ' + self.name
     
 
     

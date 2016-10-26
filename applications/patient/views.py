@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.shortcuts import render, redirect, RequestContext
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import *
@@ -18,9 +20,10 @@ def create_patient(request):
         
         if patient_form.is_valid():
             obj = patient_form.save()
+            print type(patient_form.instance.list_diagnostic)
             messages.success(request, "Paciente registrado exitosamente.")
             return render(request, 'CRUD/edit_patient.html', user_data)
-        # if it is not valid
+        # if the form is not valid
         messages.error(request, "Error al registrar el paciente.")
         user_data['form'] = patient_form
         return render(request, 'CRUD/edit_patient.html', user_data)
@@ -45,9 +48,9 @@ def modify_patient(request, patient_id):
         form = PatientForm(request.POST, instance=patient, initial=patient.__dict__)
         
         if form.is_valid():
-            sav = form.save(commit=False)
-            sav.save()
+            obj = form.save()
             messages.success(request, "Paciente modificado exitosamente.")
+            user_data['form'] = PatientForm(instance=patient, initial=patient.__dict__)
             return render(request, 'CRUD/edit_patient.html', user_data)
         # if it is not valid
         user_data['form'] = PatientForm(request.POST)
@@ -70,7 +73,6 @@ def view_patients(request):
         patient.genre,
         patient.occupation,
         patient.birthday])
-    print patients
     user_data = {
         'user_name':request.user.first_name,
         'patients':patients

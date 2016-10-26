@@ -1,11 +1,12 @@
 {# =================== Importa el archivo base html =================== #}
 {% extends "base.html" %}
 {% load staticfiles %}
+{% load bootstrap3 %}
 
 
 {# =============== Titulo ============== #}
 {% block title %}
-  Cinemania - Login
+  Playtherapy - Login
 {% endblock %}
 
 {# =============== Navbar css ============== #}
@@ -50,19 +51,20 @@
   <!--</div>-->
   <form class="form-group" action="login" method="POST">
     {% csrf_token %}
-    <label style="color: #880000 ">{{ form.non_field_errors }}</label>
-      <div class="form-group">
-          <div class="input-group">
-              <div class="input-group-addon"><i class="fa fa-user"></i></div>
-              {{form.username}}
-          </div>
-      </div>
-      <div class="form-group">
-          <div class="input-group">
-              <div class="input-group-addon"><i class="fa fa-asterisk"></i></div>
-              {{form.password}}
-          </div>
-      </div>
+    <!--<label style="color: #880000 ">{{ form.non_field_errors }}</label>-->
+    {% bootstrap_form_errors form %}
+    <div class="form-group">
+        <div class="input-group">
+            <div class="input-group-addon"><i class="fa fa-user"></i></div>
+            {{form.username}}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="input-group">
+            <div class="input-group-addon"><i class="fa fa-asterisk"></i></div>
+            {{form.password}}
+        </div>
+    </div>
     <button class="btn btn-primary btn-block" type="submit">Iniciar Sesión</button>
     <br>
     <!--<p>New to Playtherapy? <a href="/signup">Join now <i class="glyphicon glyphicon-arrow-right"></i></a></p>-->

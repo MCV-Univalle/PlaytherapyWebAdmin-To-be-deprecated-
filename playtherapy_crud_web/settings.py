@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'applications.therapist',
     # 'applications.FIM',
     'bootstrap3',
-    'datetimewidget'
+    'datetimewidget',
+    'django_select2'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -143,3 +144,21 @@ STATICFILES_DIRS = (
 
 LOGIN_URL = '/login'
 LOGIN_REDIRECT_URL = '/dashboard'
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    },
+    'select2': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+
+# Set the cache backend to select2
+SELECT2_CACHE_BACKEND = 'select2'
