@@ -7,10 +7,10 @@ from django.contrib.auth.models import User
 
 class Therapist(User):
     # Options for types of id
-    CEDULA = 'Cedula de ciudadania'
+    CEDULA = 'Cédula de ciudadania'
     TARJETA = 'Tarjeta de identidad'
-    PASAPORTE = 'Numero de pasaporte'
-    EXTRANJERIA = 'Cedula de extranjeria'
+    PASAPORTE = 'Número de pasaporte'
+    EXTRANJERIA = 'Cédula de extranjeria'
     
     ID_CHOICES = [(CEDULA, CEDULA), 
     (TARJETA, TARJETA),

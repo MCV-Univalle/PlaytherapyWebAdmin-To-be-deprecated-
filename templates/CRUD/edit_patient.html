@@ -44,7 +44,54 @@
 
 {% block content %}
 {# ================ insert here all the content of the page =============== #}
-<div id="page-wrapper">
+<!-- ******************************* Modal ******************************* -->
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Confirmar desactivar al terapeuta</h4>
+            </div>
+            
+            {#---------------------------- If the therapist is active ----------------------------#}
+            {% if form.instance.is_active %} 
+            <div class="modal-body">
+                <p>
+                    Estás a punto de desactivar al paciente <strong>{{ form.instance.name }}</strong>,
+                    sin embargo, esta acción es reversible.<br>
+                    ¿Está seguro que desea continuar?<br>
+                    Nota: Durante el tiempo de inactividad el paciente no podrá hacer uso de ninguna aplicación.
+                </p>
+                <p>¿Esta seguro que desea continuar?</p>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <a class="btn btn-danger btn-ok">Desactivar</a>
+            </div>
+            
+            {#---------------------------- If the therapist is inactive ----------------------------#}
+            {% else %}
+            <div class="modal-body">
+                <p>
+                    Estás a punto de activar al paciente <strong>{{ form.instance.name }}</strong>,
+                    sin embargo, esta acción es reversible.<br>
+                    ¿Está seguro que desea continuar?<br>
+                </p>
+                <p>¿Esta seguro que desea continuar?</p>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <a class="btn btn-danger btn-ok">Activar</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div id="page-wrapper" class="full-screen-w">
     <div class="row">
         <div class="col-lg-12">
             {% if create %}
@@ -69,70 +116,79 @@
     {% endif %}
     <div class="row">
         <div class="col-lg-12">
-            <!--<div class="panel panel-default">-->
-                <!--<div class="panel-heading">-->
-                    <!--Datos personales del paciente-->
-                <!--</div>-->
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-xs-10 col-xs-offset-1 col-sm-10 -col-sm-offset-1 col-md-12 col-md-offset-1 col-lg-12 col-lg-offset-0">
-                            <form class="form-group-up form-horizontal forml" action="" method="POST">
-                                {% csrf_token %}
-                                <fieldset>
-                                    <!--<label style="color: #880000 ">{{ form.non_field_errors }}</label>-->
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-10 col-xs-offset-1 col-sm-10 -col-sm-offset-1 col-md-12 col-md-offset-1 col-lg-12 col-lg-offset-0">
+                        <form class="form-group-up form-horizontal forml" action="" method="POST">
+                            {% csrf_token %}
+                            <fieldset>
+                                <label style="color: #880000 ">{{ form.non_field_errors }}</label>
 
-                                    <!--********************************** Nombres **********************************-->
-                                    {% bootstrap_field form.name layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
-                                    
-                                    <!--********************************** Apellidos **********************************-->
-                                    {% bootstrap_field form.lastname layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
-                                    
-                                    <!--********************************** Tipo de documento **********************************-->
-                                    {% bootstrap_field form.id_type layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
-                                    
-                                    <!--********************************** Numero de documento **********************************-->
-                                    {% bootstrap_field form.id_num layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
-                                    
-                                    <!--********************************** Genero **********************************-->
-                                    {% bootstrap_field form.genre layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
-                                    
-                                    <!--********************************** Ocupacion **********************************-->
-                                    {% bootstrap_field form.occupation layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
-                                    
-                                    <!--********************************** Fecha de nacimiento **********************************-->
-                                    {% bootstrap_field form.birthday layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
-                                    
-                                    <!--********************************** Entidad de salud **********************************-->
-                                    {% bootstrap_field form.entity layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
-                                    
-                                    <!--********************************** Diagnostico **********************************-->
-                                    {% bootstrap_field form.list_diagnostic layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
+                                <!--********************************** Nombres **********************************-->
+                                {% bootstrap_field form.name layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
+                                
+                                <!--********************************** Apellidos **********************************-->
+                                {% bootstrap_field form.lastname layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
+                                
+                                <!--********************************** Tipo de documento **********************************-->
+                                {% bootstrap_field form.id_type layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
+                                
+                                <!--********************************** Numero de documento **********************************-->
+                                {% bootstrap_field form.id_num layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
+                                
+                                <!--********************************** Genero **********************************-->
+                                {% bootstrap_field form.genre layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
+                                
+                                <!--********************************** Ocupacion **********************************-->
+                                {% bootstrap_field form.occupation layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
+                                
+                                <!--********************************** Fecha de nacimiento **********************************-->
+                                {% bootstrap_field form.birthday layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
+                                
+                                <!--********************************** Entidad de salud **********************************-->
+                                {% bootstrap_field form.entity layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
+                                
+                                <!--********************************** Diagnostico **********************************-->
+                                {% bootstrap_field form.list_diagnostic layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
 
-                                    {% if create
-                                    <div class="row buttons">
-                                        <a href="/paciente/lista_paciente/" type="return" class="btn btn-warning col-xs-12 col-sm-12  col-md-4 col-lg-4 btn-responsive">
+                                {% if create %}
+                                <div class="row buttons">
+                                    <a href="{% url 'lista_pacientes' %}" type="return" class="btn btn-warning col-xs-12 col-sm-12  col-md-4 col-lg-4 btn-responsive">
+                                        Regresar
+                                    </a>
+                                    {% bootstrap_button "Registrar" button_type="submit" button_class="btn-primary col-xs-12 col-sm-12  col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4 btn-responsive" %}
+                                </div>
+                                {% else %}
+                                <div class="row buttons">
+                                    <div class="col-xs-12 col-sm-12  col-md-4 col-lg-4">
+                                        <a href="{% url 'lista_pacientes' %}" type="return" class="btn btn-warning btn-block btn-responsive">
                                             Regresar
                                         </a>
-                                        {% bootstrap_button "Guardar" button_type="submit" button_class="btn-primary col-xs-12 col-sm-12  col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4 btn-responsive" %}
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12  col-md-4 col-lg-4">
+                                        {% bootstrap_button "Guardar" button_type="submit" button_class="btn-primary btn-block btn-responsive" %}
+                                    </div>
+                                    {% if form.instance.is_active %}
+                                    <div class="col-xs-12 col-sm-12  col-md-4 col-lg-4" >
+                                        <a type="delete" class="btn btn-danger btn-block" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="{% url 'cambiar_estado_paciente' form.instance.id_num %}">
+                                            Desactivar
+                                        </a>
                                     </div>
                                     {% else %}
-                                    <div class="row buttons">
-                                        <a href="/paciente/lista_paciente/" type="return" class="btn btn-warning col-xs-12 col-sm-12  col-md-4 col-lg-4 btn-responsive">
-                                            Regresar
-                                        </a>
-                                        {% bootstrap_button "Guardar" button_type="submit" button_class="btn-primary col-xs-12 col-sm-12  col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4 btn-responsive" %}
-                                        <a href="#" type="return" class="btn btn-warning col-xs-12 col-sm-12  col-md-4 col-lg-4 btn-responsive">
-                                            Regresar
+                                    <div class="col-xs-12 col-sm-12  col-md-4 col-lg-4" >
+                                        <a type="delete" class="btn btn-success btn-block" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="{% url 'cambiar_estado_paciente' form.instance.id_num %}">
+                                            Activar
                                         </a>
                                     </div>
-                                </fieldset>
-                            </form>
-                        </div>
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+                            </fieldset>
+                        </form>
                     </div>
                 </div>
-                <!-- /.panel-body -->
-            <!--</div>-->
-            <!-- /.panel -->
+            </div>
+            <!-- /.panel-body -->
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -148,5 +204,13 @@ function itemWithTimer(id, tiempo){
   setTimeout(function() { $(id).hide(); }, tiempo*1000);
 }
 itemWithTimer("#message", 5)
+</script>
+
+<script>
+    $('#confirm-delete').on('show.bs.modal', function(e) {
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+        
+        // $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
+    });
 </script>
 {% endblock %}

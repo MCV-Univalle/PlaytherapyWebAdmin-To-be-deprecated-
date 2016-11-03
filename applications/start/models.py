@@ -16,6 +16,9 @@ class TherapySession(models.Model):
 class Movement(models.Model):
     name = models.CharField(max_length=64)
     
+    def __unicode__(self):
+        return self.name
+    
 
 class Minigame(models.Model):
     name = models.CharField(max_length=128)

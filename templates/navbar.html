@@ -48,16 +48,16 @@
                     <!-- /input-group -->
                 </li>
                 <li>
-                    <a href="/dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                    <a href="{% url 'dashboard' %}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-user-md fa-fw"></i> Terapeutas<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="/terapeuta/crear_terapeuta">Registrar terapeutas</a>
+                            <a href="{% url 'crear_terapeuta' %}">Registrar terapeutas</a>
                         </li>
                         <li>
-                            <a href="/terapeuta/lista_terapeutas">Lista de terapeutas</a>
+                            <a href="{% url 'lista_terapeutas' %}">Lista de terapeutas</a>
                         </li>
                         <!--<li>-->
                         <!--    <a href="#">Desactivar terapeutas</a>-->
@@ -69,10 +69,10 @@
                     <a href="#"><i class="fa fa-user fa-fw"></i> Pacientes<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="/paciente/crear_paciente">Registrar pacientes</a>
+                            <a href="{% url 'crear_paciente' %}">Registrar pacientes</a>
                         </li>
                         <li>
-                            <a href="/paciente/ver_pacientes">Lista de pacientes</a>
+                            <a href="{% url 'lista_pacientes' %}">Lista de pacientes</a>
                         </li>
                         <!--<li>-->
                         <!--    <a href="#">Desactivar usuarios</a>-->
@@ -84,13 +84,10 @@
                     <a href="forms.html"><i class="fa fa-table fa-fw"></i> Reportes<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="#">No se que poner :c</a>
+                            <a href="{% url 'por_movimiento' %}">Por movimiento</a>
                         </li>
                         <li>
-                            <a href="#">Tampoco aqui</a>
-                        </li>
-                        <li>
-                            <a href="#">Tiki</a>
+                            <a href="#">Por minijuego</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->

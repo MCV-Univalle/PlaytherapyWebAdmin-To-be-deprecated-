@@ -37,6 +37,7 @@
 
 {% block content %}
 {# ================ insert here all the content of the page =============== #}
+<!-- ******************************* Modal ******************************* -->
 <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -50,9 +51,10 @@
             {% if form.instance.is_active %} 
             <div class="modal-body">
                 <p>
-                    Estas a punto de desactivar al terapeuta <strong>{{ form.instance.name }}</strong>, esta acción es reversible
-                    mas sinembargo durante el tiempo que este desactivado no podra realizar
-                    ninguna labor dentro de la aplicación.
+                    Estás a punto de desactivar al terapeuta <strong>{{ form.instance.name }}</strong>,
+                    sin embargo, esta acción es reversible.<br>
+                    ¿Está seguro que desea continuar?<br>
+                    Nota: Durante el tiempo de inactividad, no se podrá realizar ninguna labor dentro de la aplicación.
                 </p>
                 <p>Esta seguro que desea continuar?</p>
             </div>
@@ -66,8 +68,10 @@
             {% else %}
             <div class="modal-body">
                 <p>
-                    Estas a punto de activar al terapeuta <strong>{{ form.instance.name }}</strong>,
-                    si confirma se procedera a reasignar todo el acceso al terapeuta.
+                    Estás a punto de activar al terapeuta <strong>{{ form.instance.name }}</strong>,
+                    sin embargo, esta acción es reversible.<br>
+                    ¿Está seguro que desea continuar?<br>
+                    Nota: Si confirma se procedera a reasignar todo el acceso al terapeuta.
                 </p>
                 <p>Esta seguro que desea continuar?</p>
             </div>
@@ -80,7 +84,8 @@
         </div>
     </div>
 </div>
-<div id="page-wrapper" class="tiki full-screen-w">
+
+<div id="page-wrapper" class="full-screen-w">
     <div class="row">
         <div class="col-lg-12">
             {% if create %}
@@ -139,7 +144,7 @@
                                 <div class="row">
                                     <label for="" class="col-lg-2 control-label">Contraseña</label>
                                     <div class="help-block col-lg-10 form-group">
-                                        Puede cambiar la contraseña de este terapeuta usando este <a href="{% url 'setpassword_therapist' form.instance.username %}" class="">formulario</a>.
+                                        Puede cambiar la contraseña de este terapeuta usando este <a href="{% url 'cambiar_password' therapist_id=form.instance.username %}" class="">formulario</a>.
                                     </div>
                                 </div>
                                 {% endif %}
@@ -148,12 +153,12 @@
                                 {% if create %}
                                 <div class="row buttons">
                                     <div class="col-xs-12 col-sm-12  col-md-4 col-lg-4">
-                                        <a type="return" class="btn btn-warning btn-block" data-toggle="modal" data-target="#myModal" href="/dashboard">
+                                        <a type="return" class="btn btn-warning btn-block btn-responsive" href="{% url 'dashboard' %}">
                                             Regresar
                                         </a>
                                     </div>
                                     <div class="col-xs-12 col-sm-12  col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                        <button type="submit" class="btn btn-primary btn-block">
+                                        <button type="submit" class="btn btn-primary btn-block btn-responsive">
                                             Registrar
                                         </button>
                                     </div>
@@ -161,24 +166,24 @@
                                 {% else %}
                                 <div class="row buttons">
                                     <div class="col-xs-12 col-sm-12  col-md-4 col-lg-4">
-                                        <a type="return" class="btn btn-warning btn-block" href="/terapeuta/lista_terapeutas">
+                                        <a type="return" class="btn btn-warning btn-block btn-responsive" href="{% url 'lista_terapeutas' %}">
                                             Regresar
                                         </a>
                                     </div>
                                     <div class="col-xs-12 col-sm-12  col-md-4 col-lg-4">
-                                        <button type="submit" class="btn btn-primary btn-block">
-                                            Modificar
+                                        <button type="submit" class="btn btn-primary btn-block btn-responsive">
+                                            Guardar
                                         </button>
                                     </div>
                                     {% if form.instance.is_active %}
                                     <div class="col-xs-12 col-sm-12  col-md-4 col-lg-4" >
-                                        <a type="delete" class="btn btn-danger btn-block" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="{% url 'cambiar_estado' form.instance.username %}">
+                                        <a type="delete" class="btn btn-danger btn-block btn-responsive" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="{% url 'cambiar_estado_terapeuta' form.instance.username %}">
                                             Desactivar
                                         </a>
                                     </div>
                                     {% else %}
                                     <div class="col-xs-12 col-sm-12  col-md-4 col-lg-4" >
-                                        <a type="delete" class="btn btn-success btn-block" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="{% url 'cambiar_estado' form.instance.username %}">
+                                        <a type="delete" class="btn btn-success btn-block btn-responsive" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="{% url 'cambiar_estado_terapeuta' form.instance.username %}">
                                             Activar
                                         </a>
                                     </div>

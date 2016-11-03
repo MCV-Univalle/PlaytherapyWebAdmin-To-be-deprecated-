@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 from models import *
 from forms import *
@@ -37,10 +38,9 @@ def create_therapist(request):
 @login_required # Verifies that the user is authenticated
 def modify_therapist(request, therapist_id):
     try:
-        print "boku " + therapist_id
         therapist = Therapist.objects.get(username=therapist_id)
     except Exception:
-        return redirect('/terapeuta/lista_terapeutas/')
+        return redirect('lista_terapeutas')
     
     therapist_form = EditTherapistForm(instance=therapist, initial=therapist.__dict__)
     user_data = {
@@ -90,18 +90,21 @@ def setpassword_therapist(request, therapist_id):
     try:
         therapist = Therapist.objects.get(username=therapist_id)
     except Exception:
-        return redirect('/terapeuta/lista_terapeutas')
+        return redirect('lista_terapeutas')
 
-    form = SetPasswordEmpleadoForm(therapist)
+    form = SetPasswordTherapistForm(therapist)
     if request.method == 'POST':
         # importante aqui siempre mandar el POST al form
-        form = SetPasswordEmpleadoForm(request.POST)
+        form = SetPasswordTherapistForm(therapist, request.POST)
         if form.is_valid():
-            therapist.save()
+            form.save()
             messages.success(request, "Contraseña cambiada satisfactoriamente.")
-            return redirect('/terapeuta/lista_terapeutas')
-
-    return render(request, 'empleados/setpassword_empleado.html', {'form': form, 'user': request.user.therapist})
+            return redirect('lista_terapeutas')
+        # if the form is not valid
+        # user_data['form'] = therapist_form
+        messages.error(request, 'Error al modificar el terapeuta')
+    # else:
+    return render(request, 'CRUD/setpassword_therapist.html', {'form': form, })
     
     
 @login_required
@@ -109,13 +112,13 @@ def change_state(request, therapist_id):
     try:
         therapist = Therapist.objects.get(username=therapist_id)
     except Exception:
-        return redirect('/terapeuta/lista_terapeutas')
+        return redirect('lista_terapeutas')
         
     if therapist.is_active:
         therapist.is_active = False
     else:
         therapist.is_active = True
     therapist.save()
-    return redirect('/terapeuta/lista_terapeutas')
+    return redirect('lista_terapeutas')
     
     

@@ -2,7 +2,7 @@
 
 from django.shortcuts import render, redirect, RequestContext
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import *
+from models import *
 from forms import *
 from django.contrib import messages
 
@@ -72,11 +72,24 @@ def view_patients(request):
         patient.lastname,
         patient.genre,
         patient.occupation,
-        patient.birthday])
+        patient.birthday,
+        patient.is_active])
     user_data = {
         'user_name':request.user.first_name,
         'patients':patients
     }
-    return render(request, 'CRUD/view_patients.html', user_data)
+    return render(request, 'CRUD/list_patients.html', user_data)
 
+@login_required
+def change_state(request, patient_id):
+    try:
+        patient = Patient.objects.get(id_num=patient_id)
+    except Exception:
+        return redirect('/paciente/lista_pacientes')
         
+    if patient.is_active:
+        patient.is_active = False
+    else:
+        patient.is_active = True
+    patient.save()
+    return redirect('/paciente/lista_pacientes')

@@ -16,15 +16,17 @@ class CreateTherapistForm(UserCreationForm):
         self.fields['username'].label ="Número de identificación"
         self.fields['password1'].widget.attrs.update({'placeholder':'Contraseña', 'required':'required'})
         self.fields['password1'].label = 'Contraseña'
+        self.fields['password1'].help_text = 'La contraseña debe tener como minimo 8 caracteres, y debe contener letras y numeros.'
         self.fields['password2'].widget.attrs.update({'placeholder':'Confirmar contraseña', 'required':'required'})
         self.fields['password2'].label = 'Confirmar contraseña'
-        self.fields['password2'].help_text = 'Ingrese la misma contraseña'
+        self.fields['password2'].help_text = 'Ingrese la misma contraseña.'
         
         
         # fields of therapist
         self.fields['name'].widget.attrs.update({'placeholder':'Nombre', 'required':'required'})
         self.fields['lastname'].widget.attrs.update({'placeholder':'Apellido', 'required':'required'})
         self.fields['id_type'].widget.attrs.update({'placeholder':'Tipo de identificación', 'required':'required'})
+        self.fields['id_type'].help_text = "Seleccione el tipo de documento"
         # self.fields['id_num'].widget.attrs.update({'placeholder':'Número de identificación', 'required':'required'})
         self.fields['genre'].widget.attrs.update({'placeholder':'Género', 'required':'required'})
         
@@ -69,4 +71,15 @@ class EditTherapistForm(UserChangeForm):
             # 'username':forms.NumberInput()
         }
     
-   
+class SetPasswordTherapistForm(SetPasswordForm):
+    required_css_class = 'required'
+    
+    def __init__(self, user, *args, **kwargs):
+        # self.user = user
+        super(SetPasswordTherapistForm, self).__init__(user, *args, **kwargs)
+        
+        # Campos de formulario de django
+        self.fields['new_password1'].widget.attrs.update({'placeholder': 'Escriba una contraseña', 'required':'required'})
+        self.fields['new_password1'].label = 'Contraseña'
+        self.fields['new_password2'].widget.attrs.update({'placeholder': 'Confirme la contraseña', 'required':'required'})
+        self.fields['new_password2'].label = 'Confirmar Contraseña'
