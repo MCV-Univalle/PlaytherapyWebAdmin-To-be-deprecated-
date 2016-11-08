@@ -38,7 +38,7 @@ class Patient(models.Model):
     GENRE_CHOICES = [(MALE, 'Masculino'),(FEMALE, 'Femenino')]
     
     id_type = models.CharField(max_length=64, choices=ID_CHOICES, verbose_name='Tipo de identificación')
-    id_num = models.CharField(max_length=64, verbose_name='Número de identificación') # Primary key
+    id_num = models.CharField(max_length=64, verbose_name='Número de identificación', unique=True) # Primary key
     name = models.CharField(max_length=64, verbose_name='Nombre')
     lastname = models.CharField(max_length=64, verbose_name='Apellido')
     genre = models.CharField(max_length=64, choices=GENRE_CHOICES, verbose_name='Género')
