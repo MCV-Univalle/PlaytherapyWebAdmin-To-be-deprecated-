@@ -19,11 +19,13 @@ from django.contrib import admin
 import applications.start.urls
 import applications.therapist.urls
 import applications.patient.urls
+import applications.reports.urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include(applications.start.urls)),
     url(r'^terapeuta/', include(applications.therapist.urls)),
     url(r'^paciente/', include(applications.patient.urls)),
+    url(r'^reportes/', include(applications.reports.urls)),
     url(r'^select2/', include('django_select2.urls')),
 ]

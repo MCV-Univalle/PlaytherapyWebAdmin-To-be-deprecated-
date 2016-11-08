@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'applications.start',
     'applications.patient',
     'applications.therapist',
+    'applications.reports',
     # 'applications.FIM',
     'bootstrap3',
     'datetimewidget',
