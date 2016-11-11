@@ -13,18 +13,18 @@ class TherapySession(models.Model):
     therapist = models.ForeignKey(Therapist, on_delete=models.CASCADE)
     
     def __unicode__(self):
-        return self.patient.name + " - " + self.therapist.name
+        return self.patient.name + " - " + self.therapist.name + " - " + self.objective[:20]
 
     
 class Movement(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, unique=True)
     
     def __unicode__(self):
         return self.name
     
 
 class Minigame(models.Model):
-    name = models.CharField(max_length=128)
+    name = models.CharField(max_length=128, unique=True)
     description = models.CharField(max_length=1024)
     movements = models.ManyToManyField(Movement)
     
@@ -50,6 +50,9 @@ class Performance(models.Model):
     movement = models.ForeignKey(Movement, on_delete=models.CASCADE)
     game_session = models.ForeignKey(GameSession, on_delete=models.CASCADE)
     angle = models.IntegerField()
+    
+    def __unicode__(self):
+        return movement
     
     
     
