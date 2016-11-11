@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.db import models
-from patient.models import *
+from applications.patient.models import *
 
 class FunctionalIndependenceMeasure(models.Model):
     date = models.DateField()
@@ -9,8 +10,7 @@ class FunctionalIndependenceMeasure(models.Model):
     
     UNO = 1
     DOS = 2 
-    
-        TRES = 3
+    TRES = 3
     CUATRO = 4
     CINCO = 5
     SEIS = 6
@@ -24,7 +24,7 @@ class FunctionalIndependenceMeasure(models.Model):
     bath =  models.IntegerField(choices = NUMBER_CHOICES)
     dress_undress_sup =  models.IntegerField(choices = NUMBER_CHOICES)
     dress_undress_inf =  models.IntegerField(choices = NUMBER_CHOICES)
-    bathUse = dress_undress_sup =  models.IntegerField(choices = NUMBER_CHOICES)
+    bathUse =  models.IntegerField(choices = NUMBER_CHOICES)
     
     #potty training
     control_dregs =  models.IntegerField(choices = NUMBER_CHOICES)

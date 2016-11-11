@@ -28,4 +28,7 @@ urlpatterns = [
     url(r'^paciente/', include(applications.patient.urls)),
     url(r'^reportes/', include(applications.reports.urls)),
     url(r'^select2/', include('django_select2.urls')),
+    url(r'^fim/', include('applications.FIM.urls')),
+
+  
 ]

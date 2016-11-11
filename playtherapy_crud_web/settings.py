@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'applications.patient',
     'applications.therapist',
     'applications.reports',
-    # 'applications.FIM',
+    'applications.FIM',
     'bootstrap3',
     'datetimewidget',
     'django_select2'

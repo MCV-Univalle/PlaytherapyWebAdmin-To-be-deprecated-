@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect
-from FIM.forms import *
-from FIM.models import *
-from django.contrib import messages *
+from applications.FIM.forms import *
+from applications.FIM.models import *
+from django.contrib import *
 
 @login_required
 def create_fim(request):
@@ -17,9 +17,7 @@ def create_fim(request):
         form = FunctionalIndependenceMeasureForm()
     return render(request, 'fim/create_fim.html', {'form': form})
     
-@login_required
-def list_fim(request, patient_id):
-    patient = Patient.objects.get(id = patient_id)
-    return render(request, 'fim/list_fim.html', {
-        'fim_list': fim_list,
+def list_fim(request):
+    #patient = Patient.objects.get(id = patient_id)
+    return render(request, 'CRUD/list_fim.html', {
     })
