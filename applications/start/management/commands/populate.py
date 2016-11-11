@@ -197,6 +197,7 @@ def create_patient():
     patient.save()
     
     # Assign random diagnostic
+    diagnostics = Diagnostic.objects.all()
     for i in range(0, randint(1, 3)):
         diagnostic = diagnostics[randint(0, len(diagnostics) - 1)]
         patient.list_diagnostic.add(diagnostic)
@@ -294,8 +295,9 @@ class Command(BaseCommand):
     
     def handle(self, *args, **options):
         # create_type_diagnostic()
-        create_diagnostics()
-        # for i in range(0, 6):
+        # create_diagnostics()
+        # create_entities()
+        # for i in range(0, 10):
             # create_patient()
         # create_therapist()
         # create_therapy_sessieon()
