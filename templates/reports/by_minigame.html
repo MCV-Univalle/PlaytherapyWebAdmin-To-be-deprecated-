@@ -48,7 +48,7 @@
 <div id="page-wrapper" class="full-screen-w">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Progreso del Paciente Por Movimientos</h1>
+            <h1 class="page-header">Progreso del Paciente Por Minijuego</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -75,7 +75,7 @@
                                 <label style="color: #880000 ">{{ form.non_field_errors }}</label>
 
                                 <!--********************************** Nombres **********************************-->
-                                {% bootstrap_field form.movements layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
+                                {% bootstrap_field form.minigame layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
                                 
                                 <!--********************************** Apellidos **********************************-->
                                 {% bootstrap_field form.date1 layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
@@ -147,7 +147,6 @@ itemWithTimer("#message", 5)
         
         // $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
     });
-    console.log({{performances.0.angle}});
 </script>
 <!-- Morris Charts JavaScript -->
 <script src="{% static 'vendor/raphael/raphael.min.js' %}"></script>

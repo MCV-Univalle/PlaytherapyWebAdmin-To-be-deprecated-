@@ -5,8 +5,8 @@ from forms import *
 from applications.start.models import *
 
 @login_required # Verifies that the user is authenticated
-def by_movement(request):
-    patient_id  = 1
+def by_movement(request, patient_id):
+    # patient_id  = 1
     performances = []
     form = ByMovementReportForm()
     if request.method == 'POST':
@@ -20,13 +20,14 @@ def by_movement(request):
                 if gs.therapy.patient.id_num == patient_id:
                     for m in selected_movements:
                         performances += gs.performance_set.filter(movement_id=m.id)
-            
+     
+    print performances       
     return render(request, 'reports/by_movement.html', {'form': form, 'performances': performances})
     
     
 @login_required # Verifies that the user is authenticated
-def by_minigame(request):
-    patient_id  = 1
+def by_minigame(request, patient_id):
+    # patient_id  = 1
     performances = []
     form = ByMinigameReportForm()
     if request.method == 'POST':
@@ -35,9 +36,10 @@ def by_minigame(request):
             date1 = form.cleaned_data['date1']
             date2 = form.cleaned_data['date2']
             selected_minigame = form.cleaned_data['minigame']
-            gss = selected_minigame.game_session_set.filter(date__range=(date1, date2))
+            gss = selected_minigame.gamesession_set.filter(date__range=(date1, date2))
             for gs in gss:
                 if gs.therapy.patient.id_num == patient_id:
                     performances += gs.performance_set.all()
-            
-    return render(request, 'reports/by_movement.html', {'form': form, 'performances': performances})
+    
+    print performances
+    return render(request, 'reports/by_minigame.html', {'form': form, 'performances': performances})

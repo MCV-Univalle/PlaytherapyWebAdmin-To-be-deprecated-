@@ -39,6 +39,7 @@
                                 <th>Ocupacion</th>
                                 <th>Fecha de nacimiento</th>
                                 <th>Estado</th>
+                                <th>Reportes</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -52,6 +53,12 @@
                                 <td>{{ patient.5 }}</td>
                                 <td>{{ patient.6 }}</td>
                                 <td>{% if patient.7 %}Activo{% else %}Inactivo{% endif %}</td>
+                                <td>
+                                    <div class="row">
+                                        <a class="col-lg-12" href="{% url 'por_movimiento' patient_id=patient.1 %}" >Reporte 1</a>
+                                        <a class="col-lg-12" href="{% url 'por_minijuego' patient_id=patient.1 %}">Reporte 2</a>
+                                    </div>
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -77,5 +84,6 @@ $(document).ready(function() {
         responsive: true
     });
 });
+console.log({{performances}}):
 </script>
 {% endblock %}
