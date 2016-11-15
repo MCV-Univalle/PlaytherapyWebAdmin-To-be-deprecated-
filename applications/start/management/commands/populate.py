@@ -217,12 +217,17 @@ def create_therapist():
     therapist.save()
     
 def create_therapy_session():
+    patients = Patient.objects.all()
+    patient = patients[randint(0, len(patients) - 1)]
+    
     therapists = Therapist.objects.all()
     therapist = therapists[randint(0, len(therapists) - 1)]
+    
     therapySession = TherapySession(
         date=randomDate("1900-1-1", "1999-1-1", random.random()),
         objective=generate_paragraph()[2][:64],
         description=generate_paragraph()[2][:564],
+        patient=patient,
         therapist=therapist
     )
     therapySession.save()
@@ -274,40 +279,224 @@ def create_minigame():
     
 def create_minigame_random():
     # movements = Movement.object.all()
-    Minigame(
+    minigame = Minigame(
         name=generate_paragraph()[2][:12],
         description=generate_paragraph()[2][:564]
-    ).save()
-    # Assign random diagnostic
+    )
+    minigame.save()
+    
+    movements = Movement.objects.all()
+    # Assign random movement
     for i in range(0, randint(1, 3)):
-        diagnostic = diagnostics[randint(0, len(diagnostics) - 1)]
-        patient.list_diagnostic.add(diagnostic)
-        patient.save()
+        movement = movements[randint(0, len(movements) - 1)]
+        minigame.movements.add(movement)
+        minigame.save()
+        
+
+def create_gameSession():
+    therapySessions = TherapySession.objects.all()
+    therapySession = therapySessions[randint(0, len(therapySessions) - 1)]
+    
+    minigames = Minigame.objects.all()
+    minigame = minigames[randint(0, len(minigames) - 1)]
+    gameSession = GameSession(
+        date=randomDate("2016-1-1", "2016-12-31", random.random()),
+        score=randint(0, 100),
+        repetitions=randint(0,10),
+        time=randint(1,200),
+        level=randint(0, 10),
+        therapy=therapySession,
+        minigame=minigame,
+    )
+    gameSession.save()
+    
+    # movements = Movement.objects.all()
+    # # Assign random movement
+    # for i in range(0, randint(1, 3)):
+    #     movement = movements[randint(0, len(movements) - 1)]
+    #     gameSession.movements.add(movement)
+    #     gameSession.save()
+    
+    
+def create_performance():
+    movements = Movement.objects.all()
+    movement = movements[randint(0, len(movements) - 1)]
+    
+    gameSessions = GameSession.objects.all()
+    gameSession = gameSessions[randint(0, len(gameSessions) - 1)]
+    
+    Performance(
+        movement=movement,
+        game_session=gameSession,
+        angle=randint(0,180)
+    ).save()
     
     
     
 
 class Command(BaseCommand):
-    help = 'Tiki el timbiliki'
+    help = 'Command used for populate the database'
     
     def add_arguments(self, parser):
-        pass
-    
+        parser.add_argument(
+            '-e',
+            '--entity',
+            action='store_true',
+            dest='entity',
+            default=False,
+            help='Create entities',
+        )
+        
+        parser.add_argument(
+            '-td',
+            '--type-diagnostic',
+            action='store_true',
+            dest='type-diagnostic',
+            default=False,
+            help='Create type of diagnostics',
+        )
+        
+        parser.add_argument(
+            '-d',
+            '--diagnostic',
+            action='store_true',
+            dest='diagnostic',
+            default=False,
+            help='Create diagnostics',
+        )
+        
+        parser.add_argument(
+            '-p',
+            '--patient',
+            action='store',
+            dest='patient',
+            default=False,
+            help='Create random patients',
+        )
+        
+        parser.add_argument(
+            '-t',
+            '--therapist',
+            action='store',
+            dest='therapist',
+            default=False,
+            help='Create random therapists',
+        )
+        
+        parser.add_argument(
+            '-ts',
+            '--therapist-session',
+            action='store',
+            dest='therapist-session',
+            default=False,
+            help='Create random therapistSessions',
+        )
+        
+        parser.add_argument(
+            '-m',
+            '--movement',
+            action='store_true',
+            dest='movement',
+            default=False,
+            help='Create movements',
+        )
+        
+        parser.add_argument(
+            '-mg',
+            '--minigame',
+            action='store_true',
+            dest='minigame',
+            default=False,
+            help='Create minigames',
+        )
+        
+        parser.add_argument(
+            '-rmg',
+            '--random-minigame',
+            action='store',
+            dest='random-minigame',
+            default=False,
+            help='Create random minigames',
+        )
+        
+        parser.add_argument(
+            '-gs',
+            '--game-session',
+            action='store',
+            dest='game-session',
+            default=False,
+            help='Create random gameSessions',
+        )
+        
+        parser.add_argument(
+            '-pe',
+            '--performance',
+            action='store',
+            dest='performance',
+            default=False,
+            help='Create random performance',
+        )
+        
+
     def handle(self, *args, **options):
-        # create_type_diagnostic()
-        # create_diagnostics()
-        # create_entities()
-        # for i in range(0, 10):
-            # create_patient()
-        # create_therapist()
-        # create_therapy_sessieon()
-        # create_minigame()
+        if options['entity']:
+            create_entities()
+            self.stdout.write(self.style.SUCCESS('Entities created succesfully'))
+            
+        if options['type-diagnostic']:
+            create_type_diagnostic()
+            self.stdout.write(self.style.SUCCESS('Patients created succesfully'))
+            
+        if options['diagnostic']:
+            create_diagnostics()
+            self.stdout.write(self.style.SUCCESS('Diagnostics created succesfully'))
+            
+        if options['patient']:
+            for i in range(0, int(options['patient'])):
+                create_patient()
+            self.stdout.write(self.style.SUCCESS('Patients created succesfully'))
+            
+        if options['therapist']:
+            for i in range(0, int(options['therapist'])):
+                create_therapist()
+            self.stdout.write(self.style.SUCCESS('Therapists created succesfully'))
+            
+        if options['therapist-session']:
+            for i in range(0, int(options['therapist-session'])):
+                create_therapy_session()
+        
+        if options['movement']:
+            create_movements()
+            self.stdout.write(self.style.SUCCESS('Movements created succesfully'))
+            
+        if options['minigame']:
+            create_minigame()
+            self.stdout.write(self.style.SUCCESS('Minigames created succesfully'))
+        
+        if options['random-minigame']:
+            for i in range(0, int(options['random-minigame'])):
+                create_minigame_random()
+            self.stdout.write(self.style.SUCCESS('Random minigames created succesfully'))
+            
+        if options['game-session']:
+            for i in range(0, int(options['game-session'])):
+                create_gameSession()
+            self.stdout.write(self.style.SUCCESS('Random GameSessions created succesfully'))
+        
+        if options['performance']:
+            for i in range(0, int(options['performance'])):
+                create_performance()
+            self.stdout.write(self.style.SUCCESS('Random performances created succesfully'))
+            
+                
+            
+                
+                
         
         
         
         
 
         # for poll
-        print 'tiki'
         
-        self.stdout.write(self.style.SUCCESS('Tiki'))
+        # self.stdout.write(self.style.SUCCESS('Tiki'))
