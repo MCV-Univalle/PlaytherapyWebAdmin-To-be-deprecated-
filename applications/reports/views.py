@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect, RequestContext
 from django.contrib.auth.decorators import login_required, user_passes_test
+import json
+
 from models import *
 from forms import *
 from applications.start.models import *
+
 
 @login_required # Verifies that the user is authenticated
 def by_movement(request, patient_id):
@@ -20,9 +23,14 @@ def by_movement(request, patient_id):
                 if gs.therapy.patient.id_num == patient_id:
                     for m in selected_movements:
                         performances += gs.performance_set.filter(movement_id=m.id)
-     
-    print performances       
-    return render(request, 'reports/by_movement.html', {'form': form, 'performances': performances})
+    
+    encodedObjs = []
+    for performance in performances:
+        encodedObjs.append(performance.serialize())
+    jsonEdwin = json.dumps(encodedObjs)
+    print jsonEdwin
+    # print json.dumps(performances)
+    return render(request, 'reports/by_movement.html', {'form': form, 'performances': jsonEdwin})
     
     
 @login_required # Verifies that the user is authenticated
@@ -41,5 +49,9 @@ def by_minigame(request, patient_id):
                 if gs.therapy.patient.id_num == patient_id:
                     performances += gs.performance_set.all()
     
-    print performances
-    return render(request, 'reports/by_minigame.html', {'form': form, 'performances': performances})
+    encodedObjs = []
+    for performance in performances:
+        encodedObjs.append(performance.serialize())
+    jsonEdwin = json.dumps(encodedObjs)
+    print jsonEdwin
+    return render(request, 'reports/by_minigame.html', {'form': form, 'performances': jsonEdwin})

@@ -52,6 +52,10 @@ class Performance(models.Model):
     movement = models.ForeignKey(Movement, on_delete=models.CASCADE, verbose_name='Movimiento')
     game_session = models.ForeignKey(GameSession, on_delete=models.CASCADE, verbose_name='Sesión de juego')
     angle = models.IntegerField(verbose_name='Angulo')
+    
+    
+    def serialize(self):
+        return {'movement': str(self.movement), 'date': str(self.game_session.date), 'angle': self.angle}
 
     
     def __unicode__(self):

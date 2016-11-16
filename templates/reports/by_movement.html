@@ -147,7 +147,8 @@ itemWithTimer("#message", 5)
         
         // $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
     });
-    console.log({{performances.0.angle}});
+    var performances = {{performances}};
+    console.log(performances);
 </script>
 <!-- Morris Charts JavaScript -->
 <script src="{% static 'vendor/raphael/raphael.min.js' %}"></script>
