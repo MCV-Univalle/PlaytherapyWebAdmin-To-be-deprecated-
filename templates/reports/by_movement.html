@@ -149,7 +149,7 @@ itemWithTimer("#message", 5)
     });
     var data = [
     {% for performance in performances %}
-        {movement: '{{ performance.movement.name }}', date: '{{ performance.game_session.date }}', angle: {{ performance.angle }}}{% if not forloop.last %},{% endif %}
+        {movement: '{{ performance.movement.name }}', date: '{{ performance.game_session.date | date:"Y-m-d" }}', angle: {{ performance.angle }}}{% if not forloop.last %},{% endif %}
     {% endfor %}
     ];
     console.log(data);
