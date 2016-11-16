@@ -24,13 +24,8 @@ def by_movement(request, patient_id):
                     for m in selected_movements:
                         performances += gs.performance_set.filter(movement_id=m.id)
     
-    encodedObjs = []
-    for performance in performances:
-        encodedObjs.append(performance.serialize())
-    jsonEdwin = json.dumps(encodedObjs)
-    print jsonEdwin
-    # print json.dumps(performances)
-    return render(request, 'reports/by_movement.html', {'form': form, 'performances': jsonEdwin})
+    print performances
+    return render(request, 'reports/by_movement.html', {'form': form, 'performances': performances})
     
     
 @login_required # Verifies that the user is authenticated
@@ -49,9 +44,5 @@ def by_minigame(request, patient_id):
                 if gs.therapy.patient.id_num == patient_id:
                     performances += gs.performance_set.all()
     
-    encodedObjs = []
-    for performance in performances:
-        encodedObjs.append(performance.serialize())
-    jsonEdwin = json.dumps(encodedObjs)
-    print jsonEdwin
-    return render(request, 'reports/by_minigame.html', {'form': form, 'performances': jsonEdwin})
+    print performances
+    return render(request, 'reports/by_minigame.html', {'form': form, 'performances': performances})
