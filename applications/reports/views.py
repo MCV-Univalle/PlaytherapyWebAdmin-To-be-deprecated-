@@ -11,6 +11,7 @@ from applications.start.models import *
 def by_movement(request, patient_id):
     # patient_id  = 1
     performances = []
+    selected_movements = []
     form = ByMovementReportForm()
     if request.method == 'POST':
         form = ByMovementReportForm(request.POST)
@@ -25,13 +26,14 @@ def by_movement(request, patient_id):
                         performances += gs.performance_set.filter(movement_id=m.id)
     
     print performances
-    return render(request, 'reports/by_movement.html', {'form': form, 'performances': performances})
+    return render(request, 'reports/by_movement.html', {'form': form, 'performances': performances, 'selected_movements': selected_movements})
     
     
 @login_required # Verifies that the user is authenticated
 def by_minigame(request, patient_id):
     # patient_id  = 1
     performances = []
+    selected_movements = []
     form = ByMinigameReportForm()
     if request.method == 'POST':
         form = ByMinigameReportForm(request.POST)
@@ -45,4 +47,4 @@ def by_minigame(request, patient_id):
                     performances += gs.performance_set.all()
     
     print performances
-    return render(request, 'reports/by_minigame.html', {'form': form, 'performances': performances})
+    return render(request, 'reports/by_minigame.html', {'form': form, 'performances': performances, 'selected_movements': selected_movements})
