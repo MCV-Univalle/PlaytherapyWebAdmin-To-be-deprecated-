@@ -153,38 +153,19 @@ itemWithTimer("#message", 5)
 <script src="{% static 'vendor/morrisjs/morris.min.js' %}"></script>
 <script src="{% static 'data/morris-data.js' %}"></script>
 <script>
-var data = [
+
+    var data = [
     {% for performance in performances %}
-<<<<<<< Updated upstream
         { {{ performance.movement.id }}: {{ performance.angle }}, date: '{{ performance.game_session.date | date:"Y-m-d" }}'}{% if not forloop.last %},{% endif %}
-=======
-        { {{ performance.movement.id }}: {{ performance.angle }}, date: '{{ performance.game_session.date | date:"Y-m-d" }}'} {% if not forloop.last %},{% endif %}
->>>>>>> Stashed changes
     {% endfor %}
     ];
-    var labels = [
-    {% for movement in selected_movements %}
-        '{{ movement.name }}'{% if not forloop.last %},{% endif %}
-    {% endfor %}
-    ]
-    var ykeys = [
-    {% for movement in selected_movements %}
-        '{{ movement.id }}'{% if not forloop.last %},{% endif %}
-    {% endfor %}
-    ];
-    console.log('{{performances}}');
-  
-  Morris.Line({
-    element: 'by_movement_chart',
-    data: data,
-    xkey: 'date',
-    ykeys: ykeys,
-    labels: labels,
-    hoverCallback: 'hoverCallback'
-  });
-  
-  function hoverCallback (index, options, content, row) {
-  return "sin(" + row.x + ") = " + row.y;
-}
+    
+    Morris.Line({
+        element: 'by_movement_chart',
+        data: data,
+        xkey: 'date',
+        ykeys: ['{{ selected_movement.id }}'],
+        labels: ['{{ selected_movement.name }}']
+      });
 </script>
 {% endblock %}
