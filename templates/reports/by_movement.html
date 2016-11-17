@@ -149,9 +149,19 @@ itemWithTimer("#message", 5)
     });
     var data = [
     {% for performance in performances %}
-        {movement: '{{ performance.movement.name }}', date: '{{ performance.game_session.date | date:"Y-m-d" }}', angle: {{ performance.angle }}}{% if not forloop.last %},{% endif %}
+        {{{ performance.movement.id }}: {{ performance.angle }}, date: '{{ performance.game_session.date | date:"Y-m-d" }}'}{% if not forloop.last %},{% endif %}
     {% endfor %}
     ];
+    var labels = [
+    {% for movement in selected_movements %}
+        '{{ movement.name }}'{% if not forloop.last %},{% endif %}
+    {% endfor %}
+    ]
+    var ykeys = [
+    {% for movement in selected_movements %}
+        '{{ movement.id }}'{% if not forloop.last %},{% endif %}
+    {% endfor %}
+    ]
     console.log(data);
 </script>
 <!-- Morris Charts JavaScript -->
