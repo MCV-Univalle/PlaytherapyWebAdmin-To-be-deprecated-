@@ -166,7 +166,8 @@ itemWithTimer("#message", 5)
         data: data,
         xkey: 'date',
         ykeys: ['{{ selected_movement.id }}'],
-        labels: ['{{ selected_movement.name }}']
+        labels: ['{{ selected_movement.name }}'],
+        hideHover: 'auto'
       });
 </script>
 {% endblock %}
