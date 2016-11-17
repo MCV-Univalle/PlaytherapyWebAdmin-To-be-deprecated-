@@ -11,22 +11,21 @@ from applications.start.models import *
 def by_movement(request, patient_id):
     # patient_id  = 1
     performances = []
-    selected_movements = []
+    selected_movement = None
     form = ByMovementReportForm()
     if request.method == 'POST':
         form = ByMovementReportForm(request.POST)
         if form.is_valid():
             date1 = form.cleaned_data['date1']
             date2 = form.cleaned_data['date2']
-            selected_movements = form.cleaned_data['movements']
+            selected_movement = form.cleaned_data['movement']
             gss = GameSession.objects.filter(date__range=(date1, date2))
             for gs in gss:
                 if gs.therapy.patient.id_num == patient_id:
-                    for m in selected_movements:
-                        performances += gs.performance_set.filter(movement_id=m.id)
+                    performances += gs.performance_set.filter(movement_id=selected_movement.id)
     
     print performances
-    return render(request, 'reports/by_movement.html', {'form': form, 'performances': performances, 'selected_movements': selected_movements})
+    return render(request, 'reports/by_movement.html', {'form': form, 'performances': performances, 'selected_movement': selected_movement})
     
     
 @login_required # Verifies that the user is authenticated

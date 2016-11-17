@@ -8,7 +8,7 @@ from applications.start.models import *
 
 
 class ByMovementReportForm(forms.Form):
-    movements = forms.ModelMultipleChoiceField(queryset=Movement.objects.all(), widget=Select2MultipleWidget)
+    movement = forms.ModelChoiceField(queryset=Movement.objects.all(), widget=Select2Widget)
     date1 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3))
     date2 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3))
     

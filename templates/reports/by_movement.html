@@ -75,7 +75,7 @@
                                 <label style="color: #880000 ">{{ form.non_field_errors }}</label>
 
                                 <!--********************************** Nombres **********************************-->
-                                {% bootstrap_field form.movements layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
+                                {% bootstrap_field form.movement layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
                                 
                                 <!--********************************** Apellidos **********************************-->
                                 {% bootstrap_field form.date1 layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
@@ -149,7 +149,7 @@ itemWithTimer("#message", 5)
     });
     var data = [
     {% for performance in performances %}
-        {{{ performance.movement.id }}: {{ performance.angle }}, date: '{{ performance.game_session.date | date:"Y-m-d" }}'}{% if not forloop.last %},{% endif %}
+        { {{ performance.movement.id }}: {{ performance.angle }}, date: '{{ performance.game_session.date | date:"Y-m-d" }}'}{% if not forloop.last %},{% endif %}
     {% endfor %}
     ];
     var labels = [
