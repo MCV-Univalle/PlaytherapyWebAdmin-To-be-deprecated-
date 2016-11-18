@@ -1,17 +1,7 @@
-{% extends "base.html" %}
-{% load staticfiles %}
-{% block specific-css %}
+{% extends "base.html" %} {% load staticfiles %} {% block specific-css %}
 <!-- DataTables CSS -->
-
-<link rel="stylesheet" href="{% static 'bootstrap-table/bootstrap-table.css' %}">
-<link href="{% static 'vendor/datatables-plugins/dataTables.bootstrap.css' %}" rel="stylesheet">
-<!-- DataTables Responsive CSS -->
-<link href="{% static 'vendor/datatables-responsive/dataTables.responsive.css' %}" rel="stylesheet">
-{% endblock %}
-
-
-
-{% block content %}
+<link href="{% static 'bootstrap-table/css/bootstrap-table.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="//rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/css/bootstrap-editable.css"> {% endblock %} {% block content %}
 <div id="page-wrapper" class="FMI full-screen-w">
     <div class="row">
         <div class="col-lg-12">
@@ -22,12 +12,93 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    Pacientes activos
-                </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <table id="table"></table>
+                    <div class="fixed-table-toolbar">
+                        <div class="bs-bars pull-left">
+                            <div id="toolbar">
+                                <button id="remove" class="btn btn-success">
+            <i class="glyphicon glyphicon-save"></i> Guardar
+        </button>
+                                <button id="remove" class="btn btn-primary">
+            <i class="glyphicon glyphicon-ok"></i> Nuevo
+        </button>
+                                <button id="remove" class="btn btn-danger">
+            <i class="glyphicon glyphicon-remove"></i> Borrar
+        </button>
+                            </div>
+                        </div>
+                        <div class="columns columns-right btn-group pull-right"><button class="btn btn-default" type="button" name="paginationSwitch" title="Hide/Show pagination"><i class="glyphicon glyphicon-collapse-down icon-chevron-down"></i></button><button class="btn btn-default" type="button" name="refresh"
+                                title="Refresh"><i class="glyphicon glyphicon-refresh icon-refresh"></i></button><button class="btn btn-default" type="button" name="toggle" title="Toggle"><i class="glyphicon glyphicon-list-alt icon-list-alt"></i></button>
+                            <div class="keep-open btn-group" title="Columns"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-th icon-th"></i> <span class="caret"></span></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><label><input type="checkbox" data-field="id" value="1" checked="checked"> Item ID</label></li>
+                                    <li><label><input type="checkbox" data-field="name" value="2" checked="checked"> Item Name</label></li>
+                                    <li><label><input type="checkbox" data-field="price" value="3" checked="checked"> Item Price</label></li>
+                                    <li><label><input type="checkbox" data-field="operate" value="4" checked="checked"> Item Operate</label></li>
+                                </ul>
+                            </div>
+                            <div class="export btn-group"><button class="btn btn-default dropdown-toggle" title="Export data" data-toggle="dropdown" type="button"><i class="glyphicon glyphicon-export icon-share"></i> <span class="caret"></span></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li data-type="json"><a href="javascript:void(0)">JSON</a></li>
+                                    <li data-type="xml"><a href="javascript:void(0)">XML</a></li>
+                                    <li data-type="csv"><a href="javascript:void(0)">CSV</a></li>
+                                    <li data-type="txt"><a href="javascript:void(0)">TXT</a></li>
+                                    <li data-type="sql"><a href="javascript:void(0)">SQL</a></li>
+                                    <li data-type="excel"><a href="javascript:void(0)">MS-Excel</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="pull-right search"><input class="form-control" type="text" placeholder="Buscar"></div>
+                    </div>
+
+
+                    <table id="table" data-toggle="table" data-pagination="true" data-show-export="true" data-url="{% url 'datos_lista_FIM' %}">
+                        <thead>
+                            <tr>
+                                <th colspan="2" >INICIAL</th>
+                                <th colspan="13">MOVIMIENTO</th>
+                                <th colspan="5">RECONOCIMIENTO</th>
+                                <th colspan="1">TOTAL</th>
+                            </tr>
+                            <tr>
+                                <th colspan="2">FECHA</th>
+                                <th colspan="6">AUTOCUIDADO</th>
+                                <th colspan="2">CONTRO DE ESFINTERES</th>
+                                <th colspan="3">TRASLADARSE</th>
+                                <th colspan="2">MOVILIDAD</th>
+                                <th colspan="2">COMUNICACION</th>
+                                <th colspan="3">COGNICION SOCIAL</th>
+                                <th colspan="1">TOTAL</th>
+
+                            </tr>
+                            <tr>
+                                <th data-field="id">ID</th>
+                                <th data-field="fecha" data-editable="true">Fecha (Día-Mes-Año)</th>
+                                <th data-field="comer" data-editable="true">Comer</th>
+                                <th data-field="aseopersonal" data-editable="true">Aseo personal</th>
+                                <th data-field="banarse" data-editable="true">Bañarse/Ducharse</th>
+                                <th data-field="vestsup" data-editable="true">Vestirse/Desvestirse (Sup)</th>
+                                <th data-field="vestinf" data-editable="true">Vestirse/Desvestirse (Inf)</th>
+                                <th data-field="usobano" data-editable="true">Uso baño</th>
+                                <th data-field="controlheces" data-editable="true">Control de heces</th>
+                                <th data-field="controlorina" data-editable="true">Control de orina</th>
+                                <th data-field="camasilla" data-editable="true">Cama, silla, silla de ruedas</th>
+                                <th data-field="bano" data-editable="true">Baño</th>
+                                <th data-field="ducha" data-editable="true">Ducha</th>
+                                <th data-field="marcha" data-editable="true">Marcha, silla de ruedas, gateo</th>
+                                <th data-field="gradas" data-editable="true">Gradas</th>
+                                <th data-field="comprension" data-editable="true">Comprensión</th>
+                                <th data-field="expresion" data-editable="true">Expresión</th>
+                                <th data-field="intsocial" data-editable="true">Interacción social</th>
+                                <th data-field="resolvpro" data-editable="true">Resolver problema</th>
+                                <th data-field="memoria" data-editable="true">Memoria</th>
+                                <th data-field="total" data-editable="true">Total</th>
+                            </tr>
+                        </thead>
+                    </table>
+
+
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -36,34 +107,14 @@
         <!-- /.col-lg-12 -->
     </div>
 </div>
-{% endblock %}
-
-{% block specific-js %}
-<script src="{% static 'vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
-<script src="{% static 'vendor/datatables-plugins/dataTables.bootstrap.min.js' %}"></script>
-<script src="{% static 'vendor/datatables-responsive/dataTables.responsive.js' %}"></script>
-<script src="{% static 'bootstrap-table/bootstrap-table.js' %}"></script>
-
+{% endblock %} {% block specific-js %}
+<script src="{% static 'bootstrap-table/js/bootstrap-table.js' %}"></script>
+<script src="{% static 'bootstrap-table/js/bootstrap-table-editable.js' %}"></script>
+<script src="//rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/js/bootstrap-editable.js"></script>
 <script>
-$(document).ready(function() {
-    $('#dataTables-example').DataTable({
-        responsive: true
-    });
-    
-    
-    $('#table').bootstrapTable({
-    url: 'data1.json',
-    columns: [{
-        field: 'id',
-        title: 'Item ID'
-    }, {
-        field: 'name',
-        title: 'Item Name'
-    }, {
-        field: 'price',
-        title: 'Item Price'
-    }, ]
-    });
-});
 </script>
+
+
+
+
 {% endblock %}
