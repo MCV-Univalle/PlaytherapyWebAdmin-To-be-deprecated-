@@ -32,7 +32,8 @@ def by_movement(request, patient_id):
 def by_minigame(request, patient_id):
     # patient_id  = 1
     performances = []
-    selected_movements = []
+    movements = []
+    selected_minigame = None
     form = ByMinigameReportForm()
     if request.method == 'POST':
         form = ByMinigameReportForm(request.POST)
@@ -44,6 +45,16 @@ def by_minigame(request, patient_id):
             for gs in gss:
                 if gs.therapy.patient.id_num == patient_id:
                     performances += gs.performance_set.all()
+                    # correcto
+                    # ms = gs.movement_set.all()
+                    # for m in ms:
+                    #     if m not in movements:
+                    #         movements.append(m)
+                    # incorrecto
+            for performance in performances:
+                if performance.movement not in movements:
+                    movements.append(performance.movement)
     
     print performances
-    return render(request, 'reports/by_minigame.html', {'form': form, 'performances': performances, 'selected_movements': selected_movements})
+    print movements
+    return render(request, 'reports/by_minigame.html', {'form': form, 'performances': performances, 'movements': movements, 'minigame': selected_minigame})
