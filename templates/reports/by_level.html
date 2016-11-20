@@ -49,7 +49,7 @@
 <div id="page-wrapper" class="full-screen-w">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Historico de angulo alcanzado por movimiento</h1>
+            <h1 class="page-header">Historico de nivel jugado por minijuego</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -76,7 +76,7 @@
                                 <label style="color: #880000 ">{{ form.non_field_errors }}</label>
 
                                 <!--********************************** Nombres **********************************-->
-                                {% bootstrap_field form.movement layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
+                                {% bootstrap_field form.minigame layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
                                 
                                 <!--********************************** Apellidos **********************************-->
                                 {% bootstrap_field form.date1 layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
@@ -96,7 +96,7 @@
             <div class="panel panel-default">
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <div id="by_movement_chart"></div>
+                    <div id="by_level_chart"></div>
                 </div>
                 <!-- /.panel-body -->
                 </div>
@@ -131,17 +131,17 @@ itemWithTimer("#message", 5)
 <script>
 
     var data = [
-    {% for performance in performances %}
-        { {{ performance.movement.id }}: {{ performance.angle }}, date: '{{ performance.game_session.date | date:"Y-m-d" }}'}{% if not forloop.last %},{% endif %}
+    {% for game_session in game_sessions %}
+        {level: {{ game_session.level }}, date: '{{ game_session.date | date:"Y-m-d" }}'}{% if not forloop.last %},{% endif %}
     {% endfor %}
     ];
     
     Morris.Line({
-        element: 'by_movement_chart',
+        element: 'by_level_chart',
         data: data,
         xkey: 'date',
-        ykeys: ['{{ selected_movement.id }}'],
-        labels: ['{{ selected_movement.name }}'],
+        ykeys: ['level'],
+        labels: ['Nivel jugado'],
         hideHover: 'auto'
       });
 </script>
