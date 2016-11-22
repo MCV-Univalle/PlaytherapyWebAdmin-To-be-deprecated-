@@ -64,24 +64,31 @@ def by_minigame(request, patient_id):
 @login_required # Verifies that the user is authenticated
 def by_fim(request, patient_id):
     # patient_id  = 1
-    fims = []
+    fims_and_totals = []
     form = ByFimReportForm()
     if request.method == 'POST':
+        try:
+            patient_id = Patient.objects.get(id_num=patient_id).id
+        except Exception as ex:
+            raise ex
         form = ByFimReportForm(request.POST)
         if form.is_valid():
             date1 = form.cleaned_data['date1']
             date2 = form.cleaned_data['date2']
             fims = FunctionalIndependenceMeasure.objects.filter(patient_id=patient_id, date__range=(date1, date2))
+            for fim in fims:
+                fim_and_total = (fim, fim.total())
+                fims_and_totals.append(fim_and_total)
     
-    print fims
-    return render(request, 'reports/by_fim.html', {'form': form, 'fims': fims})
+    print fims_and_totals
+    return render(request, 'reports/by_fim.html', {'form': form, 'fims_and_totals': fims_and_totals})
     
     
 @login_required # Verifies that the user is authenticated
 def by_level(request, patient_id):
     # patient_id  = 1
     selected_minigame = None
-    levels = []
+    game_sessions = []
     form = ByLevelReportForm()
     if request.method == 'POST':
         form = ByLevelReportForm(request.POST)
@@ -92,9 +99,9 @@ def by_level(request, patient_id):
             gss = selected_minigame.gamesession_set.filter(date__range=(date1, date2))
             for gs in gss:
                 if gs.therapy.patient.id_num == patient_id:
-                    if gs.level not in levels:
-                        levels.append(gs.level)
+                    if gs not in game_sessions:
+                        game_sessions.append(gs)
     
-    print levels
-    return render(request, 'reports/by_level.html', {'form': form, 'levels': levels, 'selected_minigame': selected_minigame})
+    print game_sessions
+    return render(request, 'reports/by_level.html', {'form': form, 'game_sessions': game_sessions, 'selected_minigame': selected_minigame})
     
