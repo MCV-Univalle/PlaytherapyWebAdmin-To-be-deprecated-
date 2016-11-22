@@ -10,9 +10,9 @@ from applications.therapist.models import *
 class TherapySession(models.Model):
     date = models.DateField(verbose_name='Fecha')
     objective = models.CharField(max_length=128, verbose_name='Objetivo')
-    description = models.CharField(max_length=1024, verbose_name='Descripcion')
+    description = models.CharField(max_length=1024, verbose_name='Descripción')
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, verbose_name='Paciente')
-    therapist = models.ForeignKey(Therapist, on_delete=models.CASCADE, verbose_name='Therapeuta')
+    therapist = models.ForeignKey(Therapist, on_delete=models.CASCADE, verbose_name='Terapeuta')
     
     def __unicode__(self):
         return self.patient.name + " - " + self.therapist.name + " - " + self.objective[:20]
@@ -50,13 +50,8 @@ class GameSession(models.Model):
     
 class Performance(models.Model):
     movement = models.ForeignKey(Movement, on_delete=models.CASCADE, verbose_name='Movimiento')
-    game_session = models.ForeignKey(GameSession, on_delete=models.CASCADE, verbose_name='Sesión de juego')
+    game_session = models.ForeignKey(GameSession, on_delete=models.CASCADE, verbose_name='Sesión de Juego')
     angle = models.IntegerField(verbose_name='Angulo')
-    
-    
-    def serialize(self):
-        return {'movement': str(self.movement), 'date': str(self.game_session.date), 'angle': self.angle}
-
     
     def __unicode__(self):
         return self.movement.name + " Angle: " + str(self.angle)

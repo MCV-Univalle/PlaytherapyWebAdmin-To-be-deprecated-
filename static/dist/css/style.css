@@ -26,6 +26,9 @@ html, body {
 }
 
 /* additional sections */
+#tiki {
+  background-color: #CCC
+}
 #home {
   background: url("/static/img/rehabilitationN.jpg") no-repeat center center fixed; 
   display: table;

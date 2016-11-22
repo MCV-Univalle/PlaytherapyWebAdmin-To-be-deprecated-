@@ -3,6 +3,7 @@
 # Models
 from applications.patient.models import *
 from applications.therapist.models import *
+from applications.FIM.models import *
 from applications.start.models import *
 from applications.reports.models import *
 
@@ -330,7 +331,84 @@ def create_performance():
         game_session=gameSession,
         angle=randint(0,180)
     ).save()
+
     
+def create_fim():
+    patients = Patient.objects.all()
+    my_patient = patients[0]
+    
+    
+    FunctionalIndependenceMeasure(
+        date = '2016-01-01',
+        patient = my_patient,
+        goal = False,
+        eat =  4,
+        personal_clean = 3,
+        bath =  4,
+        dress_undress_sup =  5,
+        dress_undress_inf =  5,
+        bathUse =  4,
+        control_dregs =  2,
+        control_urine = 2,
+        tras_bed_chair = 2,
+        tras_bath = 3,
+        tras_shower = 3,
+        run_crawl_chair = 2,
+        steps = 2,
+        compresion = 1,
+        expresion = 1,
+        social_inter = 2,
+        problem_solve = 1,
+        memory =  2,
+    ).save()
+    
+    FunctionalIndependenceMeasure(
+        date = '2016-05-01',
+        patient = my_patient,
+        goal = False,
+        eat =  4,
+        personal_clean = 3,
+        bath =  5,
+        dress_undress_sup =  5,
+        dress_undress_inf =  5,
+        bathUse =  4,
+        control_dregs =  2,
+        control_urine = 2,
+        tras_bed_chair = 2,
+        tras_bath = 5,
+        tras_shower = 3,
+        run_crawl_chair = 2,
+        steps = 2,
+        compresion = 4,
+        expresion = 1,
+        social_inter = 2,
+        problem_solve = 1,
+        memory =  2,
+    ).save()
+    
+    FunctionalIndependenceMeasure(
+        date = '2016-01-11',
+        patient = my_patient,
+        goal = False,
+        eat =  4,
+        personal_clean = 3,
+        bath =  4,
+        dress_undress_sup =  7,
+        dress_undress_inf =  7,
+        bathUse =  4,
+        control_dregs =  2,
+        control_urine = 2,
+        tras_bed_chair = 2,
+        tras_bath = 7,
+        tras_shower = 3,
+        run_crawl_chair = 5,
+        steps = 5,
+        compresion = 5,
+        expresion = 1,
+        social_inter = 2,
+        problem_solve = 1,
+        memory =  2,
+    ).save()
     
     
 
@@ -354,6 +432,15 @@ class Command(BaseCommand):
             dest='type-diagnostic',
             default=False,
             help='Create type of diagnostics',
+        )
+        
+        parser.add_argument(
+            '-fim',
+            '--functional-independecemesure',
+            action='store_true',
+            dest='FIM',
+            default=False,
+            help='Create FIM',
         )
         
         parser.add_argument(
@@ -486,6 +573,11 @@ class Command(BaseCommand):
         if options['performance']:
             for i in range(0, int(options['performance'])):
                 create_performance()
+            self.stdout.write(self.style.SUCCESS('Random performances created succesfully'))
+            
+        if options['FIM']:
+            for i in range(0, int(options['FIM'])):
+                create_fim()
             self.stdout.write(self.style.SUCCESS('Random performances created succesfully'))
             
                 

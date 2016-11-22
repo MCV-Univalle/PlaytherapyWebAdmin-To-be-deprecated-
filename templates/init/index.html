@@ -18,6 +18,18 @@
 
 
 {% block content %}
+<!--<div id="tiki" class="pad-section">-->
+<!--  <div class="container">-->
+<!--    <div class="row">-->
+<!--      <div class="text-vcenter">-->
+<!--        <h1>PlayTherapy</h1>-->
+<!--        <h3></h3>-->
+<!--        <a href="#about" class="btn btn-default btn-lg">Continuar</a>-->
+<!--      </div>-->
+      
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
 <!-- first section - Home -->
 <div id="home" class="home">
   <div class="text-vcenter">
@@ -34,12 +46,14 @@
 <div id="about" class="pad-section">
   <div class="container">
     <div class="row">
-      <div class="col-sm-6">
-        <img class="img-responsive" src="{% static 'img/cinemania.png' %}" alt="" />
+      <div class="col-sm-4">
+        <img class="img-responsive" src="{% static 'img/logo.png' %}" alt="" />
       </div>
-      <div class="col-sm-6 text-center">
-        <h2>About Us</h2>
-        <p class="lead">We are a group of students who want to give you a great service, providing a large database with the most popular movies at the time.</p>
+      <div class="col-sm-8 text-center">
+        <h2>Acerca de nosotros</h2>
+        <p class="lead">El grupo de investigación en Multimedia y Visión de la Universidad del Valle está desarrollando el proyecto Playtherapy: Videojuego de Apoyo a Terapias de Rehabilitación Física en colaboración
+        con el Departamento en Medicina Física y Rehabilitación de la misma universidad y la Unidad de Medicina Física y de Rehabilitación del Hospital Universitario del Valle. 
+       </p>
       </div>
     </div>
   </div>
@@ -50,26 +64,26 @@
 <!-- third section - Services -->
 <div id="services" class="pad-section">
   <div class="container">
-    <h2 class="text-center">Our Services</h2> <hr />
+    <h2 class="text-center">Características del proyecto</h2> <hr />
     <div class="row text-center">
       <div class="col-sm-3 col-xs-6">
-        <i class="glyphicon glyphicon-cloud"> </i>
-        <h4>Use cinemania anywhere<br>On any device</h4>
+        <i class="glyphicon glyphicon-heart-empty"> </i>
+        <h4>Mini juegos</h4>
         <p></p>
       </div>
       <div class="col-sm-3 col-xs-6">
-        <i class="glyphicon glyphicon-search"> </i>
-        <h4>Search and browse movies</h4>
+        <i class="glyphicon glyphicon-dashboard"> </i>
+        <h4>Reportes</h4>
         <p></p>
       </div>
       <div class="col-sm-3 col-xs-6">
         <i class="glyphicon glyphicon-star"> </i>
-        <h4>Rate movies</h4>
+        <h4>Indice de movilidad funcional (IMF)</h4>
         <p></p>
       </div>
       <div class="col-sm-3 col-xs-6">
-        <i class="glyphicon glyphicon-list"> </i>
-        <h4>Create lists and add movies to them</h4>
+        <i class="glyphicon glyphicon-user"> </i>
+        <h4>Administración de pacientes y terapeutas</h4>
         <p></p>
       </div>
     </div>
