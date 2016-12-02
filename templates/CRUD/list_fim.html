@@ -54,7 +54,7 @@
 
 $(function() {
          $('#table-edit').bootstrapTable({
-            url: '{% url 'datos_lista_FIM' %}',
+            url: '{% url 'datos_lista_FIM' patient_id=patient.id_num  %}',
             columns: [
                 [
                     {

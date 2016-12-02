@@ -63,17 +63,17 @@ def modify_patient(request, patient_id):
             
 @login_required # Verifies that the user is authenticated
 def view_patients(request):
-    p = Patient.objects.filter()
-    patients = []
-    for patient in p:
-        patients.append([patient.id_type,
-        patient.id_num,
-        patient.name,
-        patient.lastname,
-        patient.genre,
-        patient.occupation,
-        patient.birthday,
-        patient.is_active])
+    patients = Patient.objects.filter()
+    # patients = []
+    # for patient in p:
+    #     patients.append([patient.id_type,
+    #     patient.id_num,
+    #     patient.name,
+    #     patient.lastname,
+    #     patient.genre,
+    #     patient.occupation,
+    #     patient.birthday,
+    #     patient.is_active])
     user_data = {
         'user_name':request.user.first_name,
         'patients':patients
