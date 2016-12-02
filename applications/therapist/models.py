@@ -28,5 +28,5 @@ class Therapist(User):
     # id_num = models.CharField(max_length=64, unique=True, verbose_name='Número de identificación')
     genre = models.CharField(max_length=64, choices=GENRE_CHOICES, verbose_name='Género')
     
-    def __str__(self):
+    def __unicode__(self):
         return self.name + " " + self.lastname

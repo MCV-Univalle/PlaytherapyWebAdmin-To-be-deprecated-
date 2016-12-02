@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from forms import LoginForm
+from models import Patient
+from applications.therapist.models import Therapist
 
 def index(request):
     return render(request, 'init/index.html')
@@ -61,14 +63,18 @@ def user_logout(request):
 
 @login_required # Verifies that the user is authenticated
 def dashboard(request):
+    num_patients = len(Patient.objects.all())
+    num_therapists = len(Therapist.objects.all())
     try:
         name = str(request.user.therapist.name)
+        
     except:
         name = ''
     user_data = {
         'user_name':name,
-        'tiki':False,
+        'num_patients':num_patients,
+        'num_therapists':num_therapists,
     }
-    print request.user.username
+    # print request.user.username
     return render(request, 'init/dashboard.html', user_data)
 

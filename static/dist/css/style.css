@@ -26,8 +26,11 @@ html, body {
 }
 
 /* additional sections */
+#tiki {
+  background-color: #CCC
+}
 #home {
-  background: url("/static/img/rehabilitation2.jpg") no-repeat center center fixed; 
+  background: url("/static/img/rehabilitationN.jpg") no-repeat center center fixed; 
   display: table;
   height: 100%;
   position: relative;

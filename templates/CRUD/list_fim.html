@@ -18,84 +18,22 @@
                         <div class="bs-bars pull-left">
                             <div id="toolbar">
                                 <button id="remove" class="btn btn-success">
-            <i class="glyphicon glyphicon-save"></i> Guardar
-        </button>
-                                <button id="remove" class="btn btn-primary">
-            <i class="glyphicon glyphicon-ok"></i> Nuevo
-        </button>
+                                    <i class="glyphicon glyphicon-floppy-save"></i> Guardar
+                                </button>
+                                <button id="new" class="btn btn-primary">
+                                    <i class="glyphicon glyphicon-ok"></i> Nuevo
+                                </button>
                                 <button id="remove" class="btn btn-danger">
-            <i class="glyphicon glyphicon-remove"></i> Borrar
-        </button>
+                                    <i class="glyphicon glyphicon-remove"></i> Borrar
+                                </button>
                             </div>
                         </div>
-                        <div class="columns columns-right btn-group pull-right"><button class="btn btn-default" type="button" name="paginationSwitch" title="Hide/Show pagination"><i class="glyphicon glyphicon-collapse-down icon-chevron-down"></i></button><button class="btn btn-default" type="button" name="refresh"
-                                title="Refresh"><i class="glyphicon glyphicon-refresh icon-refresh"></i></button><button class="btn btn-default" type="button" name="toggle" title="Toggle"><i class="glyphicon glyphicon-list-alt icon-list-alt"></i></button>
-                            <div class="keep-open btn-group" title="Columns"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-th icon-th"></i> <span class="caret"></span></button>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><label><input type="checkbox" data-field="id" value="1" checked="checked"> Item ID</label></li>
-                                    <li><label><input type="checkbox" data-field="name" value="2" checked="checked"> Item Name</label></li>
-                                    <li><label><input type="checkbox" data-field="price" value="3" checked="checked"> Item Price</label></li>
-                                    <li><label><input type="checkbox" data-field="operate" value="4" checked="checked"> Item Operate</label></li>
-                                </ul>
-                            </div>
-                            <div class="export btn-group"><button class="btn btn-default dropdown-toggle" title="Export data" data-toggle="dropdown" type="button"><i class="glyphicon glyphicon-export icon-share"></i> <span class="caret"></span></button>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li data-type="json"><a href="javascript:void(0)">JSON</a></li>
-                                    <li data-type="xml"><a href="javascript:void(0)">XML</a></li>
-                                    <li data-type="csv"><a href="javascript:void(0)">CSV</a></li>
-                                    <li data-type="txt"><a href="javascript:void(0)">TXT</a></li>
-                                    <li data-type="sql"><a href="javascript:void(0)">SQL</a></li>
-                                    <li data-type="excel"><a href="javascript:void(0)">MS-Excel</a></li>
-                                </ul>
-                            </div>
-                        </div>
+
                         <div class="pull-right search"><input class="form-control" type="text" placeholder="Buscar"></div>
                     </div>
 
 
-                    <table id="table" data-toggle="table" data-pagination="true" data-show-export="true" data-url="{% url 'datos_lista_FIM' %}">
-                        <thead>
-                            <tr>
-                                <th colspan="2" >INICIAL</th>
-                                <th colspan="13">MOVIMIENTO</th>
-                                <th colspan="5">RECONOCIMIENTO</th>
-                                <th colspan="1">TOTAL</th>
-                            </tr>
-                            <tr>
-                                <th colspan="2">FECHA</th>
-                                <th colspan="6">AUTOCUIDADO</th>
-                                <th colspan="2">CONTRO DE ESFINTERES</th>
-                                <th colspan="3">TRASLADARSE</th>
-                                <th colspan="2">MOVILIDAD</th>
-                                <th colspan="2">COMUNICACION</th>
-                                <th colspan="3">COGNICION SOCIAL</th>
-                                <th colspan="1">TOTAL</th>
-
-                            </tr>
-                            <tr>
-                                <th data-field="id">ID</th>
-                                <th data-field="fecha" data-editable="true">Fecha (Día-Mes-Año)</th>
-                                <th data-field="comer" data-editable="true">Comer</th>
-                                <th data-field="aseopersonal" data-editable="true">Aseo personal</th>
-                                <th data-field="banarse" data-editable="true">Bañarse/Ducharse</th>
-                                <th data-field="vestsup" data-editable="true">Vestirse/Desvestirse (Sup)</th>
-                                <th data-field="vestinf" data-editable="true">Vestirse/Desvestirse (Inf)</th>
-                                <th data-field="usobano" data-editable="true">Uso baño</th>
-                                <th data-field="controlheces" data-editable="true">Control de heces</th>
-                                <th data-field="controlorina" data-editable="true">Control de orina</th>
-                                <th data-field="camasilla" data-editable="true">Cama, silla, silla de ruedas</th>
-                                <th data-field="bano" data-editable="true">Baño</th>
-                                <th data-field="ducha" data-editable="true">Ducha</th>
-                                <th data-field="marcha" data-editable="true">Marcha, silla de ruedas, gateo</th>
-                                <th data-field="gradas" data-editable="true">Gradas</th>
-                                <th data-field="comprension" data-editable="true">Comprensión</th>
-                                <th data-field="expresion" data-editable="true">Expresión</th>
-                                <th data-field="intsocial" data-editable="true">Interacción social</th>
-                                <th data-field="resolvpro" data-editable="true">Resolver problema</th>
-                                <th data-field="memoria" data-editable="true">Memoria</th>
-                                <th data-field="total" data-editable="true">Total</th>
-                            </tr>
-                        </thead>
+                    <table id="table-edit">
                     </table>
 
 
@@ -112,6 +50,277 @@
 <script src="{% static 'bootstrap-table/js/bootstrap-table-editable.js' %}"></script>
 <script src="//rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/js/bootstrap-editable.js"></script>
 <script>
+
+
+$(function() {
+         $('#table-edit').bootstrapTable({
+            url: '{% url 'datos_lista_FIM' %}',
+            columns: [
+                [
+                    {
+                        field: 'state',
+                        checkbox: true,
+                        rowspan: 3,
+                        align: 'center',
+                        valign: 'middle'
+                    }, {
+                        title: 'ID',
+                        field: 'id',
+                        rowspan: 3,
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                    },{
+                        title: 'FECHA',
+                        field : 'fecha',
+                        sortable: true,
+                        rowspan: 3,
+                        align: 'center',
+                        valign: 'middle',
+                        editable: {
+                            type: 'date',
+                        format: 'yyyy-mm-dd',    
+                        viewformat: 'yyyy-mm-dd',
+                        clear: '&times; Limpiar',
+                        }
+                    },
+                    {
+                        title: 'Movimiento',
+                        colspan: 13,
+                        align: 'center'
+                    }, {
+                        title: 'Reconocimiento',
+                        colspan: 5,
+                        align: 'center'
+                    }, {
+                        title: 'Total',
+                        rowspan: 3,
+                        field: 'total',
+                        valign: 'middle',
+                        align: 'center'
+                    }
+                ],
+                [
+                    {
+                        title: 'AUTOCUIDADO',
+                        colspan: '6',
+                        sortable: true,
+                        align: 'center',
+                    }, {
+                        title: 'CONTROL DE ESFINTERES',
+                        align: 'center',
+                        align: 'center',
+                        colspan: '2'
+                    },{
+                        title: 'TRASLADARSE',
+                        align: 'center',
+                        align: 'center',
+                        colspan: '3'
+                    },{
+                        title: 'MOVILIDAD',
+                        align: 'center',
+                        align: 'center',
+                        colspan: '2'
+                    },{
+                        title: 'COMUNICACION',
+                        align: 'center',
+                        align: 'center',
+                        colspan: '2'
+                    },{
+                        title: 'COGNICION SOCIAL',
+                        align: 'center',
+                        align: 'center',
+                        colspan: '3'
+                    }
+                ],
+                [
+                    {
+                        title: 'Comer',
+                        field: 'comer',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        editable: {
+                            type: 'number',
+                            min: '0',
+                            max: '7'
+                        }
+                    },
+                    {
+                        title: 'Aseo personal',
+                        field: 'aseopersonal',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        editable: {
+                            type: 'number'
+                        }
+                    },
+                    {
+                        title: 'Bañarse/Ducharse',
+                        field: 'banarse',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        editable: {
+                            type: 'number'
+                        }
+                    },
+                    {
+                        title: 'Vestirse/Desvestirse (Sup)',
+                        field: 'vestsup',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        editable: {
+                            type: 'number'
+                        }
+                    },
+                    {
+                        title: 'Vestirse/Desvestirse (Inf)',
+                        field: 'vestinf',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        editable: {
+                            type: 'number'
+                        }
+                    },
+                    {
+                        title: 'Uso baño',
+                        field: 'usobano',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        editable: {
+                            type: 'number'
+                        }
+                    },
+                    {
+                        title: 'Control de heces',
+                        field: 'controlheces',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        editable: {
+                            type: 'number'
+                        }
+                    },
+                    {
+                        title: 'Control de orina',
+                        field: 'controlorina',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        editable: {
+                            type: 'number'
+                        }
+                    },
+                    {
+                        title: 'Cama, silla, silla de ruedas',
+                        field: 'camasilla',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        editable: {
+                            type: 'number'
+                        }
+                    },
+                    {
+                        title: 'Baño',
+                        field: 'bano',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        editable: {
+                            type: 'number'
+                        }
+                    },
+                    {
+                        title: 'Ducha',
+                        field: 'ducha',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        editable: {
+                            type: 'number'
+                        }
+                    },
+                    {
+                        title: 'Marcha, silla de ruedas, gateo',
+                        field: 'marcha',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        editable: {
+                            type: 'number'
+                        }
+                    },
+                    {
+                        title: 'Gradas',
+                        field: 'gradas',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        editable: true,
+                    },
+                    {
+                        title: 'Comprensión',
+                        field: 'comprension',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        editable: {
+                            type: 'number'
+                        }
+                    },{
+                        title: 'Expresión',
+                        field: 'expresion',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        editable: {
+                            type: 'number'
+                        }
+                    },{
+                        title: 'Interacción social',
+                        field: 'intsocial',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        editable: true,
+                    },
+                    {
+                        title: 'Resolver problema',
+                        field: 'resolvpro',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        editable: {
+                            type: 'number'
+                        }
+                    },
+                    {
+                        title: 'Memoria',
+                        field: 'memoria',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        editable: {
+                            type: 'number'
+                        }
+                    }
+                    ]
+            ]
+        });
+
+});
+    
+$( "#new" ).click(function() {
+  var fim = {} ;
+  $('#table-edit').bootstrapTable('insertRow', {index: 0, row: fim });
+  $('#table-edit').bootstrapTable('check', 0);
+});
 </script>
 
 

@@ -12,6 +12,9 @@ class TherapistInline(admin.StackedInline):
 # Define a new User admin
 class UserAdmin(UserAdmin):
   inlines = (TherapistInline, )
+  
+class TherapistAdmin(admin.ModelAdmin):
+  list_display = ('name',)
 
 # Re-register UserAdmin
 admin.site.unregister(User)

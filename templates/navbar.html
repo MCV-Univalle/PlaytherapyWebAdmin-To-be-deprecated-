@@ -51,21 +51,6 @@
                     <a href="{% url 'dashboard' %}"><i class="fa fa-dashboard fa-fw"></i>Inicio</a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-user-md fa-fw"></i> Terapeutas<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="{% url 'crear_terapeuta' %}">Registrar terapeutas</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'lista_terapeutas' %}">Lista de terapeutas</a>
-                        </li>
-                        <!--<li>-->
-                        <!--    <a href="#">Desactivar terapeutas</a>-->
-                        <!--</li>-->
-                    </ul>
-                    <!-- /.nav-second-level -->
-                </li>
-                <li>
                     <a href="#"><i class="fa fa-user fa-fw"></i> Pacientes<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
@@ -81,17 +66,24 @@
                     <!-- /.nav-second-level -->
                 </li>
                 <li>
-                    <a href="forms.html"><i class="fa fa-table fa-fw"></i> Reportes<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-user-md fa-fw"></i> Terapeutas<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="{% url 'por_movimiento' %}">Por movimiento</a>
+                            <a href="{% url 'crear_terapeuta' %}">Registrar terapeutas</a>
                         </li>
                         <li>
-                            <a href="#">Por minijuego</a>
+                            <a href="{% url 'lista_terapeutas' %}">Lista de terapeutas</a>
                         </li>
+                        <!--<li>-->
+                        <!--    <a href="#">Desactivar terapeutas</a>-->
+                        <!--</li>-->
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
+                <!--<li>-->
+                <!--    <a href="forms.html"><i class="fa fa-table fa-fw"></i> Reportes<span class="fa arrow"></span></a>-->
+                    <!-- /.nav-second-level -->
+                <!--</li>-->
                 <li>
                     <a href="#"><i class="fa fa-hospital-o fa-fw"></i> Entidades de salud</a>
                 </li>

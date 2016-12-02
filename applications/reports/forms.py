@@ -8,12 +8,19 @@ from applications.start.models import *
 
 
 class ByMovementReportForm(forms.Form):
-    movements = forms.ModelMultipleChoiceField(queryset=Movement.objects.all(), widget=Select2MultipleWidget)
+    movement = forms.ModelChoiceField(queryset=Movement.objects.all(), widget=Select2Widget)
     date1 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3))
     date2 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3))
     
     def __init__(self, *args, **kwargs):
         super(ByMovementReportForm, self).__init__(*args, **kwargs)
+        
+        self.fields['movement'].widget.attrs.update({'placeholder':'Movimiento', 'required':'required'})
+        self.fields['movement'].label = 'Movimiento'
+        self.fields['date1'].widget.attrs.update({'placeholder':'Fecha inicial', 'required':'required'})
+        self.fields['date1'].label = 'Desde'
+        self.fields['date2'].widget.attrs.update({'placeholder':'Fecha final', 'required':'required'})
+        self.fields['date2'].label = 'Hasta'
         
         
 class ByMinigameReportForm(forms.Form):
@@ -23,3 +30,42 @@ class ByMinigameReportForm(forms.Form):
     
     def __init__(self, *args, **kwargs):
         super(ByMinigameReportForm, self).__init__(*args, **kwargs)
+        
+        self.fields['minigame'].widget.attrs.update({'placeholder':'Minijuego', 'required':'required'})
+        self.fields['minigame'].label = 'Minijuego'
+        self.fields['date1'].widget.attrs.update({'placeholder':'Fecha 1', 'required':'required'})
+        self.fields['date1'].label = 'Desde'
+        self.fields['date2'].widget.attrs.update({'placeholder':'Fecha 2', 'required':'required'})
+        self.fields['date2'].label = 'Hasta'
+        
+        
+class ByFimReportForm(forms.Form):
+    # minigame = forms.ModelChoiceField(queryset=Minigame.objects.all(), widget=Select2Widget)
+    date1 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3))
+    date2 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3))
+    
+    def __init__(self, *args, **kwargs):
+        super(ByFimReportForm, self).__init__(*args, **kwargs)
+        
+        # self.fields['minigame'].widget.attrs.update({'placeholder':'Minijuego', 'required':'required'})
+        # self.fields['minigame'].label = 'Minijuego'
+        self.fields['date1'].widget.attrs.update({'placeholder':'Fecha 1', 'required':'required'})
+        self.fields['date1'].label = 'Desde'
+        self.fields['date2'].widget.attrs.update({'placeholder':'Fecha 2', 'required':'required'})
+        self.fields['date2'].label = 'Hasta'
+        
+        
+class ByLevelReportForm(forms.Form):
+    minigame = forms.ModelChoiceField(queryset=Minigame.objects.all(), widget=Select2Widget)
+    date1 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3))
+    date2 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3))
+    
+    def __init__(self, *args, **kwargs):
+        super(ByLevelReportForm, self).__init__(*args, **kwargs)
+        
+        self.fields['minigame'].widget.attrs.update({'placeholder':'Minijuego', 'required':'required'})
+        self.fields['minigame'].label = 'Minijuego'
+        self.fields['date1'].widget.attrs.update({'placeholder':'Fecha 1', 'required':'required'})
+        self.fields['date1'].label = 'Desde'
+        self.fields['date2'].widget.attrs.update({'placeholder':'Fecha 2', 'required':'required'})
+        self.fields['date2'].label = 'Hasta'

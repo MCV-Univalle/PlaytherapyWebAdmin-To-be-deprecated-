@@ -9,6 +9,72 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-user fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">{{ num_patients }}</div>
+                                <div>Pacientes</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-xs-12">Total: {{ num_patients }}</div>
+                            <div class="col-xs-12"><a href="{% url 'crear_paciente' %}">Registrar paciente</a></div>
+                            <div class="col-xs-12"><a href="{% url 'lista_pacientes' %}">Listar pacientes</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-user-md fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">{{ num_therapists }}</div>
+                                <div>Terapeutas</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-xs-12">Total: {{ num_therapists }}</div>
+                            <div class="col-xs-12"><a href="{% url 'crear_terapeuta' %}">Registrar terapeutas</a></div>
+                            <div class="col-xs-12"><a href="{% url 'lista_terapeutas' %}">Listar terapeutas</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Pasos para crear y/o asignar un FIM a un paciente
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-12">1. Buscar el paciente</div>
+                            <div class="col-xs-12">2. Ingresar al fim del paciente</div>
+                            <div class="col-xs-12">3. Seleccionar nuevo para ingresar los datos</div>
+                        </div>
+                        <!--<ol>-->
+                        <!--    <li>Buscar el paciente</li>-->
+                        <!--    <li>Ingresar al fim del paciente</li>-->
+                        <!--    <li>Seleccionar nuevo para ingresar los datos</li>-->
+                        <!--</ol>-->
+                    <!--<div class="panel-footer">Panel footer</div>-->
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
         

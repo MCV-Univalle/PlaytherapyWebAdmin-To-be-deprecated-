@@ -10,12 +10,16 @@ class Entity(models.Model):
     def __str__(self):
         return self.name
         
-        
-class Diagnostic(models.Model):
+class TypeDiagnostic(models.Model):
+    name = models.CharField(max_length=64, unique=True, verbose_name='Nombre')
     
-    code = models.CharField(max_length=64)
-    name = models.TextField()
-    tipo = models.TextField()
+    def __unicode__(self):
+        return self.name
+    
+class Diagnostic(models.Model):
+    code = models.CharField(max_length=64, unique=True, verbose_name='Codigo')
+    name = models.TextField(verbose_name='Nombre')
+    type_diagnostic = models.ForeignKey(TypeDiagnostic, verbose_name='Tipo de diagnostico')
     
     def __unicode__(self):
         return "%s - %s" % (self.code, self.name)
