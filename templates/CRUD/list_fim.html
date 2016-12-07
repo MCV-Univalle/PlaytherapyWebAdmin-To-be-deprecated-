@@ -17,15 +17,11 @@
                     <div class="fixed-table-toolbar">
                         <div class="bs-bars pull-left">
                             <div id="toolbar">
-                                <button id="remove" class="btn btn-success">
-                                    <i class="glyphicon glyphicon-floppy-save"></i> Guardar
-                                </button>
+
                                 <button id="new" class="btn btn-primary">
                                     <i class="glyphicon glyphicon-ok"></i> Nuevo
                                 </button>
-                                <button id="remove" class="btn btn-danger">
-                                    <i class="glyphicon glyphicon-remove"></i> Borrar
-                                </button>
+
                             </div>
                         </div>
 
@@ -34,6 +30,7 @@
 
 
                     <table id="table-edit">
+                         {% csrf_token %}
                     </table>
 
 
@@ -56,32 +53,54 @@ $(function() {
          $('#table-edit').bootstrapTable({
             url: '{% url 'datos_lista_FIM' patient_id=patient.id_num  %}',
             columns: [
-                [
-                    {
-                        field: 'state',
-                        checkbox: true,
+                [ {
+                        title: 'ID',
+                        field: 'num',
                         rowspan: 3,
                         align: 'center',
-                        valign: 'middle'
-                    }, {
+                        valign: 'middle',
+                        sortable: true,
+                    },{
                         title: 'ID',
                         field: 'id',
                         rowspan: 3,
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
+                        visible: false,
+                    },{
+                        title: 'patient',
+                        field: 'patient',
+                        rowspan: 3,
+                        align: 'center',
+                        valign: 'middle',
+                        visible: false,
                     },{
                         title: 'FECHA',
-                        field : 'fecha',
+                        field : 'date',
                         sortable: true,
                         rowspan: 3,
                         align: 'center',
                         valign: 'middle',
                         editable: {
                             type: 'date',
-                        format: 'yyyy-mm-dd',    
-                        viewformat: 'yyyy-mm-dd',
-                        clear: '&times; Limpiar',
+                            format: 'yyyy-mm-dd',    
+                            viewformat: 'yyyy-mm-dd',
+                            clear: '&times; Limpiar',
+                        }
+                    },{
+                        title: 'META',
+                        field: 'goal',
+                        align: 'center',
+                        rowspan: 3,
+                        valign: 'middle',
+                        editable: {
+                            type: 'select',
+                            emptytext: 'No',
+                            source: [
+                                  {value: 1, text: 'Si'},
+                                  {value: 0, text: 'No'}
+                               ]
                         }
                     },
                     {
@@ -98,6 +117,14 @@ $(function() {
                         field: 'total',
                         valign: 'middle',
                         align: 'center'
+                    },{
+                        field: 'operate',
+                        rowspan: 3,
+                        title: 'Operaciones',
+                        valign: 'middle',
+                        align: 'center',
+                        events: operateEvents,
+                        formatter: operateFormatter
                     }
                 ],
                 [
@@ -136,142 +163,170 @@ $(function() {
                 [
                     {
                         title: 'Comer',
-                        field: 'comer',
+                        field: 'eat',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
                         editable: {
                             type: 'number',
-                            min: '0',
+                            min: '1',
                             max: '7'
                         }
                     },
                     {
                         title: 'Aseo personal',
-                        field: 'aseopersonal',
+                        field: 'personal_clean',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
                         editable: {
-                            type: 'number'
+                            type: 'number',
+                            min: '1',
+                            max: '7'
                         }
                     },
                     {
                         title: 'Bañarse/Ducharse',
-                        field: 'banarse',
+                        field: 'bath',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
                         editable: {
-                            type: 'number'
+                            type: 'number',
+                            min: '1',
+                            max: '7'
                         }
                     },
                     {
                         title: 'Vestirse/Desvestirse (Sup)',
-                        field: 'vestsup',
+                        field: 'dress_undress_sup',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
                         editable: {
-                            type: 'number'
+                            type: 'number',
+                            min: '1',
+                            max: '7'
                         }
                     },
                     {
                         title: 'Vestirse/Desvestirse (Inf)',
-                        field: 'vestinf',
+                        field: 'dress_undress_inf',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
                         editable: {
-                            type: 'number'
+                            type: 'number',
+                            min: '1',
+                            max: '7'
                         }
                     },
                     {
                         title: 'Uso baño',
-                        field: 'usobano',
+                        field: 'bathUse',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
                         editable: {
-                            type: 'number'
+                            type: 'number',
+                            min: '1',
+                            max: '7'
                         }
                     },
                     {
                         title: 'Control de heces',
-                        field: 'controlheces',
+                        field: 'control_dregs',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
                         editable: {
-                            type: 'number'
+                            type: 'number',
+                            min: '1',
+                            max: '7'
                         }
                     },
                     {
                         title: 'Control de orina',
-                        field: 'controlorina',
+                        field: 'control_urine',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
                         editable: {
-                            type: 'number'
+                            type: 'number',
+                            min: '1',
+                            max: '7'
                         }
                     },
                     {
                         title: 'Cama, silla, silla de ruedas',
-                        field: 'camasilla',
+                        field: 'tras_bed_chair',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
                         editable: {
-                            type: 'number'
+                            type: 'number',
+                            min: '1',
+                            max: '7'
                         }
                     },
                     {
                         title: 'Baño',
-                        field: 'bano',
+                        field: 'tras_bath',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
                         editable: {
-                            type: 'number'
+                            type: 'number',
+                            min: '1',
+                            max: '7'
                         }
                     },
                     {
                         title: 'Ducha',
-                        field: 'ducha',
+                        field: 'tras_shower',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
                         editable: {
-                            type: 'number'
+                            type: 'number',
+                            min: '1',
+                            max: '7'
                         }
                     },
                     {
                         title: 'Marcha, silla de ruedas, gateo',
-                        field: 'marcha',
+                        field: 'run_crawl_chair',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
                         editable: {
-                            type: 'number'
+                            type: 'number',
+                            min: '1',
+                            max: '7'
                         }
                     },
                     {
                         title: 'Gradas',
-                        field: 'gradas',
-                        align: 'center',
-                        valign: 'middle',
-                        sortable: true,
-                        editable: true,
-                    },
-                    {
-                        title: 'Comprensión',
-                        field: 'comprension',
+                        field: 'steps',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
                         editable: {
-                            type: 'number'
+                            type: 'number',
+                            min: '1',
+                            max: '7'
+                        },
+                    },
+                    {
+                        title: 'Comprensión',
+                        field: 'compresion',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        editable: {
+                            type: 'number',
+                            min: '1',
+                            max: '7'
                         }
                     },{
                         title: 'Expresión',
@@ -280,47 +335,151 @@ $(function() {
                         valign: 'middle',
                         sortable: true,
                         editable: {
-                            type: 'number'
+                            type: 'number',
+                            min: '1',
+                            max: '7'
                         }
                     },{
                         title: 'Interacción social',
-                        field: 'intsocial',
-                        align: 'center',
-                        valign: 'middle',
-                        sortable: true,
-                        editable: true,
-                    },
-                    {
-                        title: 'Resolver problema',
-                        field: 'resolvpro',
+                        field: 'social_inter',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
                         editable: {
-                            type: 'number'
+                            type: 'number',
+                            min: '1',
+                            max: '7'
+                        },
+                    },
+                    {
+                        title: 'Resolver problema',
+                        field: 'problem_solve',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        editable: {
+                            type: 'number',
+                            min: '1',
+                            max: '7'
                         }
                     },
                     {
                         title: 'Memoria',
-                        field: 'memoria',
+                        field: 'memory',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
                         editable: {
-                            type: 'number'
+                            type: 'number',
+                            min: '1',
+                            max: '7'
                         }
                     }
                     ]
             ]
         });
+        
+   
 
 });
     
+    function operateFormatter(value, row, index) {
+        return [
+            '<a class="like" href="javascript:void(1)" title="Like">',
+            '<i class="glyphicon glyphicon-floppy-save"></i>',
+            '</a>  ',
+            '<a class="remove" href="javascript:void(0)" title="Remove">',
+            '<i class="glyphicon glyphicon-remove"></i>',
+            '</a>'
+        ].join('');
+    }
+    
+    
+    window.operateEvents = {
+        'click .like': function (e, value, row, index) {
+            
+            row['csrfmiddlewaretoken'] = "{{csrf_token}}";
+ 
+             $.ajax({
+                    url : '{% url 'guardar_list_FIM' %}',
+                    type: "POST",
+                    data: row,
+                    success : function(data) {
+                        if(data.success){
+                            alert(data.message);
+                            $('#table-edit').bootstrapTable('refresh', {});	
+                        }else{
+                            alert(data.errors);
+                        }
+                    },
+            
+                    // handle a non-successful response
+                    error : function(xhr,errmsg,err) {
+                        $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                            " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                        console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                    }
+
+            });
+        },
+        'click .remove': function (e, value, row, index) {
+            $('#table-edit').bootstrapTable('remove', {
+                field: 'id',
+                values: [row.id]
+            });
+        }
+    };
+    
 $( "#new" ).click(function() {
-  var fim = {} ;
+  var fim = {
+        patient : '{{patient.id}}',
+        date: fechahoy(),
+        goal: 0,
+        eat : 1,
+        personal_clean : 1,
+        bath : 1,
+        dress_undress_sup : 1,
+        dress_undress_inf : 1,
+        bathUse : 1,
+        control_dregs : 1,
+        control_urine  : 1,
+        tras_bed_chair : 1,
+        tras_bath : 1,
+        tras_shower : 1,
+        run_crawl_chair : 1,
+        steps : 1,
+        compresion : 1,
+        expresion : 1,
+        social_inter : 1,
+        problem_solve : 1,
+        memory : 1,
+  } ;
   $('#table-edit').bootstrapTable('insertRow', {index: 0, row: fim });
   $('#table-edit').bootstrapTable('check', 0);
 });
+
+
+
+$('#table-edit').on('click-row.bs.table', function (row, $element) {
+    console.log($element);
+});
+
+function fechahoy(){
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+
+var yyyy = today.getFullYear();
+if(dd<10){
+    dd='0'+dd
+} 
+if(mm<10){
+    mm='0'+mm
+} 
+var today = yyyy+'-'+mm+'-'+dd;
+return today;
+}
+
 </script>
 
 
