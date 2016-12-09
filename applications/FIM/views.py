@@ -75,3 +75,15 @@ def save_fim_data(request):
             list_response = { 'success' : False,
                        'errors' : [(k, v[0]) for k, v in form_fim.errors.items()]}
     return JsonResponse(list_response, None, False)
+    
+    
+        
+def delete_fim_data(request):
+    if request.method == 'POST':
+        try:
+            fim = FunctionalIndependenceMeasure(pk = request.POST.get('id'))
+            fim.delete()
+            list_response = {'message': 'El registro se elimino correctamente' , 'success': True}
+        except:
+            list_response = {'error': 'Error al eliminar el registro' , 'success': False}
+    return JsonResponse(list_response, None, False)

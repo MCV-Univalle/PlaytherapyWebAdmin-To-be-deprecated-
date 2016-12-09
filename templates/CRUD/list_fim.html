@@ -46,7 +46,19 @@
 <script src="{% static 'bootstrap-table/js/bootstrap-table.js' %}"></script>
 <script src="{% static 'bootstrap-table/js/bootstrap-table-editable.js' %}"></script>
 <script src="//rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/js/bootstrap-editable.js"></script>
+ <script src="{% static 'bootbox/bootbox.min.js' %}"></script>
 <script>
+
+bootbox.setDefaults({
+  /**
+   * @optional String
+   * @default: en
+   * which locale settings to use to translate the three
+   * standard button labels: OK, CONFIRM, CANCEL
+   */
+  locale: "es",
+  
+});
 
 
 $(function() {
@@ -401,15 +413,15 @@ $(function() {
             row['csrfmiddlewaretoken'] = "{{csrf_token}}";
  
              $.ajax({
-                    url : '{% url 'guardar_list_FIM' %}',
+                    url : '{% url 'save_list_FIM' %}',
                     type: "POST",
                     data: row,
                     success : function(data) {
                         if(data.success){
-                            alert(data.message);
+                            bootbox.alert(data.message);
                             $('#table-edit').bootstrapTable('refresh', {});	
                         }else{
-                            alert(data.errors);
+                            bootbox.alert(data.errors);
                         }
                     },
             
@@ -423,10 +435,36 @@ $(function() {
             });
         },
         'click .remove': function (e, value, row, index) {
-            $('#table-edit').bootstrapTable('remove', {
-                field: 'id',
-                values: [row.id]
-            });
+            bootbox.confirm("¿Está seguro de borrar este registro?", 
+                function(result){ 
+                    if(result){
+                        post = {id: row['id'], csrfmiddlewaretoken: "{{csrf_token}}"}
+                        $.ajax({
+                            url : '{% url 'delete_list_FIM' %}',
+                            type: "POST",
+                            data: post,
+                            success : function(data) {
+                                if(data.success){
+                                    bootbox.alert(data.message);
+                                    $('#table-edit').bootstrapTable('refresh', {});	
+                                }else{
+                                    bootbox.alert(data.error);
+                                }
+                            },
+                
+                        // handle a non-successful response
+                            error : function(xhr,errmsg,err) {
+                                $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                            }
+    
+                        });
+                        
+                       
+                    }
+                });
+
         }
     };
     
