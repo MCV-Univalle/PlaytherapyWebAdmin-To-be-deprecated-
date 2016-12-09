@@ -39,20 +39,25 @@
                                 <th>Ocupacion</th>
                                 <th>Fecha de nacimiento</th>
                                 <th>Estado</th>
+                                <th>Medida de Independencia Funcional</th>
                                 <th>Reportes</th>
+
                             </tr>
                         </thead>
                         <tbody>
                             {% for patient in patients %}
                             <tr class="odd gradeX">
-                                <td>{{ patient.0 }}</td>
-                                <td><a href="/paciente/modificar_paciente/{{ patient.1 }}">{{ patient.1 }}</a></td>
-                                <td>{{ patient.2 }}</td>
-                                <td class="center">{{ patient.3 }}</td>
-                                <td class="center">{{ patient.4 }}</td>
-                                <td>{{ patient.5 }}</td>
-                                <td>{{ patient.6 }}</td>
-                                <td>{% if patient.7 %}Activo{% else %}Inactivo{% endif %}</td>
+                                <td>{{ patient.id_type }}</td>
+                                <td><a href="/paciente/modificar_paciente/{{ patient.id_num }}">{{ patient.id_num }}</a></td>
+                                <td>{{ patient.name }}</td>
+                                <td class="center">{{ patient.last_name }}</td>
+                                <td class="center">{{ patient.genre }}</td>
+                                <td>{{ patient.occupation }}</td>
+                                <td>{{ patient.birthday }}</td>
+                                <td>{% if patient.is_active%}Activo{% else %}Inactivo{% endif %}</td>
+                                <td>
+                                    <a href="{% url 'listar_FIM' patient_id=patient.id_num %}">Medida de Independencia Funcional</a>
+                                </td>
                                 <td>
                                     <div class="dropdown">
                                         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -60,20 +65,17 @@
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                            <li><a href="{% url 'por_movimiento' patient_id=patient.1 %}">Por movimiento</a></li>
-                                            <li><a href="{% url 'por_minijuego' patient_id=patient.1 %}">Por minijuego</a></li>
-                                            <li><a href="{% url 'por_fim' patient_id=patient.1 %}">Por FIM</a></li>
-                                            <li><a href="{% url 'por_nivel' patient_id=patient.1 %}">Por nivel</a></li>
+                                            <li><a href="{% url 'por_movimiento' patient_id=patient.id_num %}">Por movimiento</a></li>
+                                            <li><a href="{% url 'por_minijuego' patient_id=patient.id_num %}">Por minijuego</a></li>
+                                            <li><a href="{% url 'por_fim' patient_id=patient.id_num %}">Por FIM</a></li>
+                                            <li><a href="{% url 'por_nivel' patient_id=patient.id_num %}">Por nivel</a></li>
                                             <!--<li><a href="#">Something else here</a></li>-->
                                             <!--<li role="separator" class="divider"></li>-->
                                             <!--<li><a href="#">Separated link</a></li>-->
                                         </ul>
                                     </div>
-                                    <!--<div class="row">-->
-                                    <!--    <a class="col-lg-12" href="{% url 'por_movimiento' patient_id=patient.1 %}" >Reporte 1</a>-->
-                                    <!--    <a class="col-lg-12" href="{% url 'por_minijuego' patient_id=patient.1 %}">Reporte 2</a>-->
-                                    <!--</div>-->
                                 </td>
+
                             </tr>
                             {% endfor %}
                         </tbody>
