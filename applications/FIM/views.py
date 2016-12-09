@@ -17,12 +17,14 @@ def create_fim(request):
     else:
         form = FunctionalIndependenceMeasureForm()
     return render(request, 'fim/create_fim.html', {'form': form})
-    
+
+@login_required
 def list_fim(request, patient_id):
     patient = Patient.objects.get(id_num = patient_id)
     fim = FunctionalIndependenceMeasureForm()
     return render(request, 'CRUD/list_fim.html', {'patient': patient, 'fim': fim})
-    
+
+@login_required
 def list_fim_data(request, patient_id):
     list_response=[]
     patient_id = Patient.objects.get(id_num=patient_id).id
@@ -58,7 +60,7 @@ def list_fim_data(request, patient_id):
         i+=1
     return JsonResponse(list_response, None, False)
     
-    
+@login_required
 def save_fim_data(request):
     if request.method == 'POST':
         post = request.POST.copy()
@@ -77,7 +79,7 @@ def save_fim_data(request):
     return JsonResponse(list_response, None, False)
     
     
-        
+@login_required
 def delete_fim_data(request):
     if request.method == 'POST':
         try:
