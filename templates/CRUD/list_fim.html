@@ -24,12 +24,10 @@
 
                             </div>
                         </div>
-
-                        <div class="pull-right search"><input class="form-control" type="text" placeholder="Buscar"></div>
                     </div>
 
 
-                    <table id="table-edit">
+                    <table id="table-edit" data-pagination="true" data-page-size = 4 data-page-list="[4, 8, 10, 20, All]">
                          {% csrf_token %}
                     </table>
 
