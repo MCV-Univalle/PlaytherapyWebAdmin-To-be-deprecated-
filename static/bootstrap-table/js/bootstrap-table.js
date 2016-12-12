@@ -472,13 +472,13 @@
             return 'Loading, please wait...';
         },
         formatRecordsPerPage: function (pageNumber) {
-            return sprintf('%s rows per page', pageNumber);
+            return sprintf('%s filas por pagina', pageNumber);
         },
         formatShowingRows: function (pageFrom, pageTo, totalRows) {
             return sprintf('Mostrando %s a %s de %s filas', pageFrom, pageTo, totalRows);
         },
         formatDetailPagination: function (totalRows) {
-            return sprintf('Showing %s rows', totalRows);
+            return sprintf('Mostrando %s filas', totalRows);
         },
         formatSearch: function () {
             return 'Search';

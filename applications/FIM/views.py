@@ -17,107 +17,75 @@ def create_fim(request):
     else:
         form = FunctionalIndependenceMeasureForm()
     return render(request, 'fim/create_fim.html', {'form': form})
-    
-def list_fim(request):
-    #patient = Patient.objects.get(id = patient_id)
-    return render(request, 'CRUD/list_fim.html', {
-    })
-    
-def list_fim_data(request):
+
+@login_required
+def list_fim(request, patient_id):
+    patient = Patient.objects.get(id_num = patient_id)
+    fim = FunctionalIndependenceMeasureForm()
+    return render(request, 'CRUD/list_fim.html', {'patient': patient, 'fim': fim})
+
+@login_required
+def list_fim_data(request, patient_id):
     list_response=[]
-    list_data = {}
-    list_data['id'] = 1;
-    list_data['fecha'] = '2016-01-02'
-    list_data['comer'] = '7'
-    list_data['aseopersonal'] = '3'
-    list_data['banarse'] = '4'
-    list_data['vestsup'] = '5'
-    list_data['vestinf'] = '6'
-    list_data['usobano'] = '3'
-    list_data['controlheces'] = '2'
-    list_data['controlorina'] = '2'
-    list_data['camasilla'] = '5'
-    list_data['bano'] = '5'
-    list_data['ducha'] = '3'
-    list_data['marcha'] = '6'
-    list_data['gradas'] = '4'
-    list_data['comprension'] = '2'
-    list_data['expresion'] = '5'
-    list_data['intsocial'] = '5'
-    list_data['resolvpro'] = '6'
-    list_data['memoria'] = '4'
-    list_data['total'] = '90'
-    list_response.append(list_data)
-    list_data = []
-    list_data = {}
-    list_data['id'] = 2;
-    list_data['fecha'] = '2016-01-05'
-    list_data['comer'] = '5'
-    list_data['aseopersonal'] = '6'
-    list_data['banarse'] = '7'
-    list_data['vestsup'] = '4'
-    list_data['vestinf'] = '5'
-    list_data['usobano'] = '4'
-    list_data['controlheces'] = '2'
-    list_data['controlorina'] = '3'
-    list_data['camasilla'] = '1'
-    list_data['bano'] = '3'
-    list_data['ducha'] = '6'
-    list_data['marcha'] = '7'
-    list_data['gradas'] = '4'
-    list_data['comprension'] = '5'
-    list_data['expresion'] = '3'
-    list_data['intsocial'] = '2'
-    list_data['resolvpro'] = '2'
-    list_data['memoria'] = '3'
-    list_data['total'] = '72'
-    list_response.append(list_data)
-    list_data = []
-    list_data = {}
-    list_data['id'] = 3;
-    list_data['fecha'] = '2016-01-15'
-    list_data['comer'] = '4'
-    list_data['aseopersonal'] = '5'
-    list_data['banarse'] = '5'
-    list_data['vestsup'] = '2'
-    list_data['vestinf'] = '1'
-    list_data['usobano'] = '5'
-    list_data['controlheces'] = '6'
-    list_data['controlorina'] = '5'
-    list_data['camasilla'] = '4'
-    list_data['bano'] = '4'
-    list_data['ducha'] = '3'
-    list_data['marcha'] = '2'
-    list_data['gradas'] = '3'
-    list_data['comprension'] = '6'
-    list_data['expresion'] = '3'
-    list_data['intsocial'] = '2'
-    list_data['resolvpro'] = '4'
-    list_data['memoria'] = '3'
-    list_data['total'] = '67'
-    list_response.append(list_data)
-    list_data = []
-    list_data = {}
-    list_data['id'] = 4;
-    list_data['fecha'] = '2016-01-21'
-    list_data['comer'] = '5'
-    list_data['aseopersonal'] = '5'
-    list_data['banarse'] = '5'
-    list_data['vestsup'] = '4'
-    list_data['vestinf'] = '5'
-    list_data['usobano'] = '1'
-    list_data['controlheces'] = '7'
-    list_data['controlorina'] = '6'
-    list_data['camasilla'] = '4'
-    list_data['bano'] = '6'
-    list_data['ducha'] = '7'
-    list_data['marcha'] = '4'
-    list_data['gradas'] = '2'
-    list_data['comprension'] = '5'
-    list_data['expresion'] = '6'
-    list_data['intsocial'] = '5'
-    list_data['resolvpro'] = '5'
-    list_data['memoria'] = '5'
-    list_data['total'] = '82'
-    list_response.append(list_data)
+    patient_id = Patient.objects.get(id_num=patient_id).id
+    list_fim = FunctionalIndependenceMeasure.objects.filter(patient_id = patient_id)
+    i = 1
+    for fim in list_fim:
+        list_data = {}
+        list_data['num'] = i
+        list_data['id'] = fim.id
+        list_data['patient'] = patient_id
+        list_data['date'] = fim.date.strftime('%Y-%m-%d')
+        list_data['goal'] = fim.goal*1
+        list_data['eat'] = fim.eat
+        list_data['personal_clean'] = fim.personal_clean
+        list_data['bath'] = fim.bath
+        list_data['dress_undress_sup'] = fim.dress_undress_sup
+        list_data['dress_undress_inf'] = fim.dress_undress_inf
+        list_data['bathUse'] = fim.bathUse
+        list_data['control_dregs'] = fim.control_dregs
+        list_data['control_urine'] = fim.control_urine
+        list_data['tras_bed_chair'] = fim.tras_bed_chair
+        list_data['tras_bath'] = fim.tras_bath
+        list_data['tras_shower'] =fim.tras_shower
+        list_data['run_crawl_chair'] = fim.run_crawl_chair
+        list_data['steps'] = fim.steps
+        list_data['compresion'] = fim.compresion
+        list_data['expresion'] = fim.expresion
+        list_data['social_inter'] =fim.social_inter
+        list_data['problem_solve'] = fim.problem_solve
+        list_data['memory'] = fim.memory
+        list_data['total'] = fim.total()
+        list_response.append(list_data)
+        i+=1
+    return JsonResponse(list_response, None, False)
+    
+@login_required
+def save_fim_data(request):
+    if request.method == 'POST':
+        post = request.POST.copy()
+        post['goal'] = bool(int(post['goal']))
+        if(request.POST.get('id') is not None):
+            fim = FunctionalIndependenceMeasure(pk = request.POST.get('id'))
+            form_fim = FunctionalIndependenceMeasureForm(post, instance=fim, initial = fim.__dict__)
+        else:
+            form_fim = FunctionalIndependenceMeasureForm(post)
+        if(form_fim.is_valid()):
+            form_fim.save()
+            list_response = {'message': 'Registro actualizado correctamente' , 'success': True}
+        else:
+            list_response = { 'success' : False,
+                       'errors' : [(k, v[0]) for k, v in form_fim.errors.items()]}
+    return JsonResponse(list_response, None, False)
+    
+    
+@login_required
+def delete_fim_data(request):
+    if request.method == 'POST':
+        try:
+            fim = FunctionalIndependenceMeasure(pk = request.POST.get('id'))
+            fim.delete()
+            list_response = {'message': 'El registro se elimino correctamente' , 'success': True}
+        except:
+            list_response = {'error': 'Error al eliminar el registro' , 'success': False}
     return JsonResponse(list_response, None, False)
