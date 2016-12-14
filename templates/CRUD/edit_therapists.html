@@ -51,12 +51,11 @@
             {% if form.instance.is_active %} 
             <div class="modal-body">
                 <p>
-                    Estás a punto de desactivar al terapeuta <strong>{{ form.instance.name }}</strong>,
-                    sin embargo, esta acción es reversible.<br>
-                    ¿Está seguro que desea continuar?<br>
-                    Nota: Durante el tiempo de inactividad, no se podrá realizar ninguna labor dentro de la aplicación.
+                    Está a punto de desactivar al terapeuta <strong>{{ form.instance.name}} {{form.instance.lastname }}</strong>,
+                    durante el tiempo de inactividad, este no podrá utilizar ninguna acción dentro de la aplicación.
+                    Sin embargo, esta acción es reversible.<br>
                 </p>
-                <p>Esta seguro que desea continuar?</p>
+                <p>¿Está seguro que desea continuar?</p>
             </div>
             
             <div class="modal-footer">
@@ -68,12 +67,10 @@
             {% else %}
             <div class="modal-body">
                 <p>
-                    Estás a punto de activar al terapeuta <strong>{{ form.instance.name }}</strong>,
-                    sin embargo, esta acción es reversible.<br>
-                    ¿Está seguro que desea continuar?<br>
-                    Nota: Si confirma se procedera a reasignar todo el acceso al terapeuta.
+                    Está a punto de activar al terapeuta <strong>{{ form.instance.name}} {{form.instance.lastname }}</strong>,
+                    si lo activa, el terapeuta tendrá acceso a la aplocación nuevamente. Esta acción es reversible.<br>
                 </p>
-                <p>Esta seguro que desea continuar?</p>
+                <p>¿Está seguro que desea continuar?</p>
             </div>
             
             <div class="modal-footer">
