@@ -18,7 +18,7 @@ class PatientForm(ModelForm):
         self.fields['id_type'].help_text = "Seleccione el tipo de documento"
         self.fields['id_num'].widget.attrs.update({'placeholder':'Número de indentificación', 'required':'required'})
         self.fields['genre'].widget.attrs.update({'placeholder':'Genero', 'required':'required'})
-        self.fields['occupation'].widget.attrs.update({'placeholder':'Ocipación', 'required':'required'})
+        self.fields['occupation'].widget.attrs.update({'placeholder':'Ocupación', 'required':'required'})
         self.fields['birthday'].widget.attrs.update({'placeholder':'Fecha de nacimiento', 'required':'required'})
         self.fields['entity'].widget.attrs.update({'placeholder':'Entidad de salud', 'required':'required'})
         # self.fields['list_diagnostic'].widget.attrs.update({'data-placeholder:':'Diagnostico', 'required':'required'})
