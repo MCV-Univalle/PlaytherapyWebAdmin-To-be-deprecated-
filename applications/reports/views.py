@@ -14,6 +14,11 @@ def by_movement(request, patient_id):
     performances = []
     selected_movement = None
     form = ByMovementReportForm()
+    patient = None
+    try:
+        patient = Patient.objects.get(id_num=patient_id)
+    except Exception as ex:
+        print ex.message
     if request.method == 'POST':
         form = ByMovementReportForm(request.POST)
         if form.is_valid():
@@ -26,7 +31,7 @@ def by_movement(request, patient_id):
                     performances += gs.performance_set.filter(movement_id=selected_movement.id)
     
     print performances
-    return render(request, 'reports/by_movement.html', {'form': form, 'performances': performances, 'selected_movement': selected_movement})
+    return render(request, 'reports/by_movement.html', {'form': form, 'performances': performances, 'selected_movement': selected_movement, 'patient': patient})
     
     
 @login_required # Verifies that the user is authenticated
@@ -36,6 +41,11 @@ def by_minigame(request, patient_id):
     movements = []
     selected_minigame = None
     form = ByMinigameReportForm()
+    patient = None
+    try:
+        patient = Patient.objects.get(id_num=patient_id)
+    except Exception as ex:
+        print ex.message
     if request.method == 'POST':
         form = ByMinigameReportForm(request.POST)
         if form.is_valid():
@@ -58,7 +68,7 @@ def by_minigame(request, patient_id):
     
     print performances
     print movements
-    return render(request, 'reports/by_minigame.html', {'form': form, 'performances': performances, 'movements': movements, 'minigame': selected_minigame})
+    return render(request, 'reports/by_minigame.html', {'form': form, 'performances': performances, 'movements': movements, 'minigame': selected_minigame, 'patient': patient})
     
     
 @login_required # Verifies that the user is authenticated
@@ -66,6 +76,11 @@ def by_fim(request, patient_id):
     # patient_id  = 1
     fims_and_totals = []
     form = ByFimReportForm()
+    patient = None
+    try:
+        patient = Patient.objects.get(id_num=patient_id)
+    except Exception as ex:
+        print ex.message
     if request.method == 'POST':
         try:
             patient_id = Patient.objects.get(id_num=patient_id).id
@@ -81,7 +96,7 @@ def by_fim(request, patient_id):
                 fims_and_totals.append(fim_and_total)
     
     print fims_and_totals
-    return render(request, 'reports/by_fim.html', {'form': form, 'fims_and_totals': fims_and_totals})
+    return render(request, 'reports/by_fim.html', {'form': form, 'fims_and_totals': fims_and_totals, 'patient': patient})
     
     
 @login_required # Verifies that the user is authenticated
@@ -89,6 +104,11 @@ def by_level(request, patient_id):
     # patient_id  = 1
     selected_minigame = None
     game_sessions = []
+    patient = None
+    try:
+        patient = Patient.objects.get(id_num=patient_id)
+    except Exception as ex:
+        print ex.message
     form = ByLevelReportForm()
     if request.method == 'POST':
         form = ByLevelReportForm(request.POST)
@@ -103,5 +123,5 @@ def by_level(request, patient_id):
                         game_sessions.append(gs)
     
     print game_sessions
-    return render(request, 'reports/by_level.html', {'form': form, 'game_sessions': game_sessions, 'selected_minigame': selected_minigame})
+    return render(request, 'reports/by_level.html', {'form': form, 'game_sessions': game_sessions, 'selected_minigame': selected_minigame, 'patient': patient})
     
