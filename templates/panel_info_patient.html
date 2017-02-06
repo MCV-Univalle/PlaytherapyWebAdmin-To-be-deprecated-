@@ -7,8 +7,13 @@
     <div id="collapseP" class="panel-collapse collapse">
         <div class="panel-body">
             <p><b>Tipo de identificación:</b> {{ patient.id_type }}</p>
-            <p><b>Número de identificación:</b> {{ patient.id_type }}</p>
+            <p><b>Número de identificación:</b> {{ patient.id_num }}</p>
             <p><b>Género:</b> {{ patient.genre }}</p>
+            <p><b>Diagnostico:</b>
+            {% for diagnostic in patient.list_diagnostic.all %}
+                {{ diagnostic.name }}{% if not forloop.last %},{% endif %}
+            {% endfor %}
+            </p>
         </div>
     </div>
 </div>
