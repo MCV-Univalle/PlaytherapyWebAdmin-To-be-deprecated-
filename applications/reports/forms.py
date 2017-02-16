@@ -36,8 +36,8 @@ class ByMovementReportForm(forms.Form):
         
 class ByMinigameReportForm(forms.Form):
     minigame = forms.ModelChoiceField(queryset=Minigame.objects.all(), widget=Select2Widget)
-    date1 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3))
-    date2 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3))
+    date1 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3), initial=date1)
+    date2 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3), initial=date2)
     
     def __init__(self, *args, **kwargs):
         super(ByMinigameReportForm, self).__init__(*args, **kwargs)
@@ -52,8 +52,8 @@ class ByMinigameReportForm(forms.Form):
         
 class ByFimReportForm(forms.Form):
     # minigame = forms.ModelChoiceField(queryset=Minigame.objects.all(), widget=Select2Widget)
-    date1 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3))
-    date2 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3))
+    date1 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3), initial=date1)
+    date2 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3), initial=date2)
     
     def __init__(self, *args, **kwargs):
         super(ByFimReportForm, self).__init__(*args, **kwargs)
@@ -68,8 +68,8 @@ class ByFimReportForm(forms.Form):
         
 class ByLevelReportForm(forms.Form):
     minigame = forms.ModelChoiceField(queryset=Minigame.objects.all(), widget=Select2Widget)
-    date1 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3))
-    date2 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3))
+    date1 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3), initial=date1)
+    date2 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3), initial=date2)
     
     def __init__(self, *args, **kwargs):
         super(ByLevelReportForm, self).__init__(*args, **kwargs)
