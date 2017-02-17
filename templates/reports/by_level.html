@@ -49,6 +49,20 @@
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">Histórico de nivel jugado por minijuego</h1>
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-dashboard"></i>  <a href="{% url 'dashboard' %}">Inicio</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-table"></i> <a href="{% url 'lista_pacientes' %}">Lista de pacientes</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-user"></i> <a href="{% url 'modificar_paciente' patient_id=patient.id_num %}">{{ patient.id_num }}</a>
+                </li>
+                <li>
+                    <i class="fa fa-line-chart"></i> Histórico por nivel
+                </li>
+            </ol>
         </div>
         <!-- /.col-lg-12 -->
     </div>

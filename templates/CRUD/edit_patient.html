@@ -94,9 +94,29 @@
         <div class="col-lg-12">
             {% if create %}
                 <h1 class="page-header">Registrar paciente</h1>
+                <ol class="breadcrumb">
+                    <li>
+                        <i class="fa fa-dashboard"></i>  <a href="{% url 'dashboard' %}">Inicio</a>
+                    </li>
+                    <li class="active">
+                        <i class="fa fa-user"></i> Registrar paciente
+                    </li>
+                </ol>
             {% else %}
                 <h1 class="page-header">Modificar paciente</h1>
+                <ol class="breadcrumb">
+                    <li>
+                        <i class="fa fa-dashboard"></i>  <a href="{% url 'dashboard' %}">Dashboard</a>
+                    </li>
+                    <li>
+                        <i class="fa fa-table"></i> <a href="{% url 'lista_pacientes' %}">Lista de pacientes </a>
+                    </li>
+                    <li class="active">
+                        <i class="fa fa-user"></i> {{ form.instance.id_num }}
+                    </li>
+                </ol>
             {% endif %}
+            
         </div>
         <!-- /.col-lg-12 -->
     </div>
