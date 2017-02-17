@@ -11,5 +11,4 @@ urlpatterns = [
     url(r'^logout/$', django.contrib.auth.views.logout, {'next_page': views.index}, name='logout'),
     # url(r'signup$', views.signup),
     url(r'dashboard$', views.dashboard, name='dashboard'),
-    url(r'prueba$', views.prueba),
 ]
