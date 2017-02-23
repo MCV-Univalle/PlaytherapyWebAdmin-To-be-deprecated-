@@ -29,6 +29,7 @@ class CreateTherapistForm(UserCreationForm):
         self.fields['id_type'].help_text = "Seleccione el tipo de documento"
         # self.fields['id_num'].widget.attrs.update({'placeholder':'Número de identificación', 'required':'required'})
         self.fields['genre'].widget.attrs.update({'placeholder':'Género', 'required':'required'})
+
         
     class Meta:
         model = Therapist
@@ -38,11 +39,11 @@ class CreateTherapistForm(UserCreationForm):
             # 'username':forms.NumberInput()
         }
     
-    def clean_password(self):
-        if 'password' in self.cleaned_data and 'confirm_password' in self.cleaned_data:
-            if self.cleaned_data['password'] != self.cleaned_data['confirm_password']:
-                raise form.ValidationError("Las contraseñas no son iguales")
-            return self.cleaned_data
+    # def clean_password(self):
+    #     if 'password' in self.cleaned_data and 'confirm_password' in self.cleaned_data:
+    #         if self.cleaned_data['password'] != self.cleaned_data['confirm_password']:
+    #             raise form.ValidationError("Las contraseñas no son iguales")
+    #         return self.cleaned_data
             
             
 class EditTherapistForm(UserChangeForm):
@@ -81,5 +82,7 @@ class SetPasswordTherapistForm(SetPasswordForm):
         # Campos de formulario de django
         self.fields['new_password1'].widget.attrs.update({'placeholder': 'Escriba una contraseña', 'required':'required'})
         self.fields['new_password1'].label = 'Contraseña'
+        self.fields['new_password1'].help_text = "<ul><li>Su contraseña no puede asemejarse tanto a su otra información personal.</li><li>Su contraseña debe contener al menos 8 caracteres.</li><li>Su contraseña no puede ser común.</li><li>Su contraseña no puede ser completamente numérica.</li></ul>"
         self.fields['new_password2'].widget.attrs.update({'placeholder': 'Confirme la contraseña', 'required':'required'})
         self.fields['new_password2'].label = 'Confirmar Contraseña'
+        
