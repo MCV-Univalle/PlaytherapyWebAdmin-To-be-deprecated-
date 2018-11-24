@@ -2,8 +2,8 @@
 
 from django.shortcuts import render, redirect, RequestContext
 from django.contrib.auth.decorators import login_required, user_passes_test
-from models import *
-from forms import *
+from .models import *
+from .forms import *
 from django.contrib import messages
 
 @login_required # Verifies that the user is authenticated
@@ -20,7 +20,7 @@ def create_patient(request):
         
         if patient_form.is_valid():
             obj = patient_form.save()
-            print type(patient_form.instance.list_diagnostic)
+            print(type(patient_form.instance.list_diagnostic))
             messages.success(request, "Paciente registrado exitosamente.")
             return render(request, 'CRUD/edit_patient.html', user_data)
         # if the form is not valid

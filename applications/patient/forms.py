@@ -3,7 +3,7 @@
 from django.forms import ModelForm
 from django import forms
 from datetimewidget.widgets import DateWidget
-from models import Patient
+from .models import Patient
 from django_select2.forms import Select2MultipleWidget
 
 class PatientForm(ModelForm):
@@ -21,7 +21,7 @@ class PatientForm(ModelForm):
         self.fields['occupation'].widget.attrs.update({'placeholder':'Ocupación', 'required':'required'})
         self.fields['birthday'].widget.attrs.update({'placeholder':'Fecha de nacimiento', 'required':'required'})
         self.fields['entity'].widget.attrs.update({'placeholder':'Entidad de salud', 'required':'required'})
-        # self.fields['list_diagnostic'].widget.attrs.update({'data-placeholder:':'Diagnostico', 'required':'required'})
+        self.fields['list_diagnostic'].widget.attrs.update({'data-placeholder:':'Diagnostico', 'required':'required'})
         
     class Meta:
         model = Patient

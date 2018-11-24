@@ -1,5 +1,6 @@
 from django.conf.urls import url
-import views
+
+from applications.FIM import views
 
 urlpatterns = [
     url('list_fim/(?P<patient_id>.*$)', views.list_fim, name='listar_FIM'),

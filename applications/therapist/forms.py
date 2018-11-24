@@ -3,7 +3,7 @@
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, SetPasswordForm
-from models import *
+from .models import *
 
 class CreateTherapistForm(UserCreationForm):
     requered_css_class = 'required'

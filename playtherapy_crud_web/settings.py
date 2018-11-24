@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'applications.FIM',
     'bootstrap3',
     'datetimewidget',
-    'django_select2'
+    'django_select2',
+    'corsheaders',
 ]
 
 MIDDLEWARE_CLASSES = [

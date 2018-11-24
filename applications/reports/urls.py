@@ -1,5 +1,6 @@
 from django.conf.urls import url
-import views
+
+from applications.reports import views
 
 urlpatterns = [
     url('por-movimiento/(?P<patient_id>\d+)/', views.by_movement, name='por_movimiento'),

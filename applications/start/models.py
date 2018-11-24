@@ -16,12 +16,13 @@ class TherapySession(models.Model):
     
     def __unicode__(self):
         return self.patient.name + " - " + self.therapist.name + " - " + self.objective[:20]
-
+    def __str__(self):
+        return self.name
     
 class Movement(models.Model):
     name = models.CharField(max_length=64, unique=True, verbose_name='Nombre')
     
-    def __unicode__(self):
+    def __str__(self):
         return self.name
     
 
@@ -30,8 +31,10 @@ class Minigame(models.Model):
     description = models.CharField(max_length=1024, verbose_name='Descripción')
     movements = models.ManyToManyField(Movement, verbose_name='Movimientos')
     
-    def __unicode__(self):
+    def __str__(self):
         return self.name
+
+
 
 
 class GameSession(models.Model):
@@ -46,6 +49,8 @@ class GameSession(models.Model):
     
     def __unicode__(self):
         return str(self.date)
+    def __str__(self):
+        return self.name
     
     
 class Performance(models.Model):
@@ -55,6 +60,8 @@ class Performance(models.Model):
     
     def __unicode__(self):
         return self.movement.name + " Angle: " + str(self.angle)
+    def __str__(self):
+        return self.name
     
     
     

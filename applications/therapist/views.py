@@ -3,8 +3,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
-from models import *
-from forms import *
+from .models import *
+from .forms import *
 
 
 @login_required # Verifies that the user is authenticated

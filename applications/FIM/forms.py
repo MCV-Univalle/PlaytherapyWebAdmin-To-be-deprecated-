@@ -2,7 +2,7 @@
 from django.forms import ModelForm
 from django import forms
 import datetime
-from models import FunctionalIndependenceMeasure
+from .models import FunctionalIndependenceMeasure
 
 class FunctionalIndependenceMeasureForm(ModelForm):
     required_css_class = 'required'

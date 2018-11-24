@@ -15,6 +15,8 @@ class TypeDiagnostic(models.Model):
     
     def __unicode__(self):
         return self.name
+    def __str__(self):
+        return self.name
     
 class Diagnostic(models.Model):
     code = models.CharField(max_length=64, unique=True, verbose_name='Codigo')
@@ -24,6 +26,9 @@ class Diagnostic(models.Model):
     def __unicode__(self):
         return "%s - %s" % (self.code, self.name)
 
+    def __str__(self):
+        return self.name
+        
 class Patient(models.Model):
     # Options for types of id
     CEDULA = 'Cédula de ciudadania'
@@ -54,7 +59,8 @@ class Patient(models.Model):
     
     def __unicode__(self):
         return self.id_num + ' - ' + self.name
-    
+    def __str__(self):
+        return self.name
 
     
 

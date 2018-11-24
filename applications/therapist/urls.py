@@ -1,5 +1,6 @@
 from django.conf.urls import url
-import views
+
+from applications.therapist import views
 
 urlpatterns = [
     url(r'^crear_terapeuta/$', views.create_therapist, name='crear_terapeuta'),

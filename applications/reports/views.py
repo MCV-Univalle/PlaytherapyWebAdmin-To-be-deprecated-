@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, RequestContext
 from django.contrib.auth.decorators import login_required, user_passes_test
 import json
 
-from models import *
-from forms import *
+from .models import *
+from .forms import *
 from applications.start.models import *
 from applications.FIM.models import *
 from django.contrib import messages
@@ -19,7 +19,7 @@ def by_movement(request, patient_id):
     try:
         patient = Patient.objects.get(id_num=patient_id)
     except Exception as ex:
-        print ex.message
+        print(ex.message)
     if patient:
         if request.method == 'POST':
             form = ByMovementReportForm(request.POST)
@@ -51,7 +51,7 @@ def by_minigame(request, patient_id):
     try:
         patient = Patient.objects.get(id_num=patient_id)
     except Exception as ex:
-        print ex.message
+        print(ex.message)
     if patient:
         if request.method == 'POST':
             form = ByMinigameReportForm(request.POST)
@@ -90,7 +90,7 @@ def by_fim(request, patient_id):
     try:
         patient = Patient.objects.get(id_num=patient_id)
     except Exception as ex:
-        print ex.message
+        print(ex.message)
     if patient:
         if request.method == 'POST':
             try:
@@ -123,7 +123,7 @@ def by_level(request, patient_id):
     try:
         patient = Patient.objects.get(id_num=patient_id)
     except Exception as ex:
-        print ex.message
+        print(ex.message)
     if patient:
         form = ByLevelReportForm()
         if request.method == 'POST':
