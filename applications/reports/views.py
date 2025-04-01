@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, RequestContext
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 import json
 

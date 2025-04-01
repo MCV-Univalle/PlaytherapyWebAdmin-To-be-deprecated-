@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import PasswordChangeForm
@@ -120,5 +119,3 @@ def change_state(request, therapist_id):
         therapist.is_active = True
     therapist.save()
     return redirect('lista_terapeutas')
-    
-    

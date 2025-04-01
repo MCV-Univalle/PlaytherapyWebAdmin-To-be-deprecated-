@@ -2,7 +2,7 @@
 
 from django import forms
 from django_select2.forms import Select2MultipleWidget, Select2Widget
-from datetimewidget.widgets import DateWidget
+from bootstrap_datepicker_plus.widgets import DatePickerInput
 import datetime
 
 from applications.start.models import *
@@ -20,8 +20,8 @@ def date2():
 
 class ByMovementReportForm(forms.Form):
     movement = forms.ModelChoiceField(queryset=Movement.objects.all(), widget=Select2Widget)
-    date1 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3), initial=date1)
-    date2 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3), initial=date2)
+    date1 = forms.DateField(widget=DatePickerInput(format='%Y-/%m./%d', options={'autoclose':True}), initial=date1)
+    date2 = forms.DateField(widget=DatePickerInput(format='%Y-/%m./%d', options={'autoclose':True}), initial=date2)
     
     def __init__(self, *args, **kwargs):
         super(ByMovementReportForm, self).__init__(*args, **kwargs)
@@ -36,8 +36,8 @@ class ByMovementReportForm(forms.Form):
         
 class ByMinigameReportForm(forms.Form):
     minigame = forms.ModelChoiceField(queryset=Minigame.objects.all(), widget=Select2Widget)
-    date1 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3), initial=date1)
-    date2 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3), initial=date2)
+    date1 = forms.DateField(widget=DatePickerInput(format='%Y-/%m./%d', options={'autoclose':True}), initial=date1)
+    date2 = forms.DateField(widget=DatePickerInput(format='%Y-/%m./%d', options={'autoclose':True}), initial=date2)
     
     def __init__(self, *args, **kwargs):
         super(ByMinigameReportForm, self).__init__(*args, **kwargs)
@@ -52,8 +52,8 @@ class ByMinigameReportForm(forms.Form):
         
 class ByFimReportForm(forms.Form):
     # minigame = forms.ModelChoiceField(queryset=Minigame.objects.all(), widget=Select2Widget)
-    date1 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3), initial=date1)
-    date2 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3), initial=date2)
+    date1 = forms.DateField(widget=DatePickerInput(format='%Y-/%m./%d', options={'autoclose':True}), initial=date1)
+    date2 = forms.DateField(widget=DatePickerInput(format='%Y-/%m./%d', options={'autoclose':True}), initial=date2)
     
     def __init__(self, *args, **kwargs):
         super(ByFimReportForm, self).__init__(*args, **kwargs)
@@ -68,8 +68,8 @@ class ByFimReportForm(forms.Form):
         
 class ByLevelReportForm(forms.Form):
     minigame = forms.ModelChoiceField(queryset=Minigame.objects.all(), widget=Select2Widget)
-    date1 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3), initial=date1)
-    date2 = forms.DateField(widget=DateWidget(usel10n=True, bootstrap_version=3), initial=date2)
+    date1 = forms.DateField(widget=DatePickerInput(format='%Y-/%m./%d', options={'autoclose':True}), initial=date1)
+    date2 = forms.DateField(widget=DatePickerInput(format='%Y-/%m./%d', options={'autoclose':True}), initial=date2)
     
     def __init__(self, *args, **kwargs):
         super(ByLevelReportForm, self).__init__(*args, **kwargs)

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, SetPasswordForm
@@ -85,4 +83,3 @@ class SetPasswordTherapistForm(SetPasswordForm):
         self.fields['new_password1'].help_text = "<ul><li>Su contraseña no puede asemejarse tanto a su otra información personal.</li><li>Su contraseña debe contener al menos 8 caracteres.</li><li>Su contraseña no puede ser común.</li><li>Su contraseña no puede ser completamente numérica.</li></ul>"
         self.fields['new_password2'].widget.attrs.update({'placeholder': 'Confirme la contraseña', 'required':'required'})
         self.fields['new_password2'].label = 'Confirmar Contraseña'
-        

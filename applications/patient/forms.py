@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-
 from django.forms import ModelForm
 from django import forms
-from datetimewidget.widgets import DateWidget
+from bootstrap_datepicker_plus.widgets import DatePickerInput
 from .models import Patient
 from django_select2.forms import Select2MultipleWidget
 
@@ -27,8 +25,7 @@ class PatientForm(ModelForm):
         model = Patient
         fields = ['name', 'lastname', 'id_type', 'id_num', 'genre', 'occupation', 'birthday', 'entity', 'list_diagnostic']
         widgets = {
-            'birthday':DateWidget(usel10n = True, bootstrap_version=3),
+            'birthday':DatePickerInput(format='%Y-/%m./%d', options={'autoclose':True}),
             # 'id_num':forms.NumberInput(),
             'list_diagnostic':Select2MultipleWidget,
         }
-        

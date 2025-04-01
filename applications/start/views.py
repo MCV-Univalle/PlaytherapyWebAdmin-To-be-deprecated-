@@ -11,7 +11,7 @@ def index(request):
 
 
 def custom_login(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return dashboard(request)
     
     form = LoginForm()

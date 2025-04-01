@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from __future__ import unicode_literals
 from django.db import models
 from django_select2.forms import ModelSelect2MultipleWidget, Select2MultipleWidget
@@ -21,7 +19,7 @@ class TypeDiagnostic(models.Model):
 class Diagnostic(models.Model):
     code = models.CharField(max_length=64, unique=True, verbose_name='Codigo')
     name = models.TextField(verbose_name='Nombre')
-    type_diagnostic = models.ForeignKey(TypeDiagnostic, verbose_name='Tipo de diagnostico')
+    type_diagnostic = models.ForeignKey(TypeDiagnostic, on_delete=models.CASCADE, verbose_name='Tipo de diagnostico')
     
     def __unicode__(self):
         return "%s - %s" % (self.code, self.name)
@@ -53,7 +51,7 @@ class Patient(models.Model):
     genre = models.CharField(max_length=64, choices=GENRE_CHOICES, verbose_name='Género')
     occupation = models.CharField(max_length=64, verbose_name='Ocupación')
     birthday = models.DateField(verbose_name='Fecha de nacimiento')
-    entity = models.ForeignKey(Entity, verbose_name='Entidad de salud')
+    entity = models.ForeignKey(Entity, on_delete=models.CASCADE, verbose_name='Entidad de salud')
     list_diagnostic = models.ManyToManyField(Diagnostic, verbose_name="Diagnostico")
     is_active = models.BooleanField(verbose_name='Activo', default=True)
     
@@ -61,6 +59,3 @@ class Patient(models.Model):
         return self.id_num + ' - ' + self.name
     def __str__(self):
         return self.name
-
-    
-

@@ -1,10 +1,10 @@
-from django.conf.urls import url
+from django.urls import path
 
 from applications.reports import views
 
 urlpatterns = [
-    url('por-movimiento/(?P<patient_id>\d+)/', views.by_movement, name='por_movimiento'),
-    url('por-minijuego/(?P<patient_id>\d+)/', views.by_minigame, name='por_minijuego'),
-    url('por-fim/(?P<patient_id>\d+)/', views.by_fim, name='por_fim'),
-    url('por-nivel/(?P<patient_id>\d+)/', views.by_level, name='por_nivel'),
+    path('por-movimiento/<int:patient_id>/', views.by_movement, name='por_movimiento'),
+    path('por-minijuego/<int:patient_id>/', views.by_minigame, name='por_minijuego'),
+    path('por-fim/<int:patient_id>/', views.by_fim, name='por_fim'),
+    path('por-nivel/<int:patient_id>/', views.by_level, name='por_nivel'),
 ]

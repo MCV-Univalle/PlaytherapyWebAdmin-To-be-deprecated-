@@ -1,12 +1,12 @@
-from django.conf.urls import url
+from django.urls import path
 
 from applications.therapist import views
 
 urlpatterns = [
-    url(r'^crear_terapeuta/$', views.create_therapist, name='crear_terapeuta'),
-    url(r'^modificar_terapeuta/(?P<therapist_id>.*$)', views.modify_therapist, name='modificar_terapeuta'),
-    url(r'^lista_terapeutas/$', views.list_therapist, name='lista_terapeutas'),
-    url(r'^cambiar_password/(?P<therapist_id>.*$)', views.setpassword_therapist, name='cambiar_password'),
-    url(r'^cambiar_estado/(?P<therapist_id>.*$)', views.change_state, name='cambiar_estado_terapeuta'),
+    path('crear_terapeuta/', views.create_therapist, name='crear_terapeuta'),
+    path('modificar_terapeuta/<int:therapist_id>/', views.modify_therapist, name='modificar_terapeuta'),
+    path('lista_terapeutas/', views.list_therapist, name='lista_terapeutas'),
+    path('cambiar_password/<int:therapist_id>/', views.setpassword_therapist, name='cambiar_password'),
+    path('cambiar_estado/<int:therapist_id>/', views.change_state, name='cambiar_estado_terapeuta'),
     
 ]

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.db import models
 from applications.patient.models import *
@@ -6,7 +5,7 @@ from applications.patient.models import *
 class FunctionalIndependenceMeasure(models.Model):
     date = models.DateField()
     goal = models.BooleanField(default=False)
-    patient = models.ForeignKey(Patient)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     
     UNO = 1
     DOS = 2 
@@ -57,4 +56,3 @@ class FunctionalIndependenceMeasure(models.Model):
         
     def __unicode__(self):
         return self.patient.id_num + ' ' + str(self.date)
-    

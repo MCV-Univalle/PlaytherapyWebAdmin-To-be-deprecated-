@@ -1,16 +1,12 @@
-
-from django.conf.urls import url
+from django.urls import path
 
 from applications.start.forms import LoginForm
 from .views import *
-from django.contrib.auth.views import logout
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
-    url(r'^$', index, name='index'),
-    url(r'login$', custom_login, name='login'),
-    # url(r'^login$', django.contrib.auth.views.login, {'template_name':'init/login.html',
-                                                        #  'authentication_form':LoginForm,}, name='login'),
-    url(r'^logout/$', logout, {'next_page': index}, name='logout'),
-    # url(r'signup$', views.signup),
-    url(r'dashboard$', dashboard, name='dashboard'),
+    path('', index, name='index'),
+    path('login/', custom_login, name='login'),
+    path('logout/', LogoutView.as_view(next_page='index'), name='logout'),
+    path('dashboard/', dashboard, name='dashboard'),
 ]

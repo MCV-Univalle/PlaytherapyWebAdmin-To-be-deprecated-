@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class FimConfig(AppConfig):
-    name = 'FIM'
+    name = 'applications.FIM'

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # Models
 from applications.patient.models import *
 from applications.therapist.models import *
@@ -11,13 +9,15 @@ from applications.reports.models import *
 from django.core.management.base import BaseCommand, CommandError
 
 # Extra functions
-import names
+from faker import Faker
 from random import randint
-from loremipsum import generate_paragraph
+from lorem_text import lorem
 
 
 import random
 import time
+
+fake = Faker()
 
 # Function for create a random date
 def strTimeProp(start, end, format, prop):
@@ -185,8 +185,8 @@ def create_patient():
     entity = entities[randint(0, len(entities) - 1)]
     
     patient = Patient(
-        name=names.get_first_name(),
-        lastname=names.get_last_name(),
+        name=fake.first_name(),
+        lastname=fake.last_name(),
         id_type=Patient.ID_CHOICES[randint(0,3)][0],
         id_num=randint(1, 1000000000),
         genre=Patient.GENRE_CHOICES[randint(0,1)][0],
@@ -208,8 +208,8 @@ def create_patient():
 def create_therapist():
     
     therapist = Therapist(
-        name=names.get_first_name(),
-        lastname=names.get_last_name(),
+        name=fake.first_name(),
+        lastname=fake.last_name(),
         id_type=Therapist.ID_CHOICES[randint(0,3)][0],
         genre=Therapist.GENRE_CHOICES[randint(0,1)][0],
         username=randint(1, 1000000000),
@@ -226,8 +226,8 @@ def create_therapy_session():
     
     therapySession = TherapySession(
         date=randomDate("1900-1-1", "1999-1-1", random.random()),
-        objective=generate_paragraph()[2][:64],
-        description=generate_paragraph()[2][:564],
+        objective=lorem.paragraph()[2][:64],
+        description=lorem.paragraph()[2][:564],
         patient=patient,
         therapist=therapist
     )
@@ -271,18 +271,18 @@ def create_movements():
 def create_minigame():
     Minigame(
         name='Sushi samurai',
-        description=generate_paragraph()[2][:564]
+        description=lorem.paragraph()[2][:564]
     ).save()
     Minigame(
         name='Atrapalo',
-        description=generate_paragraph()[2][:564]
+        description=lorem.paragraph()[2][:564]
     ).save()
     
 def create_minigame_random():
     # movements = Movement.object.all()
     minigame = Minigame(
-        name=generate_paragraph()[2][:12],
-        description=generate_paragraph()[2][:564]
+        name=lorem.paragraph()[2][:12],
+        description=lorem.paragraph()[2][:564]
     )
     minigame.save()
     
