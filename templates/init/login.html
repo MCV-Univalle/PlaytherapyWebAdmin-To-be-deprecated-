@@ -49,7 +49,7 @@
   <!--    <a href="signup">Sign Up</a>-->
   <!--  </div>-->
   <!--</div>-->
-  <form class="form-group" action="login" method="POST">
+  <form class="form-group" action="{% url 'login' %}" method="POST">
     {% csrf_token %}
     <!--<label style="color: #880000 ">{{ form.non_field_errors }}</label>-->
     {% bootstrap_form_errors form %}

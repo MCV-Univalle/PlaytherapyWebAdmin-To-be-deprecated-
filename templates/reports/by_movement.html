@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {# Load the tag library #}
 {% load bootstrap3 %}
-{% load staticfiles %}
+{% load static %}
 
 {# Load CSS and JavaScript #}
 
@@ -59,10 +59,31 @@
                                 {% bootstrap_field form.movement layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
                                 
                                 <!--********************************** Apellidos **********************************-->
-                                {% bootstrap_field form.date1 layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
+                                <label for="{{ form.date1.id_for_label }}" class="col-lg-2 col-form-label text-right">
+                                    {{ form.date1.label }}
+                                </label>
+                                <div class="col-lg-10 mb-5">
+                                    <input type="date" name="{{ form.date1.name }}" id="{{ form.date1.id_for_label }}" class="form-control" value="{{ form.date1.value|default:'2025-03-30' }}">
+                                    {% if form.date1.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.date1.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <!-- {% bootstrap_field form.date1 layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %} -->
                                 
                                 <!--********************************** Tipo de documento **********************************-->
-                                {% bootstrap_field form.date2 layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
+                                <label for="{{ form.date1.id_for_label }}" class="col-lg-2 col-form-label text-right">
+                                    {{ form.date2.label }}
+                                </label>
+                                <div class="col-lg-10 mb-3">
+                                    <input type="date" name="{{ form.date2.name }}" id="{{ form.date2.id_for_label }}" class="form-control" value="{{ form.date2.value|default:'2025-03-30' }}">
+                                    {% if form.date2.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.date2.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
                                 
                                 <div class="row buttons">
                                     {% bootstrap_button "Mostrar" button_type="submit" button_class="btn-primary col-xs-12 col-sm-12  col-md-4 col-md-offset-8 col-lg-4 col-lg-offset-8 btn-responsive" %}
@@ -76,6 +97,15 @@
             <div class="panel panel-default">
                 <!-- /.panel-heading -->
                 <div class="panel-body">
+                    {% if selected_movement %}
+                        <h3 class="text-center">Ángulo alcanzado para el movimiento: <strong>{{ selected_movement.name }}</strong></h3>
+                    {% endif %}
+
+                    <p class="text-center text-muted">
+                        <em>Eje X:</em> Fechas de las sesiones &nbsp;&nbsp;|&nbsp;&nbsp;
+                        <em>Eje Y:</em> Ángulo alcanzado en grados
+                    </p>
+
                     <div id="by_movement_chart"></div>
                 </div>
                 <!-- /.panel-body -->
@@ -108,7 +138,7 @@
     {% endfor %}
     ];
     
-    Morris.Line({
+    Morris.Bar({
         element: 'by_movement_chart',
         data: data,
         xkey: 'date',

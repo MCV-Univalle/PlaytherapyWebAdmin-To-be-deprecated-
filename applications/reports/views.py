@@ -30,7 +30,7 @@ def by_movement(request, patient_id):
                 gss = GameSession.objects.filter(date__range=(date1, date2))
                 if gss:
                     for gs in gss:
-                        if gs.therapy.patient.id_num == patient_id:
+                        if str(gs.therapy.patient.id_num) == str(patient_id):
                             performances += gs.performance_set.filter(movement_id=selected_movement.id)
                 else:
                     messages.error(request, "No existen datos para mostrar.")
@@ -59,10 +59,14 @@ def by_minigame(request, patient_id):
                 date1 = form.cleaned_data['date1']
                 date2 = form.cleaned_data['date2']
                 selected_minigame = form.cleaned_data['minigame']
-                gss = selected_minigame.gamesession_set.filter(date__range=(date1, date2))
+                print(selected_minigame.id)
+                gss = GameSession.objects.filter(date__range=(date1, date2))
+                print(f"Cantidad de GameSessions: {len(gss)}")
                 if gss:
                     for gs in gss:
-                        if gs.therapy.patient.id_num == patient_id:
+                        print(f"Paciente: {patient_id}")
+                        if str(gs.therapy.patient.id_num) == str(patient_id):
+                            print(f"Cantidad de performances encontrados: {len(performances)}")
                             performances += gs.performance_set.all()
                             # correcto
                             # ms = gs.movement_set.all()
@@ -73,6 +77,7 @@ def by_minigame(request, patient_id):
                     for performance in performances:
                         if performance.movement not in movements:
                             movements.append(performance.movement)
+                            print("Soy el movement: "+str(performance.movement))
                 else:
                     messages.error(request, "No existen datos para mostrar.")
     else:

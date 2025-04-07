@@ -44,10 +44,10 @@ INSTALLED_APPS = [
     'applications.start',
     'applications.reports',
     'bootstrap3',
-    'bootstrap_datepicker_plus',
     'django_select2',
     'faker',
     'lorem_text',
+    'bootstrap_datepicker_plus',
     'corsheaders',
 ]
 
@@ -155,3 +155,4 @@ SELECT2_CACHE_BACKEND = 'default'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000', 'http://localhost:8000']

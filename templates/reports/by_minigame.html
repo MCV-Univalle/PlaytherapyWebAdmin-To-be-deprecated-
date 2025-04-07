@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {# Load the tag library #}
 {% load bootstrap3 %}
-{% load staticfiles %}
+{% load static %}
 
 {# Load CSS and JavaScript #}
 
@@ -9,7 +9,7 @@
 {% block specific-css %}
     <link href="{% static 'dist/css/button.css' %}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <link rel="stylesheet" href="{% static 'vendor/morrisjs/morris.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'vendor/morrisjs/morris.css' %}">
     {{ form.media }}
 
 {% endblock %}
@@ -49,7 +49,7 @@
         <div class="col-lg-12">
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-xs-10 col-xs-offset-1 col-sm-10 -col-sm-offset-1 col-md-12 col-md-offset-1 col-lg-12 col-lg-offset-0">
+                    <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-12 col-md-offset-1 col-lg-12 col-lg-offset-0">
                         <form class="form-group-up form-horizontal forml" action="" method="POST">
                             {% csrf_token %}
                             <fieldset>
@@ -59,10 +59,32 @@
                                 {% bootstrap_field form.minigame layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
                                 
                                 <!--********************************** Apellidos **********************************-->
-                                {% bootstrap_field form.date1 layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
+                                <label for="{{ form.date1.id_for_label }}" class="col-lg-2 col-form-label">
+                                    {{ form.date1.label }}
+                                </label>
+                                <div class="col-lg-10">
+                                    <input type="date" name="{{ form.date1.name }}" id="{{ form.date1.id_for_label }}" class="form-control" value="{{ form.date1.value|default:'2025-03-30' }}">
+                                    {% if form.date1.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.date1.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <!-- {% bootstrap_field form.date1 layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %} -->
                                 
                                 <!--********************************** Tipo de documento **********************************-->
-                                {% bootstrap_field form.date2 layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
+                                <label for="{{ form.date1.id_for_label }}" class="col-lg-2 col-form-label">
+                                    {{ form.date2.label }}
+                                </label>
+                                <div class="col-lg-10">
+                                    <input type="date" name="{{ form.date2.name }}" id="{{ form.date2.id_for_label }}" class="form-control" value="{{ form.date2.value|default:'2025-03-30' }}">
+                                    {% if form.date2.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.date2.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <!-- {% bootstrap_field form.date2 layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %} -->
                                 
                                 <div class="row buttons">
                                     {% bootstrap_button "Mostrar" button_type="submit" button_class="btn-primary col-xs-12 col-sm-12  col-md-4 col-md-offset-8 col-lg-4 col-lg-offset-8 btn-responsive" %}
@@ -103,9 +125,15 @@
 
     var data = [
     {% for performance in performances %}
-        { {{ performance.movement.id }}: {{ performance.angle }}, date: '{{ performance.game_session.date | date:"Y-m-d" }}'}{% if not forloop.last %},{% endif %}
+        { 
+          movement_id: {{ performance.movement.id }}, 
+          angle: {{ performance.angle }}, 
+          date: '{{ performance.game_session.date | date:"Y-m-d" }}'
+        }{% if not forloop.last %},{% endif %}
     {% endfor %}
     ];
+
+    console.log(data);
     
     Morris.Line({
         element: 'by_minigame_chart',
