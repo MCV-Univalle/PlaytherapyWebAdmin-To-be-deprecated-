@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 import json
+import csv
+from django.http import HttpResponse
 
 from .models import *
 from .forms import *
@@ -38,52 +40,6 @@ def by_movement(request, patient_id):
         messages.error(request, "El paciente no existe o no se ha seleccionado correcatmente.")
     
     return render(request, 'reports/by_movement.html', {'form': form, 'performances': performances, 'selected_movement': selected_movement, 'patient': patient})
-    
-    
-# @login_required # Verifies that the user is authenticated
-# def by_minigame(request, patient_id):
-#     # patient_id  = 1
-#     performances = []
-#     movements = []
-#     selected_minigame = None
-#     form = ByMinigameReportForm()
-#     patient = None
-#     try:
-#         patient = Patient.objects.get(id_num=patient_id)
-#     except Exception as ex:
-#         print(ex.message)
-#     if patient:
-#         if request.method == 'POST':
-#             form = ByMinigameReportForm(request.POST)
-#             if form.is_valid():
-#                 date1 = form.cleaned_data['date1']
-#                 date2 = form.cleaned_data['date2']
-#                 selected_minigame = form.cleaned_data['minigame']
-#                 print(selected_minigame.id)
-#                 gss = GameSession.objects.filter(date__range=(date1, date2), minigame_id=selected_minigame.id)
-#                 print(f"Cantidad de GameSessions: {len(gss)}")
-#                 if gss:
-#                     for gs in gss:
-#                         print(f"Paciente: {patient_id}")
-#                         if str(gs.therapy.patient.id_num) == str(patient_id):
-#                             print(f"Cantidad de performances encontrados: {len(performances)}")
-#                             performances += gs.performance_set.all()
-#                             # correcto
-#                             # ms = gs.movement_set.all()
-#                             # for m in ms:
-#                             #     if m not in movements:
-#                             #         movements.append(m)
-#                     # incorrecto
-#                     for performance in performances:
-#                         if performance.movement not in movements:
-#                             movements.append(performance.movement)
-#                             print("Soy el movement: "+str(performance.movement))
-#                 else:
-#                     messages.error(request, "No existen datos para mostrar.")
-#     else:
-#         messages.error(request, "El paciente no existe o no se ha seleccionado correcatmente.")
-
-#     return render(request, 'reports/by_minigame.html', {'form': form, 'performances': performances, 'movements': movements, 'minigame': selected_minigame, 'patient': patient})
 
 @login_required # Verifies that the user is authenticated
 def by_minigame(request, patient_id):
@@ -202,3 +158,42 @@ def by_level(request, patient_id):
         
     return render(request, 'reports/by_level.html', {'form': form, 'game_sessions': game_sessions, 'selected_minigame': selected_minigame, 'patient': patient})
     
+@login_required
+def download_csv_by_minigame(request, patient_id):
+    # La lógica aquí puede ser la misma que tu función `by_minigame`, pero simplificada para solo obtener los datos y devolver CSV.
+    patient = Patient.objects.get(id_num=patient_id)
+    form = ByMinigameReportForm(request.GET)
+
+    if not form.is_valid():
+        return HttpResponse("Parámetros inválidos", status=400)
+
+    date1 = form.cleaned_data['date1']
+    date2 = form.cleaned_data['date2']
+    selected_minigame = form.cleaned_data['minigame']
+
+    gss = GameSession.objects.filter(date__range=(date1, date2), minigame=selected_minigame)
+
+    # Creamos el archivo CSV
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename="reporte_{selected_minigame}_{patient_id}.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Fecha', 'Movimientos', 'Repeticiones', 'Tiempo', 'Configuracion de Parametros', 'Desempeno'])
+
+    for gs in gss:
+        if str(gs.therapy.patient.id_num) == str(patient_id):
+            performances = gs.performance_set.all()
+            if performances:
+                row = performances[0]  # Agrupado como lo hacías antes
+                movements = ', '.join(set([p.movement.name for p in performances if p.movement]))
+                parametros = row.game_session.parameters if row.game_session.parameters else 'No especificado'
+                writer.writerow([
+                    gs.date.strftime("%d/%m/%Y"),
+                    movements,
+                    row.game_session.repetitions,
+                    row.game_session.time,
+                    parametros,
+                    row.game_session.score,
+                ])
+
+    return response
