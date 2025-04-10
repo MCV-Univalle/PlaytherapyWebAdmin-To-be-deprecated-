@@ -40,9 +40,55 @@ def by_movement(request, patient_id):
     return render(request, 'reports/by_movement.html', {'form': form, 'performances': performances, 'selected_movement': selected_movement, 'patient': patient})
     
     
+# @login_required # Verifies that the user is authenticated
+# def by_minigame(request, patient_id):
+#     # patient_id  = 1
+#     performances = []
+#     movements = []
+#     selected_minigame = None
+#     form = ByMinigameReportForm()
+#     patient = None
+#     try:
+#         patient = Patient.objects.get(id_num=patient_id)
+#     except Exception as ex:
+#         print(ex.message)
+#     if patient:
+#         if request.method == 'POST':
+#             form = ByMinigameReportForm(request.POST)
+#             if form.is_valid():
+#                 date1 = form.cleaned_data['date1']
+#                 date2 = form.cleaned_data['date2']
+#                 selected_minigame = form.cleaned_data['minigame']
+#                 print(selected_minigame.id)
+#                 gss = GameSession.objects.filter(date__range=(date1, date2), minigame_id=selected_minigame.id)
+#                 print(f"Cantidad de GameSessions: {len(gss)}")
+#                 if gss:
+#                     for gs in gss:
+#                         print(f"Paciente: {patient_id}")
+#                         if str(gs.therapy.patient.id_num) == str(patient_id):
+#                             print(f"Cantidad de performances encontrados: {len(performances)}")
+#                             performances += gs.performance_set.all()
+#                             # correcto
+#                             # ms = gs.movement_set.all()
+#                             # for m in ms:
+#                             #     if m not in movements:
+#                             #         movements.append(m)
+#                     # incorrecto
+#                     for performance in performances:
+#                         if performance.movement not in movements:
+#                             movements.append(performance.movement)
+#                             print("Soy el movement: "+str(performance.movement))
+#                 else:
+#                     messages.error(request, "No existen datos para mostrar.")
+#     else:
+#         messages.error(request, "El paciente no existe o no se ha seleccionado correcatmente.")
+
+#     return render(request, 'reports/by_minigame.html', {'form': form, 'performances': performances, 'movements': movements, 'minigame': selected_minigame, 'patient': patient})
+
 @login_required # Verifies that the user is authenticated
 def by_minigame(request, patient_id):
     # patient_id  = 1
+    report_rows = []
     performances = []
     movements = []
     selected_minigame = None
@@ -60,31 +106,37 @@ def by_minigame(request, patient_id):
                 date2 = form.cleaned_data['date2']
                 selected_minigame = form.cleaned_data['minigame']
                 print(selected_minigame.id)
-                gss = GameSession.objects.filter(date__range=(date1, date2))
+                gss = GameSession.objects.filter(date__range=(date1, date2), minigame_id=selected_minigame.id)
                 print(f"Cantidad de GameSessions: {len(gss)}")
                 if gss:
                     for gs in gss:
                         print(f"Paciente: {patient_id}")
                         if str(gs.therapy.patient.id_num) == str(patient_id):
                             print(f"Cantidad de performances encontrados: {len(performances)}")
-                            performances += gs.performance_set.all()
-                            # correcto
-                            # ms = gs.movement_set.all()
-                            # for m in ms:
-                            #     if m not in movements:
-                            #         movements.append(m)
-                    # incorrecto
-                    for performance in performances:
-                        if performance.movement not in movements:
-                            movements.append(performance.movement)
-                            print("Soy el movement: "+str(performance.movement))
+                            performances = gs.performance_set.all()
+                            if performances:
+                                movements = [p.movement.name for p in performances]
+                                row = {
+                                    'fecha': gs.date,
+                                    'movimientos': movements,
+                                    'repeticiones': performances[0].game_session.repetitions if performances else 0,
+                                    'tiempo': performances[0].game_session.time if performances else 0,
+                                    'parametros': performances[0].game_session.parameters.split(',') if performances and performances[0].game_session.parameters else [],
+                                    'puntaje': performances[0].game_session.score if performances else 0,
+                                }
+                                report_rows.append(row)
                 else:
                     messages.error(request, "No existen datos para mostrar.")
     else:
         messages.error(request, "El paciente no existe o no se ha seleccionado correcatmente.")
 
-    return render(request, 'reports/by_minigame.html', {'form': form, 'performances': performances, 'movements': movements, 'minigame': selected_minigame, 'patient': patient})
-    
+    return render(request, 'reports/by_minigame.html', {
+    'form': form,
+    'report_rows': report_rows,
+    'minigame': selected_minigame,
+    'patient': patient
+    })
+   
     
 @login_required # Verifies that the user is authenticated
 def by_fim(request, patient_id):

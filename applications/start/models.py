@@ -41,6 +41,7 @@ class GameSession(models.Model):
     repetitions = models.IntegerField(verbose_name='Repeticiones')
     time = models.IntegerField(verbose_name='Tiempo')
     level = models.IntegerField(verbose_name='Nivel')
+    parameters = models.TextField(verbose_name='Parámetros', blank=True, null=True)
     therapy = models.ForeignKey(TherapySession, on_delete=models.CASCADE, verbose_name='Terapeuta')
     minigame = models.ForeignKey(Minigame, on_delete=models.CASCADE, verbose_name='Minijuego')
     movements = models.ManyToManyField(Movement, through="Performance")
