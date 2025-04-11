@@ -56,7 +56,7 @@
                                 <label style="color: #880000 ">{{ form.non_field_errors }}</label>
 
                                 <!--********************************** Nombres **********************************-->
-                                {% bootstrap_field form.minigame layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' %}
+                                {% bootstrap_field form.minigame layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='form-group col-lg-10' form_group_class='row' attrs='{"id": "id_minigame"}' %}
                                 
                                 <!--********************************** Apellidos **********************************-->
                                 <label for="{{ form.date1.id_for_label }}" class="col-lg-2 col-form-label text-right">
@@ -112,7 +112,11 @@
                         <th>Repeticiones</th>
                         <th>Tiempo (s)</th>
                         <th>Configuración de Parámetros</th>
-                        <th>Desempeño</th>
+                        <th>
+                            Desempeño 
+                            <span id="score-tooltip" data-bs-toggle="tooltip" title="...">
+                                <i class="bi bi-question-circle-fill text-primary"></i>
+                            </span>
                       </tr>
                     </thead>
                     <tbody>
@@ -165,5 +169,18 @@
         
         // $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
     });
+</script>
+<script>
+    console.log("Script de tooltip ejecutado");
+</script>
+<script>
+    const tooltipSpan = document.getElementById("score-tooltip");
+    const selectedMinigame = "{{ minigame.performance_description|default:'' }}";
+    console.log(selectedMinigame);
+
+    if (tooltipSpan) {
+        const explicacion = selectedMinigame || "Este puntaje representa el desempeño en el minijuego seleccionado";
+        tooltipSpan.setAttribute("title", explicacion);
+    }
 </script>
 {% endblock %}

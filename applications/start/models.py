@@ -28,6 +28,7 @@ class Minigame(models.Model):
     name = models.CharField(max_length=128, unique=True, verbose_name='Nombre')
     description = models.CharField(max_length=1024, verbose_name='Descripción')
     movements = models.ManyToManyField(Movement, verbose_name='Movimientos')
+    performance_description = models.CharField(max_length=1024, verbose_name='Descripción de la desempeño', blank=True, null=True)
     
     def __str__(self):
         return self.name

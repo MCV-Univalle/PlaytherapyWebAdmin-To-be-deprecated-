@@ -61,7 +61,7 @@ def by_minigame(request, patient_id):
                 date1 = form.cleaned_data['date1']
                 date2 = form.cleaned_data['date2']
                 selected_minigame = form.cleaned_data['minigame']
-                print(selected_minigame.id)
+                # print(selected_minigame.id)
                 gss = GameSession.objects.filter(date__range=(date1, date2), minigame_id=selected_minigame.id)
                 print(f"Cantidad de GameSessions: {len(gss)}")
                 if gss:
