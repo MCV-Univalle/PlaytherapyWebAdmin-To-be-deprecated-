@@ -130,21 +130,75 @@
 <!-- Morris Charts JavaScript -->
 <script src="{% static 'vendor/raphael/raphael.min.js' %}"></script>
 <script src="{% static 'vendor/morrisjs/morris.min.js' %}"></script>
-<script>
+// <script>
 
-    var data = [
-    {% for performance in performances %}
-        { {{ performance.movement.id }}: {{ performance.angle }}, date: '{{ performance.game_session.date | date:"Y-m-d" }}'}{% if not forloop.last %},{% endif %}
-    {% endfor %}
-    ];
+//     var data = [
+//     {% for performance in performances %}
+//         { {{ performance.movement.id }}: {{ performance.angle }}, date: '{{ performance.game_session.date | date:"Y-m-d" }}'}{% if not forloop.last %},{% endif %}
+//     {% endfor %}
+//     ];
     
-    Morris.Bar({
-        element: 'by_movement_chart',
-        data: data,
-        xkey: 'date',
-        ykeys: ['{{ selected_movement.id }}'],
-        labels: ['Ángulo alcanzado en {{ selected_movement.name }}'],
-        hideHover: 'auto'
-      });
+//     Morris.Bar({
+//         element: 'by_movement_chart',
+//         data: data,
+//         xkey: 'date',
+//         ykeys: ['{{ selected_movement.id }}'],
+//         labels: ['Ángulo alcanzado en {{ selected_movement.name }}'],
+//         hideHover: 'auto'
+//       });
+// </script>
+<script>
+    $(document).ready(function() {
+        // Obtener los valores de los campos de fecha
+        var startDate = new Date("{{ form.date1.value|default:'2025-03-30' }}");
+        var endDate = new Date("{{ form.date2.value|default:'2025-03-30' }}");
+        
+        // Datos originales de performances
+        var rawData = [
+        {% for performance in performances %}
+            { 
+                id: {{ performance.movement.id }},
+                angle: {{ performance.angle }}, 
+                date: '{{ performance.game_session.date | date:"Y-m-d" }}'
+            }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+        ];
+        
+        // Crear un array con todas las fechas en el rango
+        var dateRange = [];
+        var currentDate = new Date(startDate);
+        
+        // Llenar el array con todas las fechas del rango
+        while (currentDate <= endDate) {
+            var formattedDate = currentDate.toISOString().split('T')[0];
+            dateRange.push(formattedDate);
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+        
+        // Crear el array de datos con todas las fechas del rango
+        var completeData = [];
+        
+        dateRange.forEach(function(date) {
+            // Buscar si hay datos para esta fecha
+            var matchingData = rawData.find(function(item) {
+                return item.date === date;
+            });
+            
+            // Si hay datos para esta fecha, usarlos; si no, poner 0 o null
+            var dataPoint = { date: date };
+            dataPoint['{{ selected_movement.id }}'] = matchingData ? matchingData.angle : null;
+            completeData.push(dataPoint);
+        });
+        
+        // Configurar y crear el gráfico
+        Morris.Bar({
+            element: 'by_movement_chart',
+            data: completeData,
+            xkey: 'date',
+            ykeys: ['{{ selected_movement.id }}'],
+            labels: ['Ángulo alcanzado en {{ selected_movement.name }}'],
+            hideHover: 'auto',
+        });
+    });
 </script>
 {% endblock %}
